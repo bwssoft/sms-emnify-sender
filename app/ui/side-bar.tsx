@@ -1,20 +1,33 @@
 "use client";
-import { Fragment, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   Bars4Icon,
-  ClockIcon,
+  CpuChipIcon,
   HomeIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import {
-  ChevronUpDownIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/20/solid";
+import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function SideBar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isOptionInCurrentPathname = useCallback(
+    (href: string) => {
+      if (href === "/" && pathname !== "/") {
+        return false;
+      }
+      if (href === "/message" && pathname !== "/message") {
+        return false;
+      }
+      return pathname.includes(href);
+    },
+    [pathname]
+  );
 
   return (
     <>
@@ -71,31 +84,28 @@ export function SideBar() {
                     </button>
                   </div>
                 </Transition.Child>
-                <div className="flex flex-shrink-0 items-center px-4">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=purple&shade=500"
-                    alt="Your Company"
-                  />
-                </div>
                 <div className="mt-5 h-0 flex-1 overflow-y-auto">
                   <nav className="px-2">
                     <div className="space-y-1">
                       {navigation.map((item) => (
-                        <a
+                        <Link
                           key={item.name}
                           href={item.href}
                           className={clsx(
-                            item.current
+                            isOptionInCurrentPathname(item.href)
                               ? "bg-gray-100 text-gray-900"
                               : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
                             "group flex items-center rounded-md px-2 py-2 text-base font-medium leading-5"
                           )}
-                          aria-current={item.current ? "page" : undefined}
+                          aria-current={
+                            isOptionInCurrentPathname(item.href)
+                              ? "page"
+                              : undefined
+                          }
                         >
                           <item.icon
                             className={clsx(
-                              item.current
+                              isOptionInCurrentPathname(item.href)
                                 ? "text-gray-500"
                                 : "text-gray-400 group-hover:text-gray-500",
                               "mr-3 h-6 w-6 flex-shrink-0"
@@ -103,10 +113,10 @@ export function SideBar() {
                             aria-hidden="true"
                           />
                           {item.name}
-                        </a>
+                        </Link>
                       ))}
                     </div>
-                    <div className="mt-8">
+                    {/* <div className="mt-8">
                       <h3
                         className="px-3 text-sm font-medium text-gray-500"
                         id="mobile-teams-headline"
@@ -135,7 +145,7 @@ export function SideBar() {
                           </a>
                         ))}
                       </div>
-                    </div>
+                    </div> */}
                   </nav>
                 </div>
               </Dialog.Panel>
@@ -295,7 +305,7 @@ export function SideBar() {
             </Transition>
           </Menu>
           {/* Sidebar Search */}
-          <div className="mt-5 px-3">
+          {/* <div className="mt-5 px-3">
             <label htmlFor="search" className="sr-only">
               Search
             </label>
@@ -317,25 +327,27 @@ export function SideBar() {
                 placeholder="Search"
               />
             </div>
-          </div>
+          </div> */}
           {/* Navigation */}
           <nav className="mt-6 px-3">
             <div className="space-y-1">
               {navigation.map((item) => (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
                   className={clsx(
-                    item.current
+                    isOptionInCurrentPathname(item.href)
                       ? "bg-gray-200 text-gray-900"
                       : "text-gray-700 hover:bg-gray-50 hover:text-gray-900",
                     "group flex items-center rounded-md px-2 py-2 text-sm font-medium"
                   )}
-                  aria-current={item.current ? "page" : undefined}
+                  aria-current={
+                    isOptionInCurrentPathname(item.href) ? "page" : undefined
+                  }
                 >
                   <item.icon
                     className={clsx(
-                      item.current
+                      isOptionInCurrentPathname(item.href)
                         ? "text-gray-500"
                         : "text-gray-400 group-hover:text-gray-500",
                       "mr-3 h-6 w-6 flex-shrink-0"
@@ -343,12 +355,12 @@ export function SideBar() {
                     aria-hidden="true"
                   />
                   {item.name}
-                </a>
+                </Link>
               ))}
             </div>
             <div className="mt-8">
               {/* Secondary navigation */}
-              <h3
+              {/* <h3
                 className="px-3 text-sm font-medium text-gray-500"
                 id="desktop-teams-headline"
               >
@@ -375,7 +387,7 @@ export function SideBar() {
                     <span className="truncate">{team.name}</span>
                   </a>
                 ))}
-              </div>
+              </div> */}
             </div>
           </nav>
         </div>
@@ -385,12 +397,16 @@ export function SideBar() {
 }
 
 const navigation = [
-  { name: "Home", href: "#", icon: HomeIcon, current: true },
-  { name: "My tasks", href: "#", icon: Bars4Icon, current: false },
-  { name: "Recent", href: "#", icon: ClockIcon, current: false },
+  { name: "Home", href: "/", icon: HomeIcon },
+  { name: "Endpoints", href: "/endpoint", icon: CpuChipIcon },
+  {
+    name: "Mensagem",
+    href: "/message",
+    icon: Bars4Icon,
+  },
 ];
-const teams = [
-  { name: "Engineering", href: "#", bgColorClass: "bg-indigo-500" },
-  { name: "Human Resources", href: "#", bgColorClass: "bg-green-500" },
-  { name: "Customer Success", href: "#", bgColorClass: "bg-yellow-500" },
-];
+// const teams = [
+//   { name: "Engineering", href: "#", bgColorClass: "bg-indigo-500" },
+//   { name: "Human Resources", href: "#", bgColorClass: "bg-green-500" },
+//   { name: "Customer Success", href: "#", bgColorClass: "bg-yellow-500" },
+// ];
