@@ -1,4 +1,5 @@
-import axios from "axios";
+import { auth } from "@/auth";
+import axios, { AxiosError } from "axios";
 
 /** 
  * Função para a autenticação via token na api da emnifiy.
@@ -17,9 +18,9 @@ type AuthenticateOutput = {
   token?: string
   authenticated: boolean
 }
-export async function authenticate({ token }: AuthenticateInput): Promise<AuthenticateOutput> {
+export async function authenticate({ token }: AuthenticateInput): Promise<AuthenticateOutput | void> {
   return axios
-    .post(`${process.env.EMNIFY_BASE_URL}/authenticate`, {
+    .post(`${process.env.NEXT_PUBLIC_EMNIFY_BASE_URL}/authenticate`, {
       application_token: token,
     })
     .then((response) => {
@@ -34,6 +35,7 @@ export async function authenticate({ token }: AuthenticateInput): Promise<Authen
       }
     })
     .catch((error) => {
+      if (error instanceof AxiosError) return
       throw new Error((error as Error).name)
     });
 }
@@ -44,11 +46,12 @@ export async function authenticate({ token }: AuthenticateInput): Promise<Authen
 */
 type ListEndpointsOutput = Endpoint[]
 export async function listEndpoints(): Promise<ListEndpointsOutput> {
+  const session = await auth()
   return axios
-    .get(`${process.env.EMNIFY_BASE_URL}/endpoint`, {
+    .get(`${process.env.NEXT_PUBLIC_EMNIFY_BASE_URL}/endpoint`, {
       headers: {
         "Content-Type": `application/json`,
-        Authorization: `Bearer ${process.env.EMNIFY_AUTH_TOKEN}`,
+        Authorization: `Bearer ${session?.user.emnify_token}`,
       },
     })
     .then((response) => {
@@ -58,6 +61,7 @@ export async function listEndpoints(): Promise<ListEndpointsOutput> {
       return []
     })
     .catch((error) => {
+      if (error instanceof AxiosError) return
       throw new Error((error as Error).name)
     });
 }
@@ -72,11 +76,12 @@ type ListEndpointsByNameInput = {
 type ListEndpointsByNameOutput = Endpoint[]
 
 export async function listEndpointsFilteredByName({ name }: ListEndpointsByNameInput): Promise<ListEndpointsByNameOutput> {
+  const session = await auth()
   return axios
-    .get(`${process.env.EMNIFY_BASE_URL}/endpoint?q=name%3A${name}`, {
+    .get(`${process.env.NEXT_PUBLIC_EMNIFY_BASE_URL}/endpoint?q=name%3A${name}`, {
       headers: {
         "Content-Type": `application/json`,
-        Authorization: `Bearer ${process.env.EMNIFY_AUTH_TOKEN}`,
+        Authorization: `Bearer ${session?.user.emnify_token}`,
       },
     })
     .then((response) => {
@@ -86,6 +91,7 @@ export async function listEndpointsFilteredByName({ name }: ListEndpointsByNameI
       return []
     })
     .catch((error) => {
+      if (error instanceof AxiosError) return
       throw new Error((error as Error).name)
     });
 }
@@ -100,11 +106,12 @@ type ListEndpointsByIdInput = {
 type ListEndpointsByIdOutput = Endpoint
 
 export async function listEndpointById({ id }: ListEndpointsByIdInput): Promise<ListEndpointsByIdOutput> {
+  const session = await auth()
   return axios
-    .get(`${process.env.EMNIFY_BASE_URL}/endpoint?q=id%3A${id}`, {
+    .get(`${process.env.NEXT_PUBLIC_EMNIFY_BASE_URL}/endpoint?q=id%3A${id}`, {
       headers: {
         "Content-Type": `application/json`,
-        Authorization: `Bearer ${process.env.EMNIFY_AUTH_TOKEN}`,
+        Authorization: `Bearer ${session?.user.emnify_token}`,
       },
     })
     .then((response) => {
@@ -114,6 +121,7 @@ export async function listEndpointById({ id }: ListEndpointsByIdInput): Promise<
       return undefined
     })
     .catch((error) => {
+      if (error instanceof AxiosError) return
       throw new Error((error as Error).name)
     });
 }
@@ -129,11 +137,12 @@ type ListEndpointConnectivityByIdInput = {
 type ListEndpointConnectivityByIdOutput = Connectivity
 
 export async function listEndpointConnectivityById({ id }: ListEndpointConnectivityByIdInput): Promise<ListEndpointConnectivityByIdOutput> {
+  const session = await auth()
   return axios
-    .get(`${process.env.EMNIFY_BASE_URL}/endpoint/${id}/connectivity`, {
+    .get(`${process.env.NEXT_PUBLIC_EMNIFY_BASE_URL}/endpoint/${id}/connectivity`, {
       headers: {
         "Content-Type": `application/json`,
-        Authorization: `Bearer ${process.env.EMNIFY_AUTH_TOKEN}`,
+        Authorization: `Bearer ${session?.user.emnify_token}`,
       },
     })
     .then((response) => {
@@ -143,6 +152,7 @@ export async function listEndpointConnectivityById({ id }: ListEndpointConnectiv
       return undefined
     })
     .catch((error) => {
+      if (error instanceof AxiosError) return
       throw new Error((error as Error).name)
     });
 }
@@ -158,11 +168,12 @@ type ListEndpointUsageByIdInput = {
 type ListEndpointUsageByIdOutput = Usage
 
 export async function listEndpointUsageById({ id }: ListEndpointUsageByIdInput): Promise<ListEndpointUsageByIdOutput> {
+  const session = await auth()
   return axios
-    .get(`${process.env.EMNIFY_BASE_URL}/endpoint/${id}/stats`, {
+    .get(`${process.env.NEXT_PUBLIC_EMNIFY_BASE_URL}/endpoint/${id}/stats`, {
       headers: {
         "Content-Type": `application/json`,
-        Authorization: `Bearer ${process.env.EMNIFY_AUTH_TOKEN}`,
+        Authorization: `Bearer ${session?.user.emnify_token}`,
       },
     })
     .then((response) => {
@@ -172,6 +183,113 @@ export async function listEndpointUsageById({ id }: ListEndpointUsageByIdInput):
       return undefined
     })
     .catch((error) => {
+      throw new Error((error as Error).name)
+    });
+}
+
+/** 
+ * Função para listar mensagens de um endpoint pelo id do dispositivo cadastrado
+*/
+type ListEndpointMessagesByIdInput = {
+  id: string
+}
+type ListEndpointMessagesIdOutput = Message[]
+export async function listEndpointMessagesById({ id }: ListEndpointMessagesByIdInput): Promise<ListEndpointMessagesIdOutput> {
+  const session = await auth()
+  return axios
+    .get(`${process.env.NEXT_PUBLIC_EMNIFY_BASE_URL}/endpoint/${id}/sms`, {
+      headers: {
+        "Content-Type": `application/json`,
+        Authorization: `Bearer ${session?.user.emnify_token}`,
+      },
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.data
+      }
+      return undefined
+    })
+    .catch((error) => {
+      if (error instanceof AxiosError) return
+      throw new Error((error as Error).name)
+    });
+}
+
+/** 
+ * Função para enviar uma mensagem do tipo MT para um dispositivo
+*/
+type SendEndpointMessageInput = {
+  device_id: string
+  payload: string
+  source_address?: string
+}
+type SendEndpointMessageOutput = {
+  status: string
+  sms_id: string
+}
+
+export async function sendEndpointMessage({
+  device_id,
+  payload,
+  source_address
+}: SendEndpointMessageInput): Promise<SendEndpointMessageOutput | void> {
+  const session = await auth()
+  return axios
+    .post(
+      `${process.env.NEXT_PUBLIC_EMNIFY_BASE_URL}/endpoint/${device_id}/sms`,
+      { source_address: source_address ?? "12345", payload: payload },
+      {
+        headers: {
+          "Content-Type": `application/json`,
+          Authorization: `Bearer ${session?.user.emnify_token}`,
+        },
+      }
+    )
+    .then((response) => {
+      if (response.status === 201) {
+        return {
+          status: "DELIVERY ATTEMPT PENDING",
+          sms_id: response.headers.location.split("/")[8]
+        }
+      }
+      return undefined
+    })
+    .catch((error) => {
+      console.log('error', error)
+      if (error instanceof AxiosError) return
+      throw new Error((error as Error).name)
+    });
+}
+
+/** 
+ * Função para enviar uma mensagem do tipo MT para um dispositivo
+*/
+type GetEndpointMessageInput = {
+  device_id: string
+  sms_id: string
+}
+type GetEndpointMessageOutput = Message
+
+export async function getEndpointMessage({
+  device_id,
+  sms_id,
+}: GetEndpointMessageInput): Promise<GetEndpointMessageOutput | undefined> {
+  const session = await auth()
+  return axios
+    .get(`${process.env.NEXT_PUBLIC_EMNIFY_BASE_URL}/endpoint/${device_id}/sms/${sms_id}`, {
+      headers: {
+        "Content-Type": `application/json`,
+        Authorization: `Bearer ${session?.user.emnify_token}`,
+      },
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.data
+      }
+      return undefined
+    })
+    .catch((error) => {
+      if (error instanceof AxiosError) return
       throw new Error((error as Error).name)
     });
 }

@@ -1,7 +1,6 @@
-import { fetchEndpoints } from "../lib/actions";
-import { EndpointHeader } from "../ui/endpoints-header";
-import { EndpointsList } from "../ui/endpoints-list";
-import { EndpointsPinned } from "../ui/endpoints-pinned";
+import { fetchEndpoints } from "@/app/lib/actions";
+import { EndpointsList } from "@/app/ui/endpoints-list";
+import { EndpointsPinned } from "@/app/ui/endpoints-pinned";
 
 export default async function Example() {
   const endpoints = await fetchEndpoints();
@@ -11,9 +10,7 @@ export default async function Example() {
   return (
     <>
       <div className="min-h-full">
-        <div className="flex flex-col lg:pl-64">
-          <EndpointHeader />
-
+        <div className="flex flex-col">
           <EndpointsPinned endpoints={endpoints} />
 
           <main className="flex-1">

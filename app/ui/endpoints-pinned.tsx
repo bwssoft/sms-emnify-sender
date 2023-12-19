@@ -25,7 +25,7 @@ export function EndpointsPinned({ endpoints }: { endpoints: Endpoint[] }) {
             >
               <div
                 className={clsx(
-                  "bg-pink-600",
+                  "bg-indigo-600",
                   "flex w-16 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white"
                 )}
               >

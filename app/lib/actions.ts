@@ -1,37 +1,96 @@
 "use server"
 
-import { Connectivity, Endpoint, Message, Usage } from "./emnify"
+import { revalidatePath } from "next/cache"
+import { Connectivity, Endpoint, Message, Usage, authenticate, getEndpointMessage, listEndpointById, listEndpointConnectivityById, listEndpointMessagesById, listEndpointUsageById, listEndpoints, listEndpointsFilteredByName, sendEndpointMessage } from "./emnify"
+import { redirect } from "next/navigation"
+import { auth, signIn, signOut } from "@/auth"
+
+export async function userAuthenticate(formData: FormData) {
+  const { token } = Object.fromEntries(formData.entries())
+  const result = await authenticate({ token: token as string })
+  if (!result) return
+  await signIn("credentials", { token: result.token })
+}
+
+
+export async function userLogout() {
+  try {
+    await signOut({ redirectTo: "/login" });
+  } catch (error) {
+    throw error;
+  }
+}
 
 export async function fetchEndpoints() {
-  // return await fecthEndpoints()
-  await new Promise<void>((resolve) => setTimeout(resolve, 2000))
-  return endpoints
+  return await listEndpoints()
+  // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
+  // return endpoints
 }
 
 export async function fetchEndpointById(id: string) {
-  // return await fetchEndpointById({id})
-  await new Promise<void>((resolve) => setTimeout(resolve, 2000))
-  return endpoints[0]
+  return await listEndpointById({ id })
+  // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
+  // return endpoints[0]
 }
 
 export async function fetchEndpointConnectivityById(id: string) {
-  // return await listEndpointConnectivityById({id})
-  await new Promise<void>((resolve) => setTimeout(resolve, 2000))
-  return connectivity
+  return await listEndpointConnectivityById({ id })
+  // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
+  // return connectivity
 }
 
 export async function fetchEndpointUsageById(id: string) {
-  // return await listEndpointUsageById({id})
-  await new Promise<void>((resolve) => setTimeout(resolve, 2000))
-  return usage
+  return await listEndpointUsageById({ id })
+  // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
+  // return usage
 }
 
 export async function fetchEndpointMessagesById(id: string) {
-  // return await listEndpointUsageById({id})
-  await new Promise<void>((resolve) => setTimeout(resolve, 2000))
-  return messages
+  return await listEndpointMessagesById({ id })
+  // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
+  // return messages
 }
 
+export async function fetchEndpointsFilteredByName(name: string) {
+  return await listEndpointsFilteredByName({ name })
+  // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
+  // return endpoints.filter(el => el.name.toLocaleLowerCase().includes(name.toLocaleLowerCase()))
+}
+
+export async function sendMessagefromMessagePage(formData: FormData) {
+  const { device_id, payload } = Object.fromEntries(formData.entries())
+  const sms = await sendEndpointMessage({
+    device_id: device_id as string,
+    payload: payload as string
+  })
+  if (!sms) return
+  redirect(`/message/check/${device_id}/${sms.sms_id}`)
+}
+
+export async function sendMessagefromEndpointPage(device_id: string, formData: FormData) {
+  const { payload } = Object.fromEntries(formData.entries())
+  const sms = await sendEndpointMessage({
+    device_id,
+    payload: payload as string
+  })
+  if (!sms) return
+  revalidatePath(`/message/check/${device_id}/${sms.sms_id}`)
+
+}
+
+export async function getMessagefromEndpoint(device_id: string, sms_id: string) {
+  return await getEndpointMessage({
+    device_id,
+    sms_id
+  })
+  // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
+  // return messages[0]
+}
+
+export async function refreshMessageDatafromEndpoint({ device_id, sms_id }: { device_id: string, sms_id: string }) {
+  await new Promise<void>((resolve) => setTimeout(resolve, 2000))
+  revalidatePath(`/message/check/${device_id}/${sms_id}`)
+}
 
 //MOCK
 const endpoints: Endpoint[] = [
@@ -74,6 +133,43 @@ const endpoints: Endpoint[] = [
   {
     id: 2,
     name: "arduino02",
+    tags: "arduino, meter, temp",
+    created: "1970-01-01T00:00:00.000+0000",
+    last_updated: "1970-01-01T00:00:00.000+0000",
+    status: {
+      id: 1,
+      description: "Disabled",
+    },
+    service_profile: {
+      id: 1,
+      name: "Smart Meter",
+    },
+    tariff_profile: {
+      id: 3,
+      name: "Domestic only",
+    },
+    sim: {
+      id: 789,
+      iccid: "7368267364738297362",
+      iccid_with_luhn: "73682673647382973622",
+      eid: "89049011803455664400026832111175",
+      imsi: "901991234567891",
+      msisdn: "88563748762",
+      status: {
+        id: 2,
+        description: "Suspended",
+      },
+    },
+    imei: "864345678897829",
+    ip_address: "10.203.23.76",
+    ip_address_space: {
+      id: 2,
+    },
+    imei_lock: false,
+  },
+  {
+    id: 3,
+    name: "barduino03",
     tags: "arduino, meter, temp",
     created: "1970-01-01T00:00:00.000+0000",
     last_updated: "1970-01-01T00:00:00.000+0000",

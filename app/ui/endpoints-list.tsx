@@ -24,7 +24,7 @@ export function EndpointsList({ endpoints }: { endpoints: Endpoint[] }) {
                 <span className="flex items-center space-x-3 truncate">
                   <span
                     className={clsx(
-                      "bg-pink-500",
+                      "bg-indigo-500",
                       "h-2.5 w-2.5 flex-shrink-0 rounded-full"
                     )}
                     aria-hidden="true"
@@ -83,7 +83,7 @@ export function EndpointsList({ endpoints }: { endpoints: Endpoint[] }) {
                     <div className="flex items-center space-x-3 lg:pl-2">
                       <div
                         className={clsx(
-                          "bg-pink-500",
+                          "bg-indigo-500",
                           "h-2.5 w-2.5 flex-shrink-0 rounded-full"
                         )}
                         aria-hidden="true"
