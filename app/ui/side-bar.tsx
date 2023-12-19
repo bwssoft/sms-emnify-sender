@@ -7,10 +7,11 @@ import {
   HomeIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { ArrowLeftIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { userLogout } from "../lib/actions";
 
 export function SideBar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -167,9 +168,9 @@ export function SideBar() {
           />
         </div>
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="mt-5 flex h-0 flex-1 flex-col overflow-y-auto pt-1">
+        <div className="mt-5 flex h-0 flex-1 flex-col justify-between overflow-y-auto pt-1">
           {/* User account dropdown */}
-          <Menu as="div" className="relative inline-block px-3 text-left">
+          {/* <Menu as="div" className="relative inline-block px-3 text-left">
             <div>
               <Menu.Button className="group w-full rounded-md bg-gray-100 px-3.5 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-100">
                 <span className="flex w-full items-center justify-between">
@@ -303,7 +304,7 @@ export function SideBar() {
                 </div>
               </Menu.Items>
             </Transition>
-          </Menu>
+          </Menu> */}
           {/* Sidebar Search */}
           {/* <div className="mt-5 px-3">
             <label htmlFor="search" className="sr-only">
@@ -390,6 +391,15 @@ export function SideBar() {
               </div> */}
             </div>
           </nav>
+          <form action={userLogout}>
+            <button
+              type="submit"
+              className="flex items-center justify-start px-3"
+            >
+              <ArrowLeftIcon className="w-4 h-4" />
+              Logout
+            </button>
+          </form>
         </div>
       </div>
     </>
@@ -397,7 +407,7 @@ export function SideBar() {
 }
 
 const navigation = [
-  { name: "Home", href: "/", icon: HomeIcon },
+  // { name: "Home", href: "/", icon: HomeIcon },
   { name: "Endpoints", href: "/endpoint", icon: CpuChipIcon },
   {
     name: "Mensagem",

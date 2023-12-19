@@ -15,14 +15,6 @@ export default function Layout({
   const pathname = usePathname();
   const router = useRouter();
 
-  const breadcrumbs = [
-    { id: 1, name: "Endpoints", href: "/endpoint" },
-    {
-      id: 2,
-      name: "Visualizar endpoint",
-      href: `/endpoint/${params.id}`,
-    },
-  ];
   const tabs: {
     name: string;
     href: string;
@@ -48,40 +40,7 @@ export default function Layout({
 
   return (
     <div className="min-h-full">
-      <div className="lg:pl-64">
-        <header className="bg-gray-50 py-4 border-b border-gray-200">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:flex xl:items-center xl:justify-between">
-            <div className="min-w-0 flex-1">
-              <nav aria-label="Breadcrumb">
-                <ol role="list" className="flex items-center space-x-2">
-                  {breadcrumbs.map((breadcrumb, breadcrumbIdx) => (
-                    <li key={breadcrumb.id}>
-                      <div className="flex items-center text-sm">
-                        <Link
-                          href={breadcrumb.href}
-                          className="font-medium text-gray-400 hover:text-gray-200"
-                        >
-                          {breadcrumb.name}
-                        </Link>
-                        {breadcrumbIdx !== breadcrumbs.length - 1 ? (
-                          <svg
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            aria-hidden="true"
-                            className="ml-2 h-5 w-5 flex-shrink-0 text-gray-300"
-                          >
-                            <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
-                          </svg>
-                        ) : null}
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </nav>
-            </div>
-          </div>
-        </header>
-
+      <div>
         <main className="pb-16">
           <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="px-4 sm:px-0">

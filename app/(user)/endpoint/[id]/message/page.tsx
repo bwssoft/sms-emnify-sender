@@ -1,4 +1,7 @@
-import { fetchEndpointMessagesById } from "@/app/lib/actions";
+import {
+  fetchEndpointMessagesById,
+  sendMessagefromEndpointPage,
+} from "@/app/lib/actions";
 import clsx from "clsx";
 
 const activity = [
@@ -59,6 +62,7 @@ export default async function Example({
   };
 }) {
   const messages = await fetchEndpointMessagesById(params.id);
+  const sendMessageBinded = sendMessagefromEndpointPage.bind(null, params.id);
   return (
     <div>
       <div className="px-4 sm:px-0">
@@ -71,7 +75,7 @@ export default async function Example({
       </div>
       <div className="px-4 sm:px-0">
         <ul role="list" className="mt-6 space-y-6">
-          {messages.map((activityItem, activityItemIdx) => (
+          {messages?.map((activityItem, activityItemIdx) => (
             <li key={activityItem.id} className="relative flex gap-x-4">
               <div
                 className={clsx(
@@ -113,16 +117,16 @@ export default async function Example({
         </ul>
 
         {/* New comment form */}
-        <div className="sticky bottom-4 mt-6 flex gap-x-3 bg-white z-10 shadow-xl">
-          <form action="#" className="relative flex-auto">
+        <div className="sticky bottom-4 mt-6 flex gap-x-3 bg-white z-10 shadow-md">
+          <form action={sendMessageBinded} className="relative flex-auto">
             <div className="overflow-hidden rounded-lg pb-12 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
-              <label htmlFor="comment" className="sr-only">
-                Add your comment
+              <label htmlFor="payload" className="sr-only">
+                Add your message
               </label>
               <textarea
                 rows={2}
-                name="comment"
-                id="comment"
+                name="payload"
+                id="payload"
                 className="block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                 placeholder="Escreva sua menasgem..."
                 defaultValue={""}

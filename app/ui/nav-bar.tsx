@@ -1,11 +1,23 @@
 "use client";
-import { Fragment } from "react";
+import { Fragment, useMemo } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Bars3CenterLeftIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
-export function EndpointHeader() {
+export function Navbar() {
+  const pathname = usePathname();
+  const titleMapped = useMemo(() => {
+    if (pathname.includes("/endpoint")) return "Endpoints";
+    if (pathname.includes("/message") && !pathname.includes("/endpoint"))
+      return "Messagens";
+    if (pathname.includes("/")) return "Dashboard";
+
+    return pathname;
+  }, [pathname]);
+
   return (
     <>
       {/* Search header */}
@@ -40,7 +52,7 @@ export function EndpointHeader() {
           </div>
           <div className="flex items-center">
             {/* Profile dropdown */}
-            <Menu as="div" className="relative ml-3">
+            {/* <Menu as="div" className="relative ml-3">
               <div>
                 <Menu.Button className="relative flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
                   <span className="absolute -inset-1.5" />
@@ -160,7 +172,7 @@ export function EndpointHeader() {
                   </div>
                 </Menu.Items>
               </Transition>
-            </Menu>
+            </Menu> */}
           </div>
         </div>
       </div>
@@ -169,10 +181,42 @@ export function EndpointHeader() {
       <div className="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
         <div className="min-w-0 flex-1">
           <h1 className="text-lg font-medium leading-6 text-gray-900 sm:truncate">
-            Enpoints
+            {titleMapped}
           </h1>
         </div>
       </div>
+      {/* <header className="bg-gray-50 py-4 border-b border-gray-200">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:flex xl:items-center xl:justify-between">
+          <div className="min-w-0 flex-1">
+            <nav aria-label="Breadcrumb">
+              <ol role="list" className="flex items-center space-x-2">
+                {breadcrumbs.map((breadcrumb, breadcrumbIdx) => (
+                  <li key={breadcrumb.id}>
+                    <div className="flex items-center text-sm">
+                      <Link
+                        href={breadcrumb.href}
+                        className="font-medium text-gray-400 hover:text-gray-200"
+                      >
+                        {breadcrumb.name}
+                      </Link>
+                      {breadcrumbIdx !== breadcrumbs.length - 1 ? (
+                        <svg
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
+                          className="ml-2 h-5 w-5 flex-shrink-0 text-gray-300"
+                        >
+                          <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+                        </svg>
+                      ) : null}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </header> */}
     </>
   );
 }
