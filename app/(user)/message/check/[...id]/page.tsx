@@ -56,7 +56,7 @@ export default async function Example({
               Data de expiração
             </dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {message.expiry_date}
+              {message?.expiry_date}
             </dd>
           </div>
         </dl>
