@@ -1,5 +1,6 @@
 import {
   fetchEndpointMessagesById,
+  refreshMessageDatafromEndpointMessagePage,
   sendMessagefromEndpointPage,
 } from "@/app/lib/actions";
 import clsx from "clsx";
@@ -63,15 +64,32 @@ export default async function Example({
 }) {
   const messages = await fetchEndpointMessagesById(params.id);
   const sendMessageBinded = sendMessagefromEndpointPage.bind(null, params.id);
+  const refreshMessageBinded = refreshMessageDatafromEndpointMessagePage.bind(
+    null,
+    {
+      device_id: params.id[0],
+      sms_id: params.id[1],
+    }
+  );
   return (
     <div>
-      <div className="px-4 sm:px-0">
-        <h3 className="text-base font-semibold leading-7 text-gray-900">
-          Interações
-        </h3>
-        <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-          Veja as mensagens recebidas e enviadas
-        </p>
+      <div className="px-4 sm:px-0 flex justify-between">
+        <div>
+          <h3 className="text-base font-semibold leading-7 text-gray-900">
+            Interações
+          </h3>
+          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+            Veja as mensagens recebidas e enviadas
+          </p>
+        </div>
+        <form action={refreshMessageBinded}>
+          <button
+            type="submit"
+            className="rounded-md px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-600 bg-indigo-500"
+          >
+            Revalidar
+          </button>
+        </form>
       </div>
       <div className="px-4 sm:px-0">
         <ul role="list" className="mt-6 space-y-6">
@@ -95,10 +113,20 @@ export default async function Example({
                       <span className="font-medium text-gray-900">
                         #{activityItem.id}
                       </span>{" "}
-                      {messageStatusDescriptionMapped[
-                        activityItem.status
-                          .description as keyof typeof messageStatusDescriptionMapped
-                      ].toLowerCase()}
+                      <span
+                        className={clsx(
+                          statusStyles[
+                            activityItem?.status
+                              .description as keyof typeof statusStyles
+                          ],
+                          "inline-flex items-center rounded-full px-1.5 py-0.2 text-xs font-medium capitalize"
+                        )}
+                      >
+                        {messageStatusDescriptionMapped[
+                          activityItem.status
+                            .description as keyof typeof messageStatusDescriptionMapped
+                        ].toLowerCase()}
+                      </span>
                     </div>
                     <time
                       dateTime={activityItem.submit_date}
@@ -136,7 +164,7 @@ export default async function Example({
             <div className="absolute inset-x-0 bottom-0 flex justify-end py-2 pl-3 pr-2">
               <button
                 type="submit"
-                className="rounded-md  px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-purple-600 bg-purple-500"
+                className="rounded-md px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-600 bg-indigo-500"
               >
                 Enviar
               </button>
@@ -156,4 +184,14 @@ const messageStatusDescriptionMapped = {
   FAILED: "FRACASSADO",
   EXPIRED: "EXPIRADO",
   CANCELED: "CANCELADO",
+};
+
+const statusStyles = {
+  DELIVERED: "bg-green-100 text-green-800",
+  "IN PROGRESS": "bg-yellow-100 text-yellow-800",
+  "DELIVERY ATTEMPT PENDING": "bg-indigo-100 text-indigo-800",
+  FAILED: "bg-gray-100 text-gray-800",
+  BUFFERED: "bg-orange-100 text-orange-800",
+  CANCELED: "bg-red-100 text-red-800",
+  EXPIRED: "bg-purple-100 text-purple-800",
 };

@@ -2,6 +2,7 @@ import {
   getMessagefromEndpoint,
   refreshMessageDatafromEndpoint,
 } from "@/app/lib/actions";
+import clsx from "clsx";
 
 export default async function Example({
   params,
@@ -32,9 +33,35 @@ export default async function Example({
               Status
             </dt>
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {message?.status.description}
+              <span
+                className={clsx(
+                  statusStyles[
+                    message?.status.description as keyof typeof statusStyles
+                  ],
+                  "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize"
+                )}
+              >
+                {message?.status.description}
+              </span>
             </dd>
           </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm font-medium leading-6 text-gray-900">
+              ICCID
+            </dt>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {message?.iccid}
+            </dd>
+          </div>
+          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm font-medium leading-6 text-gray-900">
+              Endpoint ID
+            </dt>
+            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              {message?.endpoint_id}
+            </dd>
+          </div>
+
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">
               Data de submissão
@@ -75,3 +102,13 @@ export default async function Example({
     </div>
   );
 }
+
+const statusStyles = {
+  DELIVERED: "bg-green-100 text-green-800",
+  "IN PROGRESS": "bg-yellow-100 text-yellow-800",
+  "DELIVERY ATTEMPT PENDING": "bg-indigo-100 text-indigo-800",
+  FAILED: "bg-gray-100 text-gray-800",
+  BUFFERED: "bg-orange-100 text-orange-800",
+  CANCELED: "bg-red-100 text-red-800",
+  EXPIRED: "bg-purple-100 text-purple-800",
+};

@@ -109,7 +109,7 @@ export function EndpointsList({ endpoints }: { endpoints: Endpoint[] }) {
                   </td>
                   <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
                     <Link
-                      href={`/endpoint/${endpoint.id}`}
+                      href={`/endpoint/${endpoint.id}/message`}
                       className="text-indigo-600 hover:text-indigo-900"
                     >
                       Visualizar

@@ -88,8 +88,13 @@ export async function getMessagefromEndpoint(device_id: string, sms_id: string) 
 }
 
 export async function refreshMessageDatafromEndpoint({ device_id, sms_id }: { device_id: string, sms_id: string }) {
-  await new Promise<void>((resolve) => setTimeout(resolve, 2000))
+  // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
   revalidatePath(`/message/check/${device_id}/${sms_id}`)
+}
+
+export async function refreshMessageDatafromEndpointMessagePage({ device_id, sms_id }: { device_id: string, sms_id: string }) {
+  // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
+  revalidatePath(`/endpoint/${device_id}/message`)
 }
 
 //MOCK
@@ -1340,10 +1345,7 @@ const messages: Message[] = [
     "dcs": 0,
     "pid": 0,
     "source_address": 1234567890,
-    "endpoint": {
-      "id": 166,
-      "name": "Your Endpoint"
-    },
+    "endpoint_id": "4564654",
     "sim_id": 625,
     "iccid": 8988303000000001000,
     "msisdn": "883XXXXXXXXXXXX",
@@ -1377,10 +1379,7 @@ const messages: Message[] = [
     "dcs": 0,
     "pid": 0,
     "source_address": 1234,
-    "endpoint": {
-      "id": 166,
-      "name": "Your Endpoint"
-    },
+    "endpoint_id": "4564654",
     "sim_id": 625,
     "iccid": 8988303000000001000,
     "msisdn": "883XXXXXXXXXXXX",
@@ -1414,10 +1413,7 @@ const messages: Message[] = [
     "dcs": 0,
     "pid": 0,
     "source_address": 1234,
-    "endpoint": {
-      "id": 166,
-      "name": "Your Endpoint"
-    },
+    "endpoint_id": "4564654",
     "sim_id": 625,
     "iccid": 8988303000000001000,
     "msisdn": "883XXXXXXXXXXXX",
@@ -1451,10 +1447,7 @@ const messages: Message[] = [
     "dcs": 0,
     "pid": 0,
     "source_address": 1234,
-    "endpoint": {
-      "id": 166,
-      "name": "Your Endpoint"
-    },
+    "endpoint_id": "4564654",
     "sim_id": 625,
     "iccid": 8988303000000001000,
     "msisdn": "883XXXXXXXXXXXX",
@@ -1488,10 +1481,7 @@ const messages: Message[] = [
     "dcs": 0,
     "pid": 0,
     "source_address": 1234,
-    "endpoint": {
-      "id": 166,
-      "name": "Your Endpoint"
-    },
+    "endpoint_id": "4564654",
     "sim_id": 625,
     "iccid": 8988303000000001000,
     "msisdn": "883XXXXXXXXXXXX",

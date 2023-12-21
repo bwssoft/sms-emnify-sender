@@ -11,7 +11,7 @@ export default async function Example() {
     <>
       <div className="min-h-full">
         <div className="flex flex-col">
-          <EndpointsPinned endpoints={endpoints} />
+          <EndpointsPinned endpoints={endpoints.slice(0, 4)} />
 
           <main className="flex-1">
             <EndpointsList endpoints={endpoints} />
