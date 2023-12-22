@@ -63,7 +63,7 @@ export function EndpointsPinned({ endpoints }: { endpoints: Endpoint[] }) {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              href={`/endpoint/${endpoint.id}/message`}
+                              href={`/endpoint/${endpoint.id}/info`}
                               className={clsx(
                                 active
                                   ? "bg-gray-100 text-gray-900"
@@ -80,7 +80,7 @@ export function EndpointsPinned({ endpoints }: { endpoints: Endpoint[] }) {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              href="#"
+                              href={`/endpoint/${endpoint.id}/message`}
                               className={clsx(
                                 active
                                   ? "bg-gray-100 text-gray-900"

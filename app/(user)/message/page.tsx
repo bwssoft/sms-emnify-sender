@@ -3,7 +3,8 @@ import {
   fetchEndpointsFilteredByName,
   sendMessagefromMessagePage,
 } from "@/app/lib/actions";
-import EndpointsSearchBar from "@/app/ui/endpoint-search";
+import EndpointsSearchBar from "@/app/ui/endpoint-search-bar";
+import { Breadcrumbs } from "@/app/ui/breadcrumbs";
 
 export default async function Example({
   searchParams,
@@ -18,6 +19,15 @@ export default async function Example({
   return (
     <div className="min-h-full">
       <div className="flex flex-col">
+        <Breadcrumbs
+          root="/"
+          data={[
+            {
+              href: "/message",
+              name: "Mensagem",
+            },
+          ]}
+        />
         <form
           className="px-4 py-4 sm:px-6 lg:px-8"
           action={sendMessagefromMessagePage}
