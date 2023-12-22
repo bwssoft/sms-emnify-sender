@@ -31,12 +31,13 @@ export async function listSimcard(): Promise<Simcard[] | undefined> {
   }
 }
 
-export async function listFilteredSimcardByEndpointName({ name }: { name: string }): Promise<Simcard[]> {
+export async function listFilteredSimcardByEndpointName({ value, type }: { value: string, type: string }): Promise<Simcard[]> {
+  console.log([`emnify.${type}`])
   const session = await auth()
   try {
     const client = await (await clientPromise).db("sms-emnify-sender").collection("simcard").aggregate([{
       $match: {
-        "emnify.endpoint_name": { $regex: name, $options: "i" },
+        [`emnify.${type}`]: { $regex: value, $options: "i" },
         client_uuid: session?.user.uuid
       },
     }, {
