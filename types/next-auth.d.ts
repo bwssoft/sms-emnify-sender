@@ -4,10 +4,12 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: DefaultSession["user"] & {
       emnify_token: string
+      uuid: string
     }
   }
 
   interface User extends DefaultUser {
     emnify_token: string
+    uuid: string
   }
 }

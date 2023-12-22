@@ -14,7 +14,7 @@ export default async function Example({
   };
 }) {
   const query = searchParams?.query || "";
-  const endpoints = await fetchEndpointsFilteredByName(query);
+  const simcards = await fetchEndpointsFilteredByName(query);
 
   return (
     <div className="min-h-full">
@@ -46,7 +46,7 @@ export default async function Example({
               <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                 <div className="col-span-full">
                   <EndpointsSearchBar placeholder="Pesquise pelo nome do dispositivo..." />
-                  <EndpointsInput endpoints={endpoints} />
+                  <EndpointsInput simcards={simcards.slice(0, 5)} />
                 </div>
               </div>
             </div>

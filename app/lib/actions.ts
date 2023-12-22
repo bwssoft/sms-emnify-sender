@@ -1,15 +1,20 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { Connectivity, Endpoint, Message, Usage, authenticate, getEndpointMessage, listEndpointById, listEndpointConnectivityById, listEndpointMessagesById, listEndpointUsageById, listEndpoints, listEndpointsFilteredByName, sendEndpointMessage } from "./emnify"
+import * as emnify from "./emnify"
+import * as repository from "./repository"
 import { redirect } from "next/navigation"
 import { auth, signIn, signOut } from "@/auth"
 
 export async function userAuthenticate(formData: FormData) {
-  const { token } = Object.fromEntries(formData.entries())
-  const result = await authenticate({ token: token as string })
+  const { username, password } = Object.fromEntries(formData.entries())
+  const result = await emnify.authenticate({ token: process.env.BWS_EMNIFY_AUTH_TOKEN })
   if (!result) return
-  await signIn("credentials", { token: result.token })
+  await signIn("credentials", {
+    token: result.token,
+    username,
+    password
+  })
 }
 
 
@@ -22,44 +27,45 @@ export async function userLogout() {
 }
 
 export async function fetchEndpoints() {
-  return await listEndpoints()
+  return await emnify.listEndpoints()
   // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
   // return endpoints
 }
 
 export async function fetchEndpointById(id: string) {
-  return await listEndpointById({ id })
+  return await emnify.listEndpointById({ id })
   // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
   // return endpoints[0]
 }
 
 export async function fetchEndpointConnectivityById(id: string) {
-  return await listEndpointConnectivityById({ id })
+  return await emnify.listEndpointConnectivityById({ id })
   // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
   // return connectivity
 }
 
 export async function fetchEndpointUsageById(id: string) {
-  return await listEndpointUsageById({ id })
+  return await emnify.listEndpointUsageById({ id })
   // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
   // return usage
 }
 
 export async function fetchEndpointMessagesById(id: string) {
-  return await listEndpointMessagesById({ id })
+  return await emnify.listEndpointMessagesById({ id })
   // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
   // return messages
 }
 
 export async function fetchEndpointsFilteredByName(name: string) {
-  return await listEndpointsFilteredByName({ name })
+  // return await emnify.listEndpointsFilteredByName({ name })
+  return await repository.listFilteredSimcardByEndpointName({ name })
   // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
   // return endpoints.filter(el => el.name.toLocaleLowerCase().includes(name.toLocaleLowerCase()))
 }
 
 export async function sendMessagefromMessagePage(formData: FormData) {
   const { device_id, payload } = Object.fromEntries(formData.entries())
-  const sms = await sendEndpointMessage({
+  const sms = await emnify.sendEndpointMessage({
     device_id: device_id as string,
     payload: payload as string
   })
@@ -69,7 +75,7 @@ export async function sendMessagefromMessagePage(formData: FormData) {
 
 export async function sendMessagefromEndpointPage(device_id: string, formData: FormData) {
   const { payload } = Object.fromEntries(formData.entries())
-  const sms = await sendEndpointMessage({
+  const sms = await emnify.sendEndpointMessage({
     device_id,
     payload: payload as string
   })
@@ -79,7 +85,7 @@ export async function sendMessagefromEndpointPage(device_id: string, formData: F
 }
 
 export async function getMessagefromEndpoint(device_id: string, sms_id: string) {
-  return await getEndpointMessage({
+  return await emnify.getEndpointMessage({
     device_id,
     sms_id
   })
@@ -98,7 +104,7 @@ export async function refreshMessageDatafromEndpointMessagePage({ device_id, sms
 }
 
 //MOCK
-const endpoints: Endpoint[] = [
+const endpoints: emnify.Endpoint[] = [
   {
     id: 1,
     name: "arduino01",
@@ -211,7 +217,7 @@ const endpoints: Endpoint[] = [
   },
 ]
 
-const connectivity: Connectivity = {
+const connectivity: emnify.Connectivity = {
   "status": {
     "description": "ONLINE"
   },
@@ -279,7 +285,7 @@ const connectivity: Connectivity = {
   ]
 }
 
-const usage: Usage = {
+const usage: emnify.Usage = {
   "last_month": {
     "data": {
       "endpoint_id": 166,
@@ -1332,7 +1338,7 @@ const usage: Usage = {
   }
 }
 
-const messages: Message[] = [
+const messages: emnify.Message[] = [
   {
     "submit_date": "2019-10-05T13:56:59.000Z",
     "delivery_date": "2019-10-05T13:56:59.000Z",

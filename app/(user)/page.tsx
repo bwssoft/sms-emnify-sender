@@ -1,5 +1,7 @@
 import { Bars4Icon, CpuChipIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
+import data from "@/public/simcards/emnify_saitro_simcard_processed_with_client.json";
+import { v4 as uuidv4 } from "uuid";
+import * as fs from "fs";
 
 const links = [
   {
@@ -18,6 +20,20 @@ const links = [
   },
 ];
 export default function Example() {
+  const _data = data.map((d) => ({ ...d, uuid: uuidv4() }));
+  const dados = JSON.stringify(_data);
+
+  // Escrever a string JSON em um arquivo
+  fs.writeFile(
+    "emnify_saitro_simcard_processed_with_client.json",
+    dados,
+    (err) => {
+      if (err) {
+        throw err;
+      }
+      console.log("Os dados JSON foram salvos.");
+    }
+  );
   return (
     <>
       <div className="min-h-full">

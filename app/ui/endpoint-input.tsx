@@ -2,15 +2,11 @@
 import { RadioGroup } from "@headlessui/react";
 import { useState } from "react";
 import clsx from "clsx";
-import { Endpoint } from "../lib/emnify";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { Simcard } from "../lib/definitions";
 
-export default function EndpointsInput({
-  endpoints,
-}: {
-  endpoints: Endpoint[];
-}) {
-  const [selected, setSelected] = useState<Endpoint>();
+export default function EndpointsInput({ simcards }: { simcards: Simcard[] }) {
+  const [selected, setSelected] = useState<Simcard>();
 
   return (
     <RadioGroup value={selected} onChange={setSelected} name="device_id">
@@ -18,14 +14,14 @@ export default function EndpointsInput({
         Endpoints selection
       </RadioGroup.Label>
 
-      {endpoints?.map((endpoint, endpointId) => (
+      {simcards?.map((simcard, simcardId) => (
         <RadioGroup.Option
-          key={endpoint.name}
-          value={endpoint.id}
+          key={simcard.emnify.endpoint_name}
+          value={simcard.emnify.endpoint_id}
           className={({ checked }) =>
             clsx(
-              endpointId === 0 ? "rounded-tl-md rounded-tr-md" : "",
-              endpointId === endpoints.length - 1
+              simcardId === 0 ? "rounded-tl-md rounded-tr-md" : "",
+              simcardId === simcards.length - 1
                 ? "rounded-bl-md rounded-br-md"
                 : "",
               checked
@@ -41,10 +37,10 @@ export default function EndpointsInput({
                 <div className="min-w-0 flex-auto">
                   <p className="text-sm font-semibold leading-6 text-gray-900">
                     <span className="absolute inset-x-0 -top-px bottom-0" />
-                    {endpoint.name}
+                    {simcard.emnify.endpoint_name}
                   </p>
                   <p className="mt-1 text-xs leading-5 text-gray-500">
-                    {endpoint.imei}
+                    {simcard.emnify.endpoint_imei}
                   </p>
                 </div>
               </div>

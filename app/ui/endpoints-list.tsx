@@ -1,9 +1,9 @@
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
-import { Endpoint } from "../lib/emnify";
 import Link from "next/link";
+import { Simcard } from "../lib/definitions";
 
-export function EndpointsList({ endpoints }: { endpoints: Endpoint[] }) {
+export function EndpointsList({ simcards }: { simcards: Simcard[] }) {
   return (
     <>
       {/* Projects list (only on smallest breakpoint) */}
@@ -15,8 +15,8 @@ export function EndpointsList({ endpoints }: { endpoints: Endpoint[] }) {
           role="list"
           className="mt-3 divide-y divide-gray-100 border-t border-gray-200"
         >
-          {endpoints.map((endpoint) => (
-            <li key={endpoint.id}>
+          {simcards.map((simcard) => (
+            <li key={simcard?.uuid ?? "1"}>
               <a
                 href="#"
                 className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6"
@@ -30,9 +30,9 @@ export function EndpointsList({ endpoints }: { endpoints: Endpoint[] }) {
                     aria-hidden="true"
                   />
                   <span className="truncate text-sm font-medium leading-6">
-                    {endpoint.name}{" "}
+                    {simcard.emnify.endpoint_name}{" "}
                     <span className="truncate font-normal text-gray-500">
-                      {endpoint.imei}
+                      {simcard.emnify.endpoint_imei}
                     </span>
                   </span>
                 </span>
@@ -64,12 +64,12 @@ export function EndpointsList({ endpoints }: { endpoints: Endpoint[] }) {
                 >
                   ICCID
                 </th>
-                <th
+                {/* <th
                   className="hidden border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900 md:table-cell"
                   scope="col"
                 >
                   Atualizado às
-                </th>
+                </th> */}
                 <th
                   className="border-b border-gray-200 bg-gray-50 py-3 pr-6 text-right text-sm font-semibold text-gray-900"
                   scope="col"
@@ -77,8 +77,8 @@ export function EndpointsList({ endpoints }: { endpoints: Endpoint[] }) {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 bg-white">
-              {endpoints.map((endpoint) => (
-                <tr key={endpoint.id}>
+              {simcards.map((simcard) => (
+                <tr key={simcard?.uuid ?? "1"}>
                   <td className="w-full max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
                     <div className="flex items-center space-x-3 lg:pl-2">
                       <div
@@ -89,27 +89,27 @@ export function EndpointsList({ endpoints }: { endpoints: Endpoint[] }) {
                         aria-hidden="true"
                       />
                       <Link
-                        href={`/endpoint/${endpoint.id}/info`}
+                        href={`/endpoint/${simcard.emnify.endpoint_id}/info`}
                         className="truncate hover:text-gray-600"
                       >
                         <span>
-                          {endpoint.name}{" "}
+                          {simcard.emnify.endpoint_name}{" "}
                           <span className="font-normal text-gray-500">
-                            {endpoint.imei}
+                            {simcard.emnify.endpoint_imei}
                           </span>
                         </span>
                       </Link>
                     </div>
                   </td>
                   <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-500 md:table-cell">
-                    {endpoint?.sim?.iccid}
+                    {simcard.emnify?.sim_iccid}
                   </td>
-                  <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-500 md:table-cell">
-                    {endpoint.last_updated}
-                  </td>
+                  {/* <td className="hidden whitespace-nowrap px-6 py-3 text-right text-sm text-gray-500 md:table-cell">
+                    {simcard.last_updated}
+                  </td> */}
                   <td className="whitespace-nowrap px-6 py-3 text-right text-sm font-medium">
                     <Link
-                      href={`/endpoint/${endpoint.id}/message`}
+                      href={`/endpoint/${simcard.emnify.endpoint_id}/message`}
                       className="text-indigo-600 hover:text-indigo-900"
                     >
                       Visualizar

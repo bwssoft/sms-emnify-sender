@@ -12,7 +12,7 @@ export default async function Example({
   };
 }) {
   const query = searchParams?.query || "";
-  const endpoints = await fetchEndpointsFilteredByName(query);
+  const simcards = await fetchEndpointsFilteredByName(query);
 
   return (
     <>
@@ -29,10 +29,10 @@ export default async function Example({
               },
             ]}
           />
-          <EndpointsPinned endpoints={endpoints.slice(0, 4)} />
+          <EndpointsPinned simcards={simcards.slice(0, 4)} />
 
           <main className="flex-1">
-            <EndpointsList endpoints={endpoints} />
+            <EndpointsList simcards={simcards} />
           </main>
         </div>
       </div>
