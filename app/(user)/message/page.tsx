@@ -11,10 +11,12 @@ export default async function Example({
 }: {
   searchParams?: {
     query?: string;
+    type?: string;
   };
 }) {
   const query = searchParams?.query || "";
-  const simcards = await fetchEndpointsFilteredByName(query);
+  const type = searchParams?.type || undefined;
+  const simcards = await fetchEndpointsFilteredByName(query, type);
 
   return (
     <div className="min-h-full">
