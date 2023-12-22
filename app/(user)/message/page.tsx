@@ -3,7 +3,8 @@ import {
   fetchEndpointsFilteredByName,
   sendMessagefromMessagePage,
 } from "@/app/lib/actions";
-import EndpointsSearchBar from "@/app/ui/endpoint-search";
+import EndpointsSearchBar from "@/app/ui/endpoint-search-bar";
+import { Breadcrumbs } from "@/app/ui/breadcrumbs";
 
 export default async function Example({
   searchParams,
@@ -13,11 +14,20 @@ export default async function Example({
   };
 }) {
   const query = searchParams?.query || "";
-  const endpoints = await fetchEndpointsFilteredByName(query);
+  const simcards = await fetchEndpointsFilteredByName(query);
 
   return (
     <div className="min-h-full">
       <div className="flex flex-col">
+        <Breadcrumbs
+          root="/"
+          data={[
+            {
+              href: "/message",
+              name: "Mensagem",
+            },
+          ]}
+        />
         <form
           className="px-4 py-4 sm:px-6 lg:px-8"
           action={sendMessagefromMessagePage}
@@ -36,7 +46,7 @@ export default async function Example({
               <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                 <div className="col-span-full">
                   <EndpointsSearchBar placeholder="Pesquise pelo nome do dispositivo..." />
-                  <EndpointsInput endpoints={endpoints} />
+                  <EndpointsInput simcards={simcards.slice(0, 5)} />
                 </div>
               </div>
             </div>

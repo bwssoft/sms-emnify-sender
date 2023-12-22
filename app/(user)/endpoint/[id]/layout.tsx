@@ -1,9 +1,10 @@
 "use client";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Breadcrumbs } from "@/app/ui/breadcrumbs";
 
 export default function Layout({
   children,
@@ -38,8 +39,13 @@ export default function Layout({
     [pathname]
   );
 
+  const breadbrumbs = useMemo(() => {
+    return breadBrumbsByPathname(params.id, pathname);
+  }, [pathname, params.id]);
+
   return (
     <div className="min-h-full">
+      <Breadcrumbs root="/" data={breadbrumbs} />
       <div>
         <main className="pb-16">
           <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -95,3 +101,55 @@ export default function Layout({
     </div>
   );
 }
+
+const breadBrumbsByPathname = (id: string, pathname: string) => {
+  if (pathname.endsWith("info")) {
+    return [
+      {
+        href: "/endpoint",
+        name: "Endpoints",
+      },
+      {
+        href: `/endpoint/${id}/info`,
+        name: "Informações",
+      },
+    ];
+  }
+  if (pathname.endsWith("message")) {
+    return [
+      {
+        href: "/endpoint",
+        name: "Endpoints",
+      },
+      {
+        href: `/endpoint/${id}/message`,
+        name: "Mensagem",
+      },
+    ];
+  }
+  if (pathname.endsWith("usage")) {
+    return [
+      {
+        href: "/endpoint",
+        name: "Endpoints",
+      },
+      {
+        href: `/endpoint/${id}/usage`,
+        name: "Usabilidade e custos",
+      },
+    ];
+  }
+  if (pathname.endsWith("connectivity")) {
+    return [
+      {
+        href: "/endpoint",
+        name: "Endpoints",
+      },
+      {
+        href: `/endpoint/${id}/connectivity`,
+        name: "Conectividade",
+      },
+    ];
+  }
+  return [];
+};

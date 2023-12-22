@@ -48,7 +48,7 @@ type ListEndpointsOutput = Endpoint[]
 export async function listEndpoints(): Promise<ListEndpointsOutput> {
   const session = await auth()
   return axios
-    .get(`${process.env.NEXT_PUBLIC_EMNIFY_BASE_URL}/endpoint`, {
+    .get(`${process.env.NEXT_PUBLIC_EMNIFY_BASE_URL}/endpoint?per_page=20`, {
       headers: {
         "Content-Type": `application/json`,
         Authorization: `Bearer ${session?.user.emnify_token}`,
@@ -78,7 +78,7 @@ type ListEndpointsByNameOutput = Endpoint[]
 export async function listEndpointsFilteredByName({ name }: ListEndpointsByNameInput): Promise<ListEndpointsByNameOutput> {
   const session = await auth()
   return axios
-    .get(`${process.env.NEXT_PUBLIC_EMNIFY_BASE_URL}/endpoint?q=name%3A${name}`, {
+    .get(`${process.env.NEXT_PUBLIC_EMNIFY_BASE_URL}/endpoint?q=name%3A${name}&per_page=5`, {
       headers: {
         "Content-Type": `application/json`,
         Authorization: `Bearer ${session?.user.emnify_token}`,
@@ -420,10 +420,11 @@ export type Message = {
   "dcs": number //0,
   "pid": number //0,
   "source_address": number //1234567890,
-  "endpoint": {
-    "id": number // 166,
-    "name": string // "Your Endpoint"
-  },
+  // "endpoint": {
+  //   "id": number // 166,
+  //   "name": string // "Your Endpoint"
+  // },
+  "endpoint_id": string
   "sim_id": number // 625,
   "iccid": number //8988303000000001000,
   "msisdn": string //"883XXXXXXXXXXXX",
