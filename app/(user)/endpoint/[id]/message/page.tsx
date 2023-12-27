@@ -3,6 +3,7 @@ import {
   refreshMessageDatafromEndpointMessagePage,
   sendMessagefromEndpointPage,
 } from "@/app/lib/actions";
+import { Button } from "@/app/ui/button";
 import clsx from "clsx";
 
 const activity = [
@@ -83,12 +84,12 @@ export default async function Example({
           </p>
         </div>
         <form action={refreshMessageBinded}>
-          <button
+          <Button
             type="submit"
             className="rounded-md px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-600 bg-indigo-500"
           >
             Revalidar
-          </button>
+          </Button>
         </form>
       </div>
       <div className="px-4 sm:px-0">
@@ -162,12 +163,12 @@ export default async function Example({
             </div>
 
             <div className="absolute inset-x-0 bottom-0 flex justify-end py-2 pl-3 pr-2">
-              <button
+              <Button
                 type="submit"
                 className="rounded-md px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-600 bg-indigo-500"
               >
                 Enviar
-              </button>
+              </Button>
             </div>
           </form>
         </div>
