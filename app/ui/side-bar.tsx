@@ -1,16 +1,16 @@
 "use client";
-import { Fragment, useCallback, useState } from "react";
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
+import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import {
   Bars4Icon,
+  BookOpenIcon,
   CpuChipIcon,
-  HomeIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { ArrowLeftIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Fragment, useCallback, useState } from "react";
 import { userLogout } from "../lib/actions";
 
 export function SideBar() {
@@ -413,6 +413,11 @@ const navigation = [
     name: "Mensagem",
     href: "/message",
     icon: Bars4Icon,
+  },
+  {
+    name: "Documentação",
+    href: "/docs",
+    icon: BookOpenIcon,
   },
 ];
 // const teams = [

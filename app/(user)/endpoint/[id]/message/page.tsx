@@ -157,7 +157,7 @@ export default async function Example({
                 name="payload"
                 id="payload"
                 className="block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                placeholder="Escreva sua menasgem..."
+                placeholder="Escreva sua mensagem..."
                 defaultValue={""}
               />
             </div>

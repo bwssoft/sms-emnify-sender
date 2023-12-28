@@ -1,18 +1,17 @@
 "use client";
-import { Fragment, useMemo } from "react";
-import { Menu, Transition } from "@headlessui/react";
-import { Bars3CenterLeftIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import clsx from "clsx";
+import { Bars3CenterLeftIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { useMemo } from "react";
 
 export function Navbar() {
   const pathname = usePathname();
+
   const titleMapped = useMemo(() => {
     if (pathname.includes("/endpoint")) return "Endpoints";
+    if (pathname.includes("/docs")) return "Documentação";
     if (pathname.includes("/message") && !pathname.includes("/endpoint"))
-      return "Messagens";
+      return "Mensagens";
     if (pathname.includes("/")) return "Dashboard";
 
     return pathname;

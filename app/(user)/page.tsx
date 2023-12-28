@@ -1,11 +1,8 @@
 import { Bars4Icon, CpuChipIcon } from "@heroicons/react/24/outline";
-import data from "@/public/simcards/emnify_saitro_simcard_processed_with_client.json";
-import { v4 as uuidv4 } from "uuid";
-import * as fs from "fs";
 
 const links = [
   {
-    name: "Messagens",
+    name: "Mensagens",
     href: "/message",
     description:
       "Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non. Cras aliquet purus dui laoreet diam sed lacus, fames.",

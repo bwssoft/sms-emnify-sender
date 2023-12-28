@@ -1,11 +1,11 @@
-import EndpointsInput from "@/app/ui/endpoint-input";
 import {
   fetchEndpointsFilteredByName,
   sendMessagefromMessagePage,
 } from "@/app/lib/actions";
-import EndpointsSearchBar from "@/app/ui/endpoint-search-bar";
 import { Breadcrumbs } from "@/app/ui/breadcrumbs";
 import { Button } from "@/app/ui/button";
+import EndpointsInput from "@/app/ui/endpoint-input";
+import EndpointsSearchBar from "@/app/ui/endpoint-search-bar";
 
 export default async function Example({
   searchParams,
@@ -76,7 +76,7 @@ export default async function Example({
                       name="payload"
                       id="payload"
                       className="block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Escreva sua menasgem..."
+                      placeholder="Escreva sua mensagem..."
                       defaultValue={""}
                     />
                   </div>
