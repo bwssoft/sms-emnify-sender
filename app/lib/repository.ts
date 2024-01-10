@@ -48,3 +48,26 @@ export async function listFilteredSimcardByEndpointName({ value, type }: { value
     throw new Error('Failed to list simcard.');
   }
 }
+
+export async function updateUser(data: Omit<Partial<Client>, 'uuid'>) {
+  const session = await auth();
+
+  try {
+    const client = await 
+      (await clientPromise)
+      .db("sms-emnify-sender")
+      .collection("client")
+      .updateOne(
+        {
+          uuid: session?.user.uuid,
+        }, 
+        {
+          $set: data
+        }
+      )
+
+    return client as unknown as Client;
+  } catch {
+    throw new Error('Cant update user');
+  }
+}
