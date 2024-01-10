@@ -28,6 +28,7 @@ export const authConfig = {
           emnify_token: user.emnify_token,
           uuid: user.uuid,
           name: user.name,
+          role: user.role,
         }
       }
       return token
@@ -36,6 +37,8 @@ export const authConfig = {
       // @ts-ignore
       session.user.emnify_token = token.emnify_token
       session.user.name = token.name
+      // @ts-ignore
+      session.user.role = token.role
       // @ts-ignore
       session.user.uuid = token.uuid
       return session
