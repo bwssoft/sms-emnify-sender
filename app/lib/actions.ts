@@ -58,8 +58,6 @@ export async function fetchEndpointMessagesById(id: string) {
 
 export async function fetchEndpointsFilteredByName(value: string, type?: string) {
   // return await emnify.listEndpointsFilteredByName({ name })
-  console.log('type', type ?? "endpoint_name")
-  console.log('typeof', typeof type)
   return await repository.listFilteredSimcardByEndpointName({ value, type: type ?? "endpoint_name" })
   // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
   // return endpoints.filter(el => el.name.toLocaleLowerCase().includes(name.toLocaleLowerCase()))

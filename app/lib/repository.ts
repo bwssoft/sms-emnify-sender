@@ -32,7 +32,6 @@ export async function listSimcard(): Promise<Simcard[] | undefined> {
 }
 
 export async function listFilteredSimcardByEndpointName({ value, type }: { value: string, type: string }): Promise<Simcard[]> {
-  console.log([`emnify.${type}`])
   const session = await auth()
   try {
     const client = await (await clientPromise).db("sms-emnify-sender").collection("simcard").aggregate([{
