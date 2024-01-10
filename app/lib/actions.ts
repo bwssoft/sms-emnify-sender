@@ -19,6 +19,13 @@ export async function userAuthenticate(formData: FormData) {
   })
 }
 
+export async function isAdm(): Promise<boolean> {
+  const data = await auth()
+  if(!data){
+      return false
+  }
+  return data.user.role ===  'adm'
+}
 
 export async function userLogout() {
   try {

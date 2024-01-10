@@ -1,10 +1,11 @@
 "use client";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Breadcrumbs } from "@/app/ui/breadcrumbs";
+import { isAdm } from "@/app/lib/actions";
 
 export default function Layout({
   children,
@@ -15,22 +16,31 @@ export default function Layout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [tabs, setTabs] = useState([
+  { name: "Informações", href: `/endpoint/${params.id}/info` },
+  { name: "Conectividade", href: `/endpoint/${params.id}/connectivity` },
+  {
+    name: "Mensagens",
+    href: `/endpoint/${params.id}/message`,
+  },])
 
-  const tabs: {
-    name: string;
-    href: string;
-  }[] = [
-    { name: "Informações", href: `/endpoint/${params.id}/info` },
-    { name: "Conectividade", href: `/endpoint/${params.id}/connectivity` },
-    {
-      name: "Uso e estastisticas de custo",
-      href: `/endpoint/${params.id}/usage`,
-    },
-    {
-      name: "Mensagens",
-      href: `/endpoint/${params.id}/message`,
-    },
-  ];
+  useEffect(()=>{
+    isAdm().then((value)=>{
+      if(value){
+        setTabs([
+          { name: "Informações", href: `/endpoint/${params.id}/info` },
+          { name: "Conectividade", href: `/endpoint/${params.id}/connectivity` },
+          {
+            name: "Uso e estastisticas de custo",
+            href: `/endpoint/${params.id}/usage`,
+          },
+          {
+            name: "Mensagens",
+            href: `/endpoint/${params.id}/message`,
+          },])
+      }
+    })
+  },[])
 
   const isOptionInCurrentPathname = useCallback(
     (href: string) => {
