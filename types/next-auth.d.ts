@@ -5,11 +5,13 @@ declare module "next-auth" {
     user: DefaultSession["user"] & {
       emnify_token: string
       uuid: string
+      role: string
     }
   }
 
   interface User extends DefaultUser {
     emnify_token: string
     uuid: string
+    role: string
   }
 }

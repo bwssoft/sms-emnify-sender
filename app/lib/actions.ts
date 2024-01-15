@@ -6,6 +6,8 @@ import * as repository from "./repository"
 import { redirect } from "next/navigation"
 import { auth, signIn, signOut } from "@/auth"
 
+import bcrypt from "bcrypt"
+
 export async function userAuthenticate(formData: FormData) {
   const { username, password } = Object.fromEntries(formData.entries())
   const result = await emnify.authenticate({ token: process.env.BWS_EMNIFY_AUTH_TOKEN })
@@ -24,6 +26,14 @@ export async function userLogout() {
   } catch (error) {
     throw error;
   }
+}
+
+export async function changeUserPassword(formData: FormData) {
+  const { new_password } = Object.fromEntries(formData.entries())
+  const hashPassword = await bcrypt.hash(new_password as string, 10)
+  return await repository.updateUser({
+    password: hashPassword
+  })
 }
 
 export async function fetchEndpoints() {
@@ -58,8 +68,6 @@ export async function fetchEndpointMessagesById(id: string) {
 
 export async function fetchEndpointsFilteredByName(value: string, type?: string) {
   // return await emnify.listEndpointsFilteredByName({ name })
-  console.log('type', type ?? "endpoint_name")
-  console.log('typeof', typeof type)
   return await repository.listFilteredSimcardByEndpointName({ value, type: type ?? "endpoint_name" })
   // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
   // return endpoints.filter(el => el.name.toLocaleLowerCase().includes(name.toLocaleLowerCase()))

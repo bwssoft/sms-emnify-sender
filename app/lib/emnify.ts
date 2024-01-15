@@ -255,7 +255,6 @@ export async function sendEndpointMessage({
       return undefined
     })
     .catch((error) => {
-      console.log('error', error)
       if (error instanceof AxiosError) return
       throw new Error((error as Error).name)
     });

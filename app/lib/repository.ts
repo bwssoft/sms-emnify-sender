@@ -32,7 +32,6 @@ export async function listSimcard(): Promise<Simcard[] | undefined> {
 }
 
 export async function listFilteredSimcardByEndpointName({ value, type }: { value: string, type: string }): Promise<Simcard[]> {
-  console.log([`emnify.${type}`])
   const session = await auth()
   try {
     const client = await (await clientPromise).db("sms-emnify-sender").collection("simcard").aggregate([{
@@ -46,5 +45,28 @@ export async function listFilteredSimcardByEndpointName({ value, type }: { value
     return client as unknown as Simcard[];
   } catch (error) {
     throw new Error('Failed to list simcard.');
+  }
+}
+
+export async function updateUser(data: Omit<Partial<Client>, 'uuid'>) {
+  const session = await auth();
+
+  try {
+    const client = await 
+      (await clientPromise)
+      .db("sms-emnify-sender")
+      .collection("client")
+      .updateOne(
+        {
+          uuid: session?.user.uuid,
+        }, 
+        {
+          $set: data
+        }
+      )
+
+    return client as unknown as Client;
+  } catch {
+    throw new Error('Cant update user');
   }
 }

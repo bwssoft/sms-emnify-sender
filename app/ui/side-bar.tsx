@@ -6,6 +6,7 @@ import {
   BookOpenIcon,
   CpuChipIcon,
   XMarkIcon,
+  UserIcon
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Link from "next/link";
@@ -417,6 +418,11 @@ const navigation = [
     href: "/docs",
     icon: BookOpenIcon,
   },
+  {
+    name: 'Meu usuário',
+    href: '/profile',
+    icon: UserIcon
+  }
 ];
 // const teams = [
 //   { name: "Engineering", href: "#", bgColorClass: "bg-indigo-500" },
