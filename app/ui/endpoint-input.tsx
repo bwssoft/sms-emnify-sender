@@ -9,6 +9,7 @@ import { Button } from "./button";
 import { useDebouncedCallback } from "use-debounce";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { XCircleIcon, NoSymbolIcon, ClockIcon, Square3Stack3DIcon, PaperAirplaneIcon, ExclamationCircleIcon } from '@heroicons/react/24/outline'
+import EndpointsSearchBar from "./endpoint-search-bar";
 
 export default function EndpointsInput({ simcards }: { simcards: Simcard[] }) {
   const [selected, setSelected] = useState<Simcard>();
@@ -56,17 +57,16 @@ export default function EndpointsInput({ simcards }: { simcards: Simcard[] }) {
     }
   } 
 
-
-
   return (
     <div className="flex min-h-[91vh]">
       <RadioGroup className={'w-fit border-gray-200 border-r-[1px]'} value={selected} onChange={(e) => {setSelected(e), handleSearch(e.emnify?.endpoint_id)}} name="device_id">
-      <div className="flex col-span-1 flex-col my-3 justify-start items-start gap-2 flex-grow ">
+      <EndpointsSearchBar placeholder={""} />
+      {/* <div className="flex col-span-1 flex-col my-3 justify-start items-start gap-2 flex-grow ">
         <Button className="flex items-center gap-1 rounded-md bg-indigo-600 px-3 py-2 ml-7  text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
           <ChatBubbleLeftIcon className="w-4 h-4" />
           Iniciar chat
         </Button>
-      </div>
+      </div> */}
         <RadioGroup.Label className="sr-only">
           Endpoints selection
         </RadioGroup.Label>
@@ -89,9 +89,9 @@ export default function EndpointsInput({ simcards }: { simcards: Simcard[] }) {
               <>
                 <div className="flex min-w-0 gap-x-4">
                   <div className="flex items-center gap-2 pl-3">
-                    <div className="bg-gray-300 p-2 rounded-full">
+                    {/* <div className="bg-gray-300 p-2 rounded-full">
                       <UserIcon className="w-4 h-4" />
-                    </div>
+                    </div> */}
                     <div className="min-w-0 flex flex-col">
                       <p className="text-sm font-semibold  text-gray-900">
                         <span className="absolute inset-x-0 -top-px bottom-0" />
@@ -120,7 +120,7 @@ export default function EndpointsInput({ simcards }: { simcards: Simcard[] }) {
         <div className="border-b-2 border-gray-400 flex justify-between items-center px-6">
         <p className="text-sm font-semibold text-gray-900 py-3">{name}</p>
         <div className="flex gap-3">
-              <BellIcon className="w-4 h-4" />
+              {/* <BellIcon className="w-4 h-4" /> */}
               <EllipsisVerticalIcon className="w-4 h-4" />
             </div>
             </div>
@@ -154,16 +154,16 @@ export default function EndpointsInput({ simcards }: { simcards: Simcard[] }) {
               
               </div>
               </form>
-              </div>
+        </div>
       )}
       {!selected && (
         <div className="flex flex-col w-full justify-center items-center col-span-2">
-        <div className="text-center flex flex-col items-center">
-        <CpuChipIcon  className="h-8 w-8 text-gray-700"/>
+          <div className="text-center flex flex-col items-center">
+            <CpuChipIcon  className="h-8 w-8 text-gray-700"/>
             <h3 className="mt-2 text-sm font-semibold text-gray-900">Nenhum SIM CARD selecionado</h3>
             <p className="mt-1 text-sm text-gray-500">Selecione um dispositivo para iniciar um novo chat</p>
           </div>
-          </div>
+        </div>
       )}
     </div>
   );
