@@ -4,7 +4,7 @@ import {
 } from "@/app/lib/actions";
 import EndpointsInput from "@/app/ui/endpoint-input";
 import { MessagePageForm } from "@/app/ui/form/message-page-form";
-import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { ArrowPathIcon, EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { CpuChipIcon } from "@heroicons/react/24/outline";
 
 export default async function Example({
@@ -39,7 +39,7 @@ export default async function Example({
             <div className="flex gap-3">
               {/* <BellIcon className="w-4 h-4" /> */}
               <form action={refreshMessageBinded}>
-                <button type="submit">revalidar</button>
+                <button type="submit"><ArrowPathIcon className="w-4 h-4" /></button>
               </form>
               <EllipsisVerticalIcon className="w-4 h-4" />
             </div>
