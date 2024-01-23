@@ -20,14 +20,14 @@ export async function MessagePageForm({
 
   return (
     <div className="grid grid-cols-3 px-10">
-      <div className="col-start-2 col-span-2 my-3 flex gap-2 items-center mr-12">
+      <div className="col-start-2 col-span-3 my-5 flex flex-col gap-5 items-end ">
         {messages?.map((activityItem, activityItemIdx) => (
-          <div key={activityItem.id}>
-            <div className="flex flex-col justify-between items-end pb-2">
+          <div key={activityItem.id} className="flex items-center gap-1.5">
+            <div className="flex flex-col justify-between items-end" >
               {/* <p>{endpoint_id}</p> */}
               {icon(activityItem.status.description as ITypeStatus)}
             </div>
-            <p className="text-[12px] text-gray-700 px-2 py-2 border bg-gray-200 rounded-lg">
+            <p className="text-[12px] text-gray-700 px-2.5 py-2 border bg-gray-200 rounded-lg">
               {activityItem.payload}
             </p>
           </div>
