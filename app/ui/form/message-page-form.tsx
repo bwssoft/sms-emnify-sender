@@ -20,22 +20,27 @@ export async function MessagePageForm({
 
 
   return (
-    <div className="grid grid-cols-3 px-10">
-      <div className="col-start-2 col-span-3 my-5 flex flex-col gap-5 items-end ">
+    <div className="grid grid-cols-3 pl-10">
+      <div className="col-start-2 col-span-3 flex flex-col-reverse gap-5 items-end overflow-auto max-h-[73vh] scrollbar-thin scrollbar-thumb-gray-300">
         {messages?.map((activityItem, activityItemIdx) => (
-          <div key={activityItem.id} className="flex items-center gap-1.5">
-            <div className="flex flex-col justify-between items-end" >
-              {/* <p>{endpoint_id}</p> */}
-              {icon(activityItem.status.description as ITypeStatus)}
-            </div>
-            <p className="text-[12px] text-gray-700 px-2.5 py-2 border bg-gray-200 rounded-lg">
-              {activityItem.payload}
+          <div key={activityItem.id} className="flex flex-col items-end pr-10">
+            <section className="flex items-center justify-center gap-1.5">
+              <div className="flex" >
+                {/* <p>{endpoint_id}</p> */}
+                {icon(activityItem.status.description as ITypeStatus)}
+              </div>
+              <p className="text-[12px] text-gray-700 px-3 py-2 border bg-gray-200 rounded-lg ">
+                {activityItem.payload}
+              </p>
+            </section>
+            <p className="text-gray-500 text-[9px]">
+              {activityItem.submit_date.slice(11, 16)}
             </p>
           </div>
         ))}
       </div>
       <form
-        className="col-span-3 flex gap-4 w-full items-end flex-grow mb-3"
+        className="col-span-3 flex gap-4 w-full items-end flex-grow mb-3 pr-10"
         action={sendMessageBinded}
       >
         <div className="flex overflow-hidden w-full rounded-full shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">

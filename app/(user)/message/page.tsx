@@ -34,7 +34,7 @@ export default async function Example({
       {/*SEGUNDA COLUNA  */}
       {searchParams?.endpoint_id && (
         <div className="flex flex-col w-full justify-between col-span-2">
-          <div className="border-b-2 border-gray-400 flex justify-between items-center px-6 py-3">
+          <div className="border-b-2 border-gray-200 flex justify-between items-center px-6 py-2.5">
             <div>
               <p className="text-sm font-semibold text-gray-900">
                 {searchParams?.endpoint_name}
