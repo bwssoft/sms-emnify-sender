@@ -14,12 +14,37 @@ export default function EndpointsInput({ simcards }: { simcards: Simcard[] }) {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleSelect = useDebouncedCallback((term: string) => {
+  const handleSelect = useDebouncedCallback((term) => {
     const params = new URLSearchParams(searchParams);
     if (term) {
-      params.set("endpoint_id", term);
+      params.set("endpoint_id", term.endpoint_id);
     } else {
       params.delete("endpoint_id");
+    }
+    replace(`${pathname}?${params.toString()}`);
+
+    if (term) {
+      params.set('endpoint_name', term.endpoint_name)
+    } else {
+      params.set('endpoint_name', term)
+    }
+    replace(`${pathname}?${params.toString()}`);
+
+    if (term) {
+      params.set('endpoint_imei', term.endpoint_imei)
+    } else {
+      params.set('endpoint_imei', term)
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }, 300);
+
+  
+  const handleSelectName = useDebouncedCallback((term: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("endpoint_name", term);
+    } else {
+      params.delete("endpoint_name");
     }
     replace(`${pathname}?${params.toString()}`);
   }, 300);
@@ -31,7 +56,6 @@ export default function EndpointsInput({ simcards }: { simcards: Simcard[] }) {
         value={selected}
         onChange={(e) => {
           setSelected(e);
-          handleSelect(e);
         }}
         name="device_id"
       >
@@ -50,6 +74,9 @@ export default function EndpointsInput({ simcards }: { simcards: Simcard[] }) {
           <RadioGroup.Option
             key={simcard.emnify.endpoint_name}
             value={simcard.emnify.endpoint_id}
+            onClick={() => {
+              handleSelect(simcard.emnify)
+            }}
             className={({ checked }) =>
               clsx(
                 checked

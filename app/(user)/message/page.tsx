@@ -14,6 +14,8 @@ export default async function Example({
     query?: string;
     type?: string;
     endpoint_id?: string;
+    endpoint_name?: string;
+    endpoint_imei?: string
   };
 }) {
   const query = searchParams?.query || "";
@@ -32,10 +34,15 @@ export default async function Example({
       {/*SEGUNDA COLUNA  */}
       {searchParams?.endpoint_id && (
         <div className="flex flex-col w-full justify-between col-span-2">
-          <div className="border-b-2 border-gray-400 flex justify-between items-center px-6">
-            <p className="text-sm font-semibold text-gray-900 py-3">
-              {searchParams?.endpoint_id}
-            </p>
+          <div className="border-b-2 border-gray-400 flex justify-between items-center px-6 py-3">
+            <div>
+              <p className="text-sm font-semibold text-gray-900">
+                {searchParams?.endpoint_name}
+              </p>
+              <p className="text-xs font-normal text-gray-600">
+                {searchParams?.endpoint_imei}
+              </p>
+            </div>
             <div className="flex gap-3">
               {/* <BellIcon className="w-4 h-4" /> */}
               <form action={refreshMessageBinded}>

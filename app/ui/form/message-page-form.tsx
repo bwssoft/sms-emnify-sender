@@ -18,6 +18,7 @@ export async function MessagePageForm({
     url: `/message?endpoint_id=${endpoint_id}`,
   });
 
+
   return (
     <div className="grid grid-cols-3 px-10">
       <div className="col-start-2 col-span-3 my-5 flex flex-col gap-5 items-end ">
