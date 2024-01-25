@@ -80,14 +80,14 @@ export async function fetchEndpointsFilteredByName(value: string, type?: string)
   // return endpoints.filter(el => el.name.toLocaleLowerCase().includes(name.toLocaleLowerCase()))
 }
 
-export async function sendMessagefromMessagePage(formData: FormData) {
-  const { device_id, payload } = Object.fromEntries(formData.entries())
+export async function sendMessagefromMessagePage(params: { endpoint_id: string, url: string }, formData: FormData) {
+  const { payload } = Object.fromEntries(formData.entries())
   const sms = await emnify.sendEndpointMessage({
-    device_id: device_id as string,
+    device_id: params.endpoint_id as string,
     payload: payload as string
   })
   if (!sms) return
-  redirect(`/message/check/${device_id}/${sms.sms_id}`)
+  revalidatePath(params.url)
 }
 
 export async function sendMessagefromEndpointPage(device_id: string, formData: FormData) {
@@ -115,7 +115,10 @@ export async function refreshMessageDatafromEndpoint({ device_id, sms_id }: { de
   revalidatePath(`/message/check/${device_id}/${sms_id}`)
 }
 
-export async function refreshMessageDatafromEndpointMessagePage({ device_id, sms_id }: { device_id: string, sms_id: string }) {
+export async function refreshMessageDatafromMessagePage(url: string) {
+  revalidatePath(url)
+}
+export async function refreshMessageDatafromEndpointMessagePage({ device_id, sms_id }: { device_id: string, sms_id?: string }) {
   // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
   revalidatePath(`/endpoint/${device_id}/message`)
 }

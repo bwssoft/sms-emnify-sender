@@ -1,11 +1,11 @@
 import {
   fetchEndpointsFilteredByName,
-  sendMessagefromMessagePage,
+  refreshMessageDatafromMessagePage,
 } from "@/app/lib/actions";
-import { Breadcrumbs } from "@/app/ui/breadcrumbs";
-import { Button } from "@/app/ui/button";
 import EndpointsInput from "@/app/ui/endpoint-input";
-import EndpointsSearchBar from "@/app/ui/endpoint-search-bar";
+import { MessagePageForm } from "@/app/ui/form/message-page-form";
+import { ArrowPathIcon, EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { CpuChipIcon } from "@heroicons/react/24/outline";
 
 export default async function Example({
   searchParams,
@@ -13,94 +13,61 @@ export default async function Example({
   searchParams?: {
     query?: string;
     type?: string;
+    endpoint_id?: string;
+    endpoint_name?: string;
+    endpoint_imei?: string
   };
 }) {
   const query = searchParams?.query || "";
   const type = searchParams?.type || undefined;
   const simcards = await fetchEndpointsFilteredByName(query, type);
 
+  const refreshMessageBinded = refreshMessageDatafromMessagePage.bind(
+    null,
+    `/message?endpoint_id=${searchParams?.endpoint_id}`
+  );
+
   return (
-    <div className="min-h-full">
-      <div className="flex flex-col">
-        <Breadcrumbs
-          root="/"
-          data={[
-            {
-              href: "/message",
-              name: "Mensagem",
-            },
-          ]}
-        />
-        <form
-          className="px-4 py-4 sm:px-6 lg:px-8"
-          action={sendMessagefromMessagePage}
-        >
-          <div className="space-y-12">
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
-              <div>
-                <h2 className="text-base font-semibold leading-7 text-gray-900">
-                  Dispositivos
-                </h2>
-                <p className="mt-1 text-sm leading-6 text-gray-600">
-                  Escolha para qual dispositivo deseja enviar uma mensagem.
-                </p>
-              </div>
+    <div className="grid grid-cols-3">
+      <EndpointsInput simcards={simcards.slice(0, 9)} />
 
-              <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
-                <div className="col-span-full">
-                  <EndpointsSearchBar placeholder="Pesquise pelo nome do dispositivo..." />
-                  <EndpointsInput simcards={simcards.slice(0, 5)} />
-                </div>
-              </div>
+      {/*SEGUNDA COLUNA  */}
+      {searchParams?.endpoint_id && (
+        <div className="flex flex-col w-full justify-between col-span-2">
+          <div className="border-b-2 border-gray-200 flex justify-between items-center px-6 py-2.5">
+            <div>
+              <p className="text-sm font-semibold text-gray-900">
+                {searchParams?.endpoint_name}
+              </p>
+              <p className="text-xs font-normal text-gray-600">
+                {searchParams?.endpoint_imei}
+              </p>
             </div>
-
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
-              <div>
-                <h2 className="text-base font-semibold leading-7 text-gray-900">
-                  Mensagem
-                </h2>
-                <p className="mt-1 text-sm leading-6 text-gray-600">
-                  Escreva uma ou mais mensanges para serem enviadas para os
-                  dispositivos selecionados.
-                </p>
-              </div>
-
-              <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
-                <div className="col-span-full">
-                  <div className="overflow-hidden rounded-lg pb-12 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
-                    <label htmlFor="payload" className="sr-only">
-                      Mensagem
-                    </label>
-                    <textarea
-                      rows={2}
-                      name="payload"
-                      id="payload"
-                      className="block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Escreva sua mensagem..."
-                      defaultValue={""}
-                    />
-                  </div>
-                </div>
-              </div>
+            <div className="flex gap-3">
+              {/* <BellIcon className="w-4 h-4" /> */}
+              <form action={refreshMessageBinded}>
+                <button type="submit"><ArrowPathIcon className="w-4 h-4" /></button>
+              </form>
+              <EllipsisVerticalIcon className="w-4 h-4" />
             </div>
           </div>
 
-          <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button
-              type="button"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
-              Limpar
-            </button>
-            <Button
-              type="submit"
-              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Enviar
-            </Button>
+          <MessagePageForm endpoint_id={searchParams?.endpoint_id} />
+        </div>
+      )}
+      {!searchParams?.endpoint_id && (
+        <div className="flex flex-col w-full justify-center items-center col-span-2">
+          <div className="text-center flex flex-col items-center">
+            <CpuChipIcon className="h-8 w-8 text-gray-700" />
+            <h3 className="mt-2 text-sm font-semibold text-gray-900">
+              Nenhum SIM CARD selecionado
+            </h3>
+            <p className="mt-1 text-sm text-gray-500">
+              Selecione um dispositivo para iniciar um novo chat
+            </p>
           </div>
-        </form>
-      </div>
+        </div>
+      )}
     </div>
   );
 }
