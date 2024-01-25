@@ -93,7 +93,7 @@ export default async function Example({
         </form>
       </div>
       <div className="px-4 sm:px-0">
-        <ul role="list" className="mt-6 space-y-6">
+        <ul role="list" className="">
           {messages?.map((activityItem, activityItemIdx) => (
             <li key={activityItem.id} className="relative flex gap-x-4">
               <div

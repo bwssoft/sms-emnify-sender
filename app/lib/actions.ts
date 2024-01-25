@@ -6,6 +6,8 @@ import * as repository from "./repository"
 import { redirect } from "next/navigation"
 import { auth, signIn, signOut } from "@/auth"
 
+import bcrypt from "bcrypt"
+
 export async function userAuthenticate(formData: FormData) {
   const { username, password } = Object.fromEntries(formData.entries())
   const result = await emnify.authenticate({ token: process.env.BWS_EMNIFY_AUTH_TOKEN })
@@ -17,6 +19,13 @@ export async function userAuthenticate(formData: FormData) {
   })
 }
 
+export async function isAdm(): Promise<boolean> {
+  const data = await auth()
+  if(!data){
+      return false
+  }
+  return data.user.role ===  'adm'
+}
 
 export async function userLogout() {
   try {
@@ -24,6 +33,14 @@ export async function userLogout() {
   } catch (error) {
     throw error;
   }
+}
+
+export async function changeUserPassword(formData: FormData) {
+  const { new_password } = Object.fromEntries(formData.entries())
+  const hashPassword = await bcrypt.hash(new_password as string, 10)
+  return await repository.updateUser({
+    password: hashPassword
+  })
 }
 
 export async function fetchEndpoints() {
@@ -58,21 +75,19 @@ export async function fetchEndpointMessagesById(id: string) {
 
 export async function fetchEndpointsFilteredByName(value: string, type?: string) {
   // return await emnify.listEndpointsFilteredByName({ name })
-  console.log('type', type ?? "endpoint_name")
-  console.log('typeof', typeof type)
   return await repository.listFilteredSimcardByEndpointName({ value, type: type ?? "endpoint_name" })
   // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
   // return endpoints.filter(el => el.name.toLocaleLowerCase().includes(name.toLocaleLowerCase()))
 }
 
-export async function sendMessagefromMessagePage(formData: FormData) {
-  const { device_id, payload } = Object.fromEntries(formData.entries())
+export async function sendMessagefromMessagePage(params: { endpoint_id: string, url: string }, formData: FormData) {
+  const { payload } = Object.fromEntries(formData.entries())
   const sms = await emnify.sendEndpointMessage({
-    device_id: device_id as string,
+    device_id: params.endpoint_id as string,
     payload: payload as string
   })
   if (!sms) return
-  redirect(`/message/check/${device_id}/${sms.sms_id}`)
+  revalidatePath(params.url)
 }
 
 export async function sendMessagefromEndpointPage(device_id: string, formData: FormData) {
@@ -100,7 +115,10 @@ export async function refreshMessageDatafromEndpoint({ device_id, sms_id }: { de
   revalidatePath(`/message/check/${device_id}/${sms_id}`)
 }
 
-export async function refreshMessageDatafromEndpointMessagePage({ device_id, sms_id }: { device_id: string, sms_id: string }) {
+export async function refreshMessageDatafromMessagePage(url: string) {
+  revalidatePath(url)
+}
+export async function refreshMessageDatafromEndpointMessagePage({ device_id, sms_id }: { device_id: string, sms_id?: string }) {
   // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
   revalidatePath(`/endpoint/${device_id}/message`)
 }

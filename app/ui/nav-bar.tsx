@@ -12,6 +12,7 @@ export function Navbar() {
     if (pathname.includes("/docs")) return "Documentação";
     if (pathname.includes("/message") && !pathname.includes("/endpoint"))
       return "Mensagens";
+    if (pathname.includes('/profile')) return 'Meu usuário'
     if (pathname.includes("/")) return "Dashboard";
 
     return pathname;
