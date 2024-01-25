@@ -9,7 +9,7 @@ const links = [
     icon: Bars4Icon,
   },
   {
-    name: "Endpoints",
+    name: "SIMCards",
     href: "/endpoint",
     description:
       "Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non. Cras aliquet purus dui laoreet diam sed lacus, fames.",

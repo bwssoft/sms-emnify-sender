@@ -407,7 +407,7 @@ export function SideBar() {
 
 const navigation = [
   // { name: "Home", href: "/", icon: HomeIcon },
-  { name: "Endpoints", href: "/endpoint", icon: CpuChipIcon },
+  { name: "SIMCard", href: "/endpoint", icon: CpuChipIcon },
   {
     name: "Mensagem",
     href: "/message",
