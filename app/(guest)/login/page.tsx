@@ -1,6 +1,7 @@
 import { userAuthenticate } from "@/app/lib/actions";
 import { Button } from "@/app/ui/button";
-
+import Logo from "../../public/logotipo.png";
+import Image from "next/image";
 /*
   This example requires some changes to your config:
   
@@ -27,12 +28,9 @@ export default function Example() {
         ```
       */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
+          <Image src={Logo} alt="Logotipo" width={120} />
+
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Faça login na sua conta
           </h2>
