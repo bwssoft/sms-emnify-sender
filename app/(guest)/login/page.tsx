@@ -1,6 +1,6 @@
 import { userAuthenticate } from "@/app/lib/actions";
 import { Button } from "@/app/ui/button";
-import Logo from "../../public/logotipo.png";
+import Logo from "../../../public/logotipo.png";
 import Image from "next/image";
 /*
   This example requires some changes to your config:
