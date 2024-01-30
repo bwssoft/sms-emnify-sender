@@ -1,4 +1,4 @@
-import { fetchEndpointById, isAdm } from "@/app/lib/actions";
+import { fetchEndpointById, isAdmOrSupport } from "@/app/lib/actions";
 
 export default async function Example({
   params,
@@ -8,10 +8,10 @@ export default async function Example({
   };
 }) {
   const endpoint = await fetchEndpointById(params.id);
-  const isUserAdm = await isAdm();
+  const isUserAdm = await isAdmOrSupport();
   if (!endpoint) {
     return <p className="mt-4 text-gray-400">No data available.</p>;
-  } 
+  }
   return (
     <div>
       <div className="px-4 sm:px-0">
@@ -32,14 +32,16 @@ export default async function Example({
               {endpoint.name}
             </dd>
           </div>
-          {isUserAdm && <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
-              Perfil de tarifa
-            </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {endpoint.tariff_profile.name}
-            </dd>
-          </div>}
+          {isUserAdm && (
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-medium leading-6 text-gray-900">
+                Perfil de tarifa
+              </dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                {endpoint.tariff_profile.name}
+              </dd>
+            </div>
+          )}
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">
               Perfil do serviço
