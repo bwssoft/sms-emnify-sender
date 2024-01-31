@@ -5,39 +5,55 @@ import { EndpointsList } from "@/app/ui/endpoints-list";
 import { EndpointsPinned } from "@/app/ui/endpoints-pinned";
 
 export default async function Example({
-  searchParams,
+    searchParams,
 }: {
-  searchParams?: {
-    query?: string;
-    type?: string;
-  };
+    searchParams?: {
+        query?: string;
+        type?: string;
+    };
 }) {
-  const query = searchParams?.query || "";
-  const type = searchParams?.type || undefined;
-  const simcards = await fetchEndpointsFilteredByName(query, type);
+    const query = searchParams?.query || "";
+    const type = searchParams?.type || undefined;
+    const simcards = await fetchEndpointsFilteredByName(query, type);
 
-  return (
-    <>
-      <div className="min-h-full">
-        <div className="flex flex-col">
-          <EndpointsSearchBar placeholder="Pesquise pelo endpoint." />
+    return (
+        <>
+            <div className="min-h-full">
+                <div className="flex flex-col">
+                    <EndpointsSearchBar
+                        placeholder="Pesquise pelo endpoint."
+                        fieldsForSearch={[
+                            {
+                                field: "endpoint_name",
+                                label: "Nome",
+                            },
+                            {
+                                field: "sim_iccid_with_luhn",
+                                label: "Iccid",
+                            },
+                            {
+                                field: "endpoint_imei",
+                                label: "Imei",
+                            },
+                        ]}
+                    />
 
-          <Breadcrumbs
-            root="/"
-            data={[
-              {
-                href: "/endpoint",
-                name: "Endpoints",
-              },
-            ]}
-          />
-          <EndpointsPinned simcards={simcards.slice(0, 4)} />
+                    <Breadcrumbs
+                        root="/"
+                        data={[
+                            {
+                                href: "/endpoint",
+                                name: "Endpoints",
+                            },
+                        ]}
+                    />
+                    <EndpointsPinned simcards={simcards.slice(0, 4)} />
 
-          <main className="flex-1">
-            <EndpointsList simcards={simcards} />
-          </main>
-        </div>
-      </div>
-    </>
-  );
+                    <main className="flex-1">
+                        <EndpointsList simcards={simcards} />
+                    </main>
+                </div>
+            </div>
+        </>
+    );
 }

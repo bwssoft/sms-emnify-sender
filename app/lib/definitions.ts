@@ -16,3 +16,13 @@ export type Simcard = {
   client_uuid: string
   uuid: string
 }
+
+export type Command = {
+  _id?: string;
+  name: string
+  variables?: Array<{ name: string, description?: string }>,
+  description?: string;
+  command: string;
+  uuid: string;
+  readonly?: boolean;
+}
