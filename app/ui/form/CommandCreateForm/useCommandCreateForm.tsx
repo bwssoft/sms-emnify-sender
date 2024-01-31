@@ -2,7 +2,7 @@ import { z } from "zod";
 import { v4 as uuid } from "uuid";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { CommandFormContext } from "./context";
 
 const schema = z.object({
@@ -38,10 +38,6 @@ export const useCommandCreateForm = () => {
         resolver: zodResolver(schema),
         values: state["CURRENT_COMMAND"],
     });
-
-    useEffect(() => {
-        console.log(state["CURRENT_COMMAND"]);
-    }, [state["CURRENT_COMMAND"]]);
 
     const onHandleSubmit = handleSubmit(async (data) => {
         dispatch({ payload: data, type: "CURRENT_COMMAND" });
