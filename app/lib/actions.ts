@@ -7,6 +7,7 @@ import { redirect } from "next/navigation"
 import { auth, signIn, signOut } from "@/auth"
 
 import bcrypt from "bcrypt"
+import { Command } from "./definitions"
 
 export async function userAuthenticate(formData: FormData) {
   const { username, password } = Object.fromEntries(formData.entries())
@@ -88,6 +89,33 @@ export async function sendMessagefromMessagePage(params: { endpoint_id: string, 
   })
   if (!sms) return
   revalidatePath(params.url)
+}
+
+export async function createCommandfromCoomandPage(data: Command) {
+  const response = await repository.createCommand(data);
+  revalidatePath('/command');
+  return response;
+}
+
+export async function findOneCommandformComandPage(id: string) {
+  const response = await repository.findOneCommand(id);
+  return response;
+}
+
+export async function deleteCommandfromComandPage(id: string) {
+  const response = await repository.deleteCommand(id);
+  revalidatePath('/command');
+  return response;
+}
+
+export async function updateCommandfromCommandPage(data: Partial<Command>) {
+  const response = await repository.updateCommand(data)
+  revalidatePath('/command');
+  return response;
+}
+
+export async function listCommandsfromComandPage(value?: string, type?: string) {
+  return await repository.listCommands({ type, value });
 }
 
 export async function sendMessagefromEndpointPage(device_id: string, formData: FormData) {
