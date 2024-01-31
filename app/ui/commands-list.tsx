@@ -116,9 +116,11 @@ const CommandsList: React.FC<ICommandsListType> = ({ commands }) => {
                                                             ""
                                                         }
                                                     >
-                                                        <Badge>
-                                                            {props.name}
-                                                        </Badge>
+                                                        <div>
+                                                            <Badge>
+                                                                {props.name}
+                                                            </Badge>
+                                                        </div>
                                                     </Tooltip>
                                                 )
                                             )}
