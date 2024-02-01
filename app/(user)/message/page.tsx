@@ -30,7 +30,6 @@ export default async function Example({
         `/message?endpoint_id=${searchParams?.endpoint_id}`
     );
 
-    console.log(query_command);
     const commands = await listCommandsfromComandPage(query_command, "name");
 
     return (
