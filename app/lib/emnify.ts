@@ -435,6 +435,7 @@ export type Message = {
   "status": {
     "description": "DELIVERY" |
     "ATTEMPT PENDING" |
+    "DELIVERY ATTEMPT PENDING" |
     "IN PROGRESS" |
     "BUFFERED" |
     "DELIVERED" |
