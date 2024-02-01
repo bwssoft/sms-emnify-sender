@@ -17,10 +17,12 @@ export default async function Example({
         endpoint_id?: string;
         endpoint_name?: string;
         endpoint_imei?: string;
+        query_command?: string;
     };
 }) {
     const query = searchParams?.query || "";
     const type = searchParams?.type || undefined;
+    const query_command = searchParams?.query_command || "";
     const simcards = await fetchEndpointsFilteredByName(query, type);
 
     const refreshMessageBinded = refreshMessageDatafromMessagePage.bind(
@@ -28,7 +30,8 @@ export default async function Example({
         `/message?endpoint_id=${searchParams?.endpoint_id}`
     );
 
-    const commands = await listCommandsfromComandPage();
+    console.log(query_command);
+    const commands = await listCommandsfromComandPage(query_command, "name");
 
     return (
         <div className="grid grid-cols-3">

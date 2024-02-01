@@ -7,6 +7,8 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Badge from "@/app/ui/badge";
 import { Command } from "@/app/lib/definitions";
 import { useMessagePageForm } from "@/app/ui/form/MessagePageForm/useMessagePageForm";
+import { useDebouncedCallback } from "use-debounce";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export type ICommandMenuType = {
     commands?: Array<Command>;
@@ -17,6 +19,16 @@ const CommandMenu: React.FC<ICommandMenuType> = ({ commands = [] }) => {
         "bg-slate-800 text-[8px] font-medium border-slate-900 text-white";
 
     const { onHandleClickCommand } = useMessagePageForm();
+
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
+
+    const handleSearch = useDebouncedCallback((term: string) => {
+        const params = new URLSearchParams(searchParams);
+        params.set("query_command", term);
+        replace(`${pathname}?${params.toString()}`);
+    }, 300);
 
     return (
         <Popover.Root>
@@ -35,6 +47,9 @@ const CommandMenu: React.FC<ICommandMenuType> = ({ commands = [] }) => {
                                 name="name"
                                 className="block w-full min-w-0 flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 placeholder="Filtrar por nome"
+                                onChange={(event) =>
+                                    handleSearch(event.target.value)
+                                }
                             />
                         </div>
                         <div className="flex flex-col gap-2 max-h-[214px] overflow-y-auto mt-2 bg-gray-200 rounded-md shadow-md py-3 border-4 p-1 scroll-slim">
