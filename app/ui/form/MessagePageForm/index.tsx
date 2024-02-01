@@ -2,6 +2,7 @@
 
 import {
     fetchEndpointMessagesById,
+    listCommandsfromComandPage,
     sendMessagefromMessagePage,
 } from "@/app/lib/actions";
 import { ITypeStatus, icon } from "../../icons";
@@ -15,8 +16,15 @@ import { MessagePageFormContextProvider } from "./context/MessagePageFormContext
 import FormInput from "./components/FormInput";
 import { useMessagePageForm } from "./useMessagePageForm";
 import FormContent from "./components/FormContent";
+import { Command } from "@/app/lib/definitions";
 
-export async function Form({ endpoint_id }: { endpoint_id?: string }) {
+export async function Form({
+    endpoint_id,
+    commands,
+}: {
+    endpoint_id?: string;
+    commands: Array<Command>;
+}) {
     // const { onHandleSubmit } = useMessagePageForm();
     if (!endpoint_id) return null;
     const messages = await fetchEndpointMessagesById(endpoint_id);
@@ -117,16 +125,22 @@ export async function Form({ endpoint_id }: { endpoint_id?: string }) {
                 </div>
             </div>
             <div className="col-span-3">
-                <FormContent action={sendMessageBinded} />
+                <FormContent commands={commands} action={sendMessageBinded} />
             </div>
         </div>
     );
 }
 
-export const MessagePageForm = ({ endpoint_id }: { endpoint_id?: string }) => {
+export const MessagePageForm = ({
+    endpoint_id,
+    commands,
+}: {
+    endpoint_id?: string;
+    commands: Array<Command>;
+}) => {
     return (
         <MessagePageFormContextProvider>
-            <Form endpoint_id={endpoint_id} />
+            <Form commands={commands} endpoint_id={endpoint_id} />
         </MessagePageFormContextProvider>
     );
 };

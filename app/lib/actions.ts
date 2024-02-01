@@ -115,8 +115,9 @@ export async function updateCommandfromCommandPage(data: Partial<Command>) {
 }
 
 export async function listCommandsfromComandPage(value?: string, type?: string) {
-  const resposne = await repository.listCommands({ type, value });
-  return resposne;
+  const response = await repository.listCommands({ type, value });
+  const convertData = response.map(({ _id, ...props }) => ({ _id: _id.toString(), ...props }));
+  return convertData;
 }
 
 export async function sendMessagefromEndpointPage(device_id: string, formData: FormData) {

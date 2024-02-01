@@ -6,12 +6,14 @@ import FormInput from "../FormInput";
 import { Button } from "@/app/ui/button";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { useMessagePageForm } from "../../useMessagePageForm";
+import { Command } from "@/app/lib/definitions";
 
 export type IFormContentType = {
     action: (formData: FormData) => Promise<void>;
+    commands: Array<Command>;
 };
 
-const FormContent: React.FC<IFormContentType> = ({ action }) => {
+const FormContent: React.FC<IFormContentType> = ({ action, commands }) => {
     const { onHandleSubmit } = useMessagePageForm();
 
     return (
@@ -22,46 +24,7 @@ const FormContent: React.FC<IFormContentType> = ({ action }) => {
         >
             <div className="flex relative w-full mt-2 rounded-full shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
                 <div className="cursor-pointer absolute inset-y-0 right-0 flex items-center pr-3">
-                    <CommandMenu
-                        commands={[
-                            {
-                                command: "IP1#[IP]#[PORT]",
-                                name: "Configuração do IP1",
-                                uuid: "065f9aab-a746-4fc3-9328-281cb37279dc",
-                                description: "Comando de configuração do IP1",
-                                readonly: false,
-                                variables: [
-                                    {
-                                        name: "IP",
-                                        description:
-                                            "Endereço IPv4 do servidor",
-                                    },
-                                    {
-                                        name: "PORT",
-                                        description: "Porta do endreço IPv4",
-                                    },
-                                ],
-                            },
-                            {
-                                command: "IP2#[IP]#[PORT]",
-                                name: "Configuração do IP2",
-                                uuid: "065f9aab-a746-4fc3-9328-281cb37279dc",
-                                description: "Comando de configuração do IP2",
-                                readonly: false,
-                                variables: [
-                                    {
-                                        name: "IP",
-                                        description:
-                                            "Endereço IPv4 do servidor",
-                                    },
-                                    {
-                                        name: "PORT",
-                                        description: "Porta do endreço IPv4",
-                                    },
-                                ],
-                            },
-                        ]}
-                    />
+                    <CommandMenu commands={commands} />
                 </div>
                 <FormInput />
             </div>

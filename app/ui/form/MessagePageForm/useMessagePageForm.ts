@@ -32,7 +32,6 @@ export const useMessagePageForm = () => {
 
   const onHandleClickCommand = (command: Command) => {
     dispatch({ type: 'CURRENT_COMMAND', payload: command });
-    dispatch({ type: 'MODAL_HELPER_COMMAND', payload: true }); 
     setValue('payload', command.command);
   }
 

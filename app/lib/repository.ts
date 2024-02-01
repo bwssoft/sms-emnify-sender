@@ -66,8 +66,8 @@ export async function listCommands({ type = 'name', value }: { type?: string, va
       where = { [type]: { $regex: value } }
     }
     const commnadModel = (await clientPromise).db("sms-emnify-sender").collection<Command>("commands");
-    const commandsEntity = await commnadModel.find().toArray();
-    return commandsEntity as unknown as Command[];;
+    const commandsEntity = await commnadModel.find(where).toArray();
+    return commandsEntity;
   } catch (error) {
     throw new Error('Failed to list commands.');
   }

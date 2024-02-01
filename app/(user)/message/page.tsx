@@ -1,5 +1,6 @@
 import {
     fetchEndpointsFilteredByName,
+    listCommandsfromComandPage,
     refreshMessageDatafromMessagePage,
 } from "@/app/lib/actions";
 import EndpointsInput from "@/app/ui/endpoint-input";
@@ -26,6 +27,8 @@ export default async function Example({
         null,
         `/message?endpoint_id=${searchParams?.endpoint_id}`
     );
+
+    const commands = await listCommandsfromComandPage();
 
     return (
         <div className="grid grid-cols-3">
@@ -54,7 +57,10 @@ export default async function Example({
                         </div>
                     </div>
 
-                    <MessagePageForm endpoint_id={searchParams?.endpoint_id} />
+                    <MessagePageForm
+                        commands={commands}
+                        endpoint_id={searchParams?.endpoint_id}
+                    />
                 </div>
             )}
             {!searchParams?.endpoint_id && (
