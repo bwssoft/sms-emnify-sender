@@ -7,6 +7,7 @@ import EndpointsSearchBar from "@/app/ui/endpoint-search-bar";
 import Link from "next/link";
 import React from "react";
 import ModalDelete from "./components/ModalDelete";
+import CommandMenu from "../message/components/CommandMenu";
 
 const Command: React.FC = async ({
     searchParams,
