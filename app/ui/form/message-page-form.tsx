@@ -3,11 +3,13 @@ import { fetchEndpointMessagesById, sendMessagefromMessagePage } from "@/app/lib
 import { ITypeStatus, icon } from "../icons";
 import { Button } from "../button";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { Message } from "@/app/lib/emnify";
 
 export async function MessagePageForm({ endpoint_id }: { endpoint_id?: string }) {
   if (!endpoint_id) return null;
 
   const messages = await fetchEndpointMessagesById(endpoint_id);
+
   const sendMessageBinded = sendMessagefromMessagePage.bind(null, {
     endpoint_id,
     url: `/message?endpoint_id=${endpoint_id}`,
@@ -15,63 +17,65 @@ export async function MessagePageForm({ endpoint_id }: { endpoint_id?: string })
 
   let lastRenderedDate = '';
 
+  function compareDates(activityItem: Message, currentDate: string) {
+    const shouldRenderDate = lastRenderedDate !== currentDate;
+
+    if (shouldRenderDate) {
+      lastRenderedDate = currentDate;
+      return currentDate.split('-').reverse().join('-')
+    } else if (lastRenderedDate === '') {
+      return activityItem.submit_date.slice(0, 10).split('-').reverse().join('-')
+    }
+  }
+
   return (
     <div className="grid grid-cols-3 pl-10">
       <div className="col-span-3 flex flex-col-reverse gap-5  overflow-auto max-h-[71vh] scrollbar-thin scrollbar-thumb-gray-300">
-        
-        {messages?.map((activityItem, activityItemIdx) => {
-          const currentDate = activityItem.submit_date.slice(0, 10);
-          const shouldRenderDate = lastRenderedDate !== currentDate;
 
-          const dateRender = () => {
-            if (shouldRenderDate) {
-              lastRenderedDate = currentDate;
-                return  currentDate.split('-').reverse().join('-')
-            } else if (lastRenderedDate === '') { 
-                  return activityItem.submit_date.slice(0, 10).split('-').reverse().join('-')
-            }
-          }
+        {messages?.map((activityItem) => {
+          const currentDate = activityItem.submit_date.slice(0, 10);
 
           return (
             activityItem.status.description !== "DELIVERY ATTEMPT PENDING" ?
-            <>
-              <div key={activityItem.id} className="col-span-2 flex flex-col items-end justify-end">
-                <p className="flex flex-col items-center text-gray-600 w-full text-[11px]">{dateRender()}</p> 
-                <div key={activityItem.id} className="flex flex-col items-end pr-10 col-start-2 w-96">
+              <>
+                <div key={activityItem.id} className="col-span-2 flex flex-col items-end justify-end">
+                  <p className="flex flex-col items-center text-gray-600 w-full text-[11px]">{compareDates(activityItem, currentDate)}</p>
+                  <div key={activityItem.id} className="flex flex-col items-end pr-10 col-start-2 w-96">
+                    <section className="flex items-center justify-center gap-1.5">
+                      <div className="flex" >
+                        {icon(activityItem.status.description as ITypeStatus)}
+                      </div>
+                      <p className="text-[12px] text-gray-700 px-3 py-2 border bg-gray-200 rounded-lg whitespace-break-spaces overflow-wrap:break-word" style={{ wordBreak: 'break-all' }}>
+                        {activityItem.payload}
+                      </p>
+                    </section>
+                    <p className="text-gray-500 text-[9px]">
+                      {activityItem.submit_date.slice(11, 16)}
+                    </p>
+                  </div>
+                </div>
+              </>
+              :
+              <div key={activityItem.id} className="col-span-3 flex flex-col w-[26rem]">
+                <div className="flex flex-col items-start pr-10 ">
+                  <p className="flex flex-col items-end pb-2 text-gray-600 w-full text-[11px]">{compareDates(activityItem, currentDate)}</p>
                   <section className="flex items-center justify-center gap-1.5">
+                    <p className="text-[12px] text-gray-700 px-3 py-2 border bg-gray-200 rounded-lg whitespace-break-spaces overflow-wrap:break-word" style={{ wordBreak: 'break-all' }}>
+                      {activityItem.payload}
+                    </p>
                     <div className="flex" >
                       {icon(activityItem.status.description as ITypeStatus)}
                     </div>
-                    <p className="text-[12px] text-gray-700 px-3 py-2 border bg-gray-200 rounded-lg whitespace-break-spaces overflow-wrap:break-word" style={{wordBreak: 'break-all'}}>
-                      {activityItem.payload}
-                    </p>
                   </section>
                   <p className="text-gray-500 text-[9px]">
                     {activityItem.submit_date.slice(11, 16)}
                   </p>
-                </div> 
+                </div>
               </div>
-            </>
-            :
-            <div key={activityItem.id} className="col-span-3 flex flex-col w-[26rem]">
-              <div className="flex flex-col items-start pr-10 ">
-                <p className="flex flex-col items-end pb-2 text-gray-600 w-full text-[11px]">{dateRender()}</p>
-                <section className="flex items-center justify-center gap-1.5">
-                  <p className="text-[12px] text-gray-700 px-3 py-2 border bg-gray-200 rounded-lg whitespace-break-spaces overflow-wrap:break-word" style={{wordBreak: 'break-all'}}>
-                    {activityItem.payload}
-                  </p>
-                  <div className="flex" >
-                    {icon(activityItem.status.description as ITypeStatus)}
-                  </div>
-                </section>
-                <p className="text-gray-500 text-[9px]">
-                  {activityItem.submit_date.slice(11, 16)}
-                </p>
-              </div>
-            </div>
           );
         })}
       </div>
+
       <form
         className="col-span-3 flex gap-4 w-full items-end flex-grow mb-3 pr-10"
         action={sendMessageBinded}
@@ -85,6 +89,7 @@ export async function MessagePageForm({ endpoint_id }: { endpoint_id?: string })
             placeholder="Escreva sua mensagem..."
           />
         </div>
+
         <Button
           type="submit"
           className="rounded-full mb-1 bg-indigo-600 p-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
