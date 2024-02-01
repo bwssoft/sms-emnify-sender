@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useMessagePageFormContext } from "./context/useMessagePageFormContext"
 import { Command } from "@/app/lib/definitions";
 import { z } from "zod";
@@ -19,7 +19,10 @@ export const useMessagePageForm = () => {
 
   const {
     register,
-    setValue
+    setValue,
+    resetField,
+    watch,
+    getValues
   } = useForm<IMessagePageFormData>({
     resolver: zodResolver(schema),
     values: {
@@ -27,17 +30,27 @@ export const useMessagePageForm = () => {
     }
   })
 
-
   const onHandleClickCommand = (command: Command) => {
     dispatch({ type: 'CURRENT_COMMAND', payload: command });
     dispatch({ type: 'MODAL_HELPER_COMMAND', payload: true }); 
     setValue('payload', command.command);
   }
 
+  useEffect(() =>{
+    if(!watch('payload')) {
+      onCloseModal();
+    }
+  },[watch('payload')])
+
   const showModal = useCallback(() => state['MODAL_HELPER_COMMAND'], [state['MODAL_HELPER_COMMAND']]);
 
   const onCloseModal = () => {
     dispatch({ type: 'MODAL_HELPER_COMMAND', payload: false })
+  }
+
+  const onHandleSubmit = () => {
+    resetField('payload');
+    onCloseModal();
   }
 
   const currentCommand = state['CURRENT_COMMAND'];
@@ -47,6 +60,7 @@ export const useMessagePageForm = () => {
     showModal,
     onCloseModal,
     currentCommand,
-    register
+    register,
+    onHandleSubmit
   }
 }
