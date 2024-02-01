@@ -56,10 +56,10 @@ export async function MessagePageForm({ endpoint_id }: { endpoint_id?: string })
                 </div>
               </>
               :
-              <div key={activityItem.id} className="col-span-3 flex flex-col w-[26rem]">
-                <div className="flex flex-col items-start pr-10 ">
-                  <p className="flex flex-col items-end pb-2 text-gray-600 w-full text-[11px]">{compareDates(activityItem, currentDate)}</p>
-                  <section className="flex items-center justify-center gap-1.5">
+              <div key={activityItem.id} className="col-span-3 flex flex-col">
+                <div className="flex flex-col items-start">
+                  <p className="flex flex-col items-center pb-3 text-gray-600 w-full text-[11px]">{compareDates(activityItem, currentDate)}</p>
+                  <section className="flex items-center justify-center gap-1.5 w-96">
                     <p className="text-[12px] text-gray-700 px-3 py-2 border bg-gray-200 rounded-lg whitespace-break-spaces overflow-wrap:break-word" style={{ wordBreak: 'break-all' }}>
                       {activityItem.payload}
                     </p>
