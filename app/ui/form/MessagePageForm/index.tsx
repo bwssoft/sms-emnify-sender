@@ -41,7 +41,7 @@ export async function Form({ endpoint_id }: { endpoint_id?: string }) {
 
     return (
         <div className="grid grid-cols-3">
-            <div className="col-span-3 pl-10 flex flex-col-reverse gap-5  overflow-auto max-h-[71vh] scrollbar-thin scrollbar-thumb-gray-300">
+            <div className="col-span-3 relative pl-10 flex flex-col-reverse gap-5  overflow-auto max-h-[71vh] scrollbar-thin scrollbar-thumb-gray-300">
                 {messages?.map((activityItem) => {
                     const currentDate = activityItem.submit_date.slice(0, 10);
 
@@ -109,16 +109,19 @@ export async function Form({ endpoint_id }: { endpoint_id?: string }) {
                         </div>
                     );
                 })}
+                <div className="absolute z-0 right-0 left-0 bottom-0 w-full">
+                    <CommandHelper />
+                </div>
             </div>
-            <div className="col-span-3 overflow-hidden">
+            {/* <div className="col-span-3 overflow-hidden">
                 <CommandHelper />
-            </div>
+            </div> */}
             <div className="col-span-3">
                 <form
-                    className=" pl-10 flex gap-4 w-full items-end flex-grow mb-3 pr-10"
+                    className=" pl-10 flex gap-4 z-[999] overflow-hidden w-full items-end flex-grow mb-3 pr-10"
                     action={sendMessageBinded}
                 >
-                    <div className="flex relative z-[999] overflow-hidden w-full mt-2 rounded-full shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
+                    <div className="flex relative w-full mt-2 rounded-full shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
                         <div className="cursor-pointer absolute inset-y-0 right-0 flex items-center pr-3">
                             <CommandMenu
                                 commands={[

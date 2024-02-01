@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useMessagePageForm } from "../../useMessagePageForm";
+import CommandHelper from "@/app/(user)/message/components/CommandHelper";
 
 // import { Container } from './styles';
 
