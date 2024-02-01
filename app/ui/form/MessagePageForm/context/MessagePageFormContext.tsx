@@ -5,7 +5,7 @@ import {
     useEffect,
     useReducer,
 } from "react";
-import { Action, State, initialState, redcuer } from "./reducer";
+import { Action, State, initialState, reducer } from "./reducer";
 
 export type IMessagePageFormContextType = {
     state: State;
@@ -19,7 +19,7 @@ export const MessagePageFormContext = createContext(
 export const MessagePageFormContextProvider: React.FC<{
     children: ReactNode;
 }> = ({ children }) => {
-    const [state, dispatch] = useReducer(redcuer, initialState);
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
         if (state["CURRENT_COMMAND"]._id) {

@@ -2,9 +2,6 @@
 
 import React from "react";
 import { useMessagePageForm } from "../../useMessagePageForm";
-import CommandHelper from "@/app/(user)/message/components/CommandHelper";
-
-// import { Container } from './styles';
 
 const FormInput: React.FC = () => {
     const { register } = useMessagePageForm();

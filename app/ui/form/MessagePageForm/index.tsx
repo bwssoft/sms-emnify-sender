@@ -113,9 +113,6 @@ export async function Form({ endpoint_id }: { endpoint_id?: string }) {
                     <CommandHelper />
                 </div>
             </div>
-            {/* <div className="col-span-3 overflow-hidden">
-                <CommandHelper />
-            </div> */}
             <div className="col-span-3">
                 <form
                     className=" pl-10 flex gap-4 z-[999] overflow-hidden w-full items-end flex-grow mb-3 pr-10"

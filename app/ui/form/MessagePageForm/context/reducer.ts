@@ -17,7 +17,7 @@ export type ModalHelperCommandStateAction = {
 
 export type Action = CurrentCommandStateAction | ModalHelperCommandStateAction;
 
-export const redcuer = (state: State, action: Action) => {
+export const reducer = (state: State, action: Action) => {
   return { ...state, [action.type]: action.payload }
 }
 
