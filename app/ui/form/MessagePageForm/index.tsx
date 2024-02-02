@@ -1,7 +1,7 @@
 'use client'
 
 import { Command } from "@/app/lib/definitions";
-import { Form } from "./ServerForm";
+import { Form } from "./Form";
 import { MessagePageFormContextProvider } from "./context/MessagePageFormContext";
 import { Message } from "@/app/lib/emnify";
 

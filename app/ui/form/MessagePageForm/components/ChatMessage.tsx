@@ -5,38 +5,19 @@ import { ITypeStatus, icon } from "@/app/ui/icons";
 
 type ChatMessageProps = {
   content: Message
+  date: string
+  index: number
 }
 
-export default function ChatMessage({ content }: ChatMessageProps) {
-  let lastRenderedDate = "";
-
-  function compareDates(activityItem: Message, currentDate: string) {
-    const shouldRenderDate = lastRenderedDate !== currentDate;
-
-    if (shouldRenderDate) {
-      lastRenderedDate = currentDate;
-      return currentDate.split("-").reverse().join("-");
-    } else if (lastRenderedDate === "") {
-      return activityItem.submit_date
-        .slice(0, 10)
-        .split("-")
-        .reverse()
-        .join("-");
-    }
-  }
-
-  const currentDate = content.submit_date.slice(0, 10);
-
+export default function ChatMessage({ content, date, index }: ChatMessageProps) {
   return content.status.description !==
     "DELIVERY ATTEMPT PENDING" ? (
     <>
       <div
         key={content.id}
-        className="col-span-2 flex flex-col items-end justify-end"
+        className="w-full flex flex-col items-end justify-end"
       >
-        <p className="flex flex-col items-center text-gray-600 w-full text-[11px]">
-          {compareDates(content, currentDate)}
-        </p>
+        <p className="flex flex-col items-center text-gray-600 w-full text-[11px] sticky top-0" style={{ zIndex: 100 + index }}>{date}</p>
         <div
           key={content.id}
           className="flex flex-col items-end pr-10 col-start-2 w-96"
@@ -67,9 +48,7 @@ export default function ChatMessage({ content }: ChatMessageProps) {
       className="col-span-3 flex flex-col"
     >
       <div className="flex flex-col items-start">
-        <p className="flex flex-col items-center pb-3 text-gray-600 w-full text-[11px]">
-          {compareDates(content, currentDate)}
-        </p>
+        <p className="flex flex-col items-center pb-3 text-gray-600 w-full text-[11px] sticky top-0" style={{ zIndex: 100 + index }}>{date}</p>
         <section className="flex items-center justify-start gap-1.5 w-96">
           <p
             className="text-[12px] text-gray-700 px-3 py-2 border bg-gray-200 rounded-lg whitespace-break-spaces overflow-wrap:break-word"
