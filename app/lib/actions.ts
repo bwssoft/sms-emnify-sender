@@ -115,7 +115,6 @@ export async function updateCommandfromCommandPage(data: Partial<Command>) {
 }
 
 export async function listCommandsfromComandPage(value?: string, type?: string) {
-  console.log(value, type)
   return await repository.listCommands({ type, value });
 }
 
