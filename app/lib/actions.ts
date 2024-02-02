@@ -115,8 +115,7 @@ export async function updateCommandfromCommandPage(data: Partial<Command>) {
 }
 
 export async function listCommandsfromComandPage(value?: string, type?: string) {
-  const resposne = await repository.listCommands({ type, value });
-  return resposne;
+  return await repository.listCommands({ type, value });
 }
 
 export async function sendMessagefromEndpointPage(device_id: string, formData: FormData) {

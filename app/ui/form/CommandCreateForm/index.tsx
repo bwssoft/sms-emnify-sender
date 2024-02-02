@@ -34,6 +34,8 @@ const Form: React.FC = () => {
         return fieldValue;
     }, [watch("name")]);
 
+    const isReadOnly = watch("readonly", false);
+
     const BadgeClassName = "bg-slate-700 border-slate-900 text-gray-300";
 
     if (state["PENDING_COMMAND_REQUEST"]) {
@@ -53,6 +55,7 @@ const Form: React.FC = () => {
                             placeholder="Nome do comando"
                             error={errors.name?.message}
                             {...register("name")}
+                            readOnly={isReadOnly}
                         />
                         <div className="flex flex-col">
                             <label
@@ -64,6 +67,7 @@ const Form: React.FC = () => {
                             <div className="mt-1">
                                 <textarea
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 p-2 outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-inset resize-none focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    readOnly={isReadOnly}
                                     placeholder="Descrição do comando"
                                     {...register("description")}
                                 />
@@ -120,6 +124,7 @@ const Form: React.FC = () => {
                                     </Tooltip>
                                 </>
                             }
+                            readOnly={isReadOnly}
                             error={errors.command?.message}
                             labelClassName="items-center"
                             placeholder="Comando"
@@ -137,6 +142,7 @@ const Form: React.FC = () => {
                             <Variables
                                 onSubmit={field.onChange}
                                 variables={field.value || []}
+                                isReadOnly={isReadOnly}
                             />
                         )}
                     />
@@ -148,7 +154,11 @@ const Form: React.FC = () => {
                     type="submit"
                     className="inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                    {getValues("_id") ? "Ataulizar" : "Cadastrar"}
+                    {isReadOnly
+                        ? "Visualizar"
+                        : getValues("uuid")
+                        ? "Ataulizar"
+                        : "Cadastrar"}
                 </button>
             </div>
             <ModalPreview />
