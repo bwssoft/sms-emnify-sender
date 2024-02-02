@@ -1,4 +1,7 @@
+'use server'
+
 import {
+    fetchEndpointMessagesById,
     fetchEndpointsFilteredByName,
     listCommandsfromComandPage,
     refreshMessageDatafromMessagePage,
@@ -8,7 +11,7 @@ import { MessagePageForm } from "@/app/ui/form/MessagePageForm";
 import { ArrowPathIcon, EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { CpuChipIcon } from "@heroicons/react/24/outline";
 
-export default async function Example({
+export default async function MessagePage({
     searchParams,
 }: {
     searchParams?: {
@@ -24,6 +27,7 @@ export default async function Example({
     const type = searchParams?.type || undefined;
     const query_command = searchParams?.query_command || "";
     const simcards = await fetchEndpointsFilteredByName(query, type);
+    const messages = await fetchEndpointMessagesById(searchParams?.endpoint_id ?? '');
 
     const refreshMessageBinded = refreshMessageDatafromMessagePage.bind(
         null,
@@ -61,6 +65,7 @@ export default async function Example({
 
                     <MessagePageForm
                         commands={commands}
+                        messages={messages}
                         endpoint_id={searchParams?.endpoint_id}
                     />
                 </div>

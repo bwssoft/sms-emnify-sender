@@ -1,12 +1,12 @@
 "use client";
 
-import CommandMenu from "@/app/(user)/message/components/CommandMenu";
 import React from "react";
 import FormInput from "../FormInput";
 import { Button } from "@/app/ui/button";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { useMessagePageForm } from "../../useMessagePageForm";
 import { Command } from "@/app/lib/definitions";
+import CommandMenu from "@/app/ui/components/CommandMenu";
 
 export type IFormContentType = {
     action: (formData: FormData) => Promise<void>;
