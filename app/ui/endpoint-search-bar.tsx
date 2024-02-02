@@ -7,9 +7,11 @@ import { useDebouncedCallback } from 'use-debounce';
 export default function EndpointsSearchBar({
 	placeholder,
 	conatinerClassname,
+	fieldsForSearch = [],
 }: {
 	placeholder: string;
 	conatinerClassname?: string;
+	fieldsForSearch?: Array<{ label: string; field: string }>;
 }) {
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
@@ -53,10 +55,11 @@ export default function EndpointsSearchBar({
 					className="absolute top-0 right-4 lg:right-8 h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
 					onChange={(e) => handleChangeType(e.target.value)}
 				>
-					<option value="endpoint_name">Nome</option>
-					<option value="sim_iccid_with_luhn">Iccid</option>
-					<option value="endpoint_imei">Imei</option>
-					<option value="sim_msisdn">SIM</option>
+					{fieldsForSearch.map((data, key) => (
+						<option value={data.field} key={key}>
+							{data.label}
+						</option>
+					))}
 				</select>
 			</div>
 		</>
