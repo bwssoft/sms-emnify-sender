@@ -22,8 +22,13 @@ export const MessagePageFormContextProvider: React.FC<{
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        if (state["CURRENT_COMMAND"]._id) {
+        if (
+            state["CURRENT_COMMAND"].variables &&
+            state["CURRENT_COMMAND"].variables?.length > 0
+        ) {
             dispatch({ type: "MODAL_HELPER_COMMAND", payload: true });
+        } else {
+            dispatch({ type: "MODAL_HELPER_COMMAND", payload: false });
         }
     }, [state["CURRENT_COMMAND"]]);
 

@@ -34,7 +34,6 @@ export const CommandFormProvider: React.FC<{
                 type: "CURRENT_COMMAND",
                 payload: {
                     ...currentCommand,
-                    _id: currentCommand._id.toString(),
                 },
             });
         } finally {

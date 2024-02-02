@@ -1,5 +1,6 @@
 import {
     fetchEndpointsFilteredByName,
+    listCommandsfromComandPage,
     refreshMessageDatafromMessagePage,
 } from "@/app/lib/actions";
 import EndpointsInput from "@/app/ui/endpoint-input";
@@ -16,16 +17,20 @@ export default async function Example({
         endpoint_id?: string;
         endpoint_name?: string;
         endpoint_imei?: string;
+        query_command?: string;
     };
 }) {
     const query = searchParams?.query || "";
     const type = searchParams?.type || undefined;
+    const query_command = searchParams?.query_command || "";
     const simcards = await fetchEndpointsFilteredByName(query, type);
 
     const refreshMessageBinded = refreshMessageDatafromMessagePage.bind(
         null,
         `/message?endpoint_id=${searchParams?.endpoint_id}`
     );
+
+    const commands = await listCommandsfromComandPage(query_command, "name");
 
     return (
         <div className="grid grid-cols-3">
@@ -54,7 +59,10 @@ export default async function Example({
                         </div>
                     </div>
 
-                    <MessagePageForm endpoint_id={searchParams?.endpoint_id} />
+                    <MessagePageForm
+                        commands={commands}
+                        endpoint_id={searchParams?.endpoint_id}
+                    />
                 </div>
             )}
             {!searchParams?.endpoint_id && (

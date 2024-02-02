@@ -3,7 +3,6 @@ import {
     ExclamationCircleIcon,
     QuestionMarkCircleIcon,
 } from "@heroicons/react/20/solid";
-import { error } from "console";
 import React, { ReactNode, forwardRef } from "react";
 
 export type IInputType = React.InputHTMLAttributes<HTMLInputElement> & {

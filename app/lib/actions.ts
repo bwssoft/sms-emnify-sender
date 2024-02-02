@@ -125,12 +125,8 @@ export async function updateCommandfromCommandPage(data: Partial<Command>) {
 	return response;
 }
 
-export async function listCommandsfromComandPage(
-	value?: string,
-	type?: string,
-) {
-	const resposne = await repository.listCommands({ type, value });
-	return resposne;
+export async function listCommandsfromComandPage(value?: string, type?: string) {
+  return await repository.listCommands({ type, value });
 }
 
 export async function sendMessagefromEndpointPage(

@@ -17,6 +17,8 @@ const ModalPreview = () => {
         onPedingRequest,
     } = useModalPreview();
 
+    const isReadOnly = state["CURRENT_COMMAND"]?.readonly || false;
+
     return (
         <Modal
             onClose={() =>
@@ -84,18 +86,20 @@ const ModalPreview = () => {
                             })
                         }
                     >
-                        Cancelar
+                        {isReadOnly ? "Fechar" : "Cancelar"}
                     </Button>
-                    <Button
-                        disabled={onPedingRequest}
-                        type="button"
-                        className={cn(
-                            "inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
-                        )}
-                        onClick={onHandleSubmit}
-                    >
-                        Salvar
-                    </Button>
+                    {!isReadOnly && (
+                        <Button
+                            disabled={onPedingRequest}
+                            type="button"
+                            className={cn(
+                                "inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
+                            )}
+                            onClick={onHandleSubmit}
+                        >
+                            Salvar
+                        </Button>
+                    )}
                 </div>
             </div>
         </Modal>

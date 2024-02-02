@@ -21,7 +21,7 @@ export const useModalPreview = () => {
     const [onPedingRequest, setOnPendingRequest] = useState<boolean>(false);
     const router = useRouter();
     const formState = state["CURRENT_COMMAND"];
-    const isUpadte = formState?._id !== undefined;
+    const isUpadte = formState?.uuid !== undefined;
     const badgeClassName = "bg-slate-800 border-slate-900 text-white";
 
     const CommnadFormater = () => {
