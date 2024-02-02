@@ -49,9 +49,9 @@ export default function EndpointsInput({ simcards }: { simcards: Simcard[] }) {
     }, 300);
 
     return (
-        <div className="flex min-h-[91vh]">
+        <div className="flex min-h-[91vh] cols-span-1">
             <RadioGroup
-                className={"w-fit border-gray-200 border-r-[1px]"}
+                className={"w-full border-gray-200 border-r-[1px] cols-span-1"}
                 value={selected}
                 onChange={(e) => {
                     setSelected(e);
