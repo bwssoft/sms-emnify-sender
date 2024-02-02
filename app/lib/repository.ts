@@ -66,7 +66,16 @@ export async function listCommands({ type = 'name', value }: { type?: string, va
       where = { [type]: { $regex: value } }
     }
     const commnadModel = (await clientPromise).db("sms-emnify-sender").collection<Command>("commands");
-    const commandsEntity = await commnadModel.find(where).toArray();
+    const commandsEntity = await commnadModel.aggregate<Command>([
+      {
+        $match: {
+          ...where
+        }
+      },
+      {
+        $limit: 20
+      }, { $project: { _id: 0 } }
+    ]).toArray();
     return commandsEntity;
   } catch (error) {
     throw new Error('Failed to list commands.');
@@ -76,11 +85,18 @@ export async function listCommands({ type = 'name', value }: { type?: string, va
 export async function findOneCommand(uuid: string) {
   try {
     const commnadModel = (await clientPromise).db("sms-emnify-sender").collection<Command>("commands");
-    const commandEntity = await commnadModel.findOne({
-      uuid
-    });
+    const commandEntity = await commnadModel.aggregate([
+      {
+        $match: {
+          uuid
+        }
+      },
+      {
+        $limit: 1
+      }, { $project: { _id: 0 } }
+    ]).toArray()
 
-    return commandEntity;
+    return commandEntity[0];
   } 
   catch (error) {
     throw new Error('Failed to find one command.');

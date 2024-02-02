@@ -18,7 +18,7 @@ const CommandMenu: React.FC<ICommandMenuType> = ({ commands = [] }) => {
     const badgeClassName =
         "bg-slate-800 text-[8px] font-medium border-slate-900 text-white";
 
-    const { onHandleClickCommand } = useMessagePageForm();
+    const { onHandleClickCommand, CommnadFormater } = useMessagePageForm();
 
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -72,18 +72,7 @@ const CommandMenu: React.FC<ICommandMenuType> = ({ commands = [] }) => {
                                                 <div className="rounded-full w-1 h-1 bg-green-500" />
                                             </div>
                                             <div className="flex gap-[1.2px] items-center mt-1 px-2 font-medium text-white text-[11px]">
-                                                <span>IP1#</span>
-                                                <Badge
-                                                    className={badgeClassName}
-                                                >
-                                                    IP
-                                                </Badge>
-                                                <span>#</span>
-                                                <Badge
-                                                    className={badgeClassName}
-                                                >
-                                                    PORT
-                                                </Badge>
+                                                {CommnadFormater(props)}
                                             </div>
                                         </div>
                                     </div>
