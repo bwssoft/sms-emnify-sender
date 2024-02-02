@@ -43,6 +43,25 @@ export async function changeUserPassword(formData: FormData) {
   })
 }
 
+export async function recoverUserPassword(formData: FormData) {
+  const entries = Object.fromEntries(formData.entries());
+  const username = entries.username.toString();
+  const new_password = entries.new_password.toString();
+
+
+  const user = await repository.listUserByUsername(username);
+  if (!user) {
+    throw new Error('Usuário não encontrado');
+  }
+  const hashPassword = await bcrypt.hash(new_password, 10)
+  return await repository.updateUser({
+    username: username,
+    password: hashPassword
+  })
+}
+
+
+
 export async function fetchEndpoints() {
   return await emnify.listEndpoints()
   // await new Promise<void>((resolve) => setTimeout(resolve, 2000))
