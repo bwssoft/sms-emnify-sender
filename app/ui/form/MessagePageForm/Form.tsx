@@ -54,7 +54,6 @@ export function Form(props: {
     });
 
     const onRenderViewDate = (date: string) => {
-        console.log(date);
         const currentDay = getDay(new Date());
         const yesterday = getDay(subDays(new Date(), 1));
 
@@ -79,13 +78,13 @@ export function Form(props: {
                         {Object.values(datesToRenderMessageIndexes).includes(
                             index
                         ) && (
-                            <p
-                                className="w-fit p-2 my-2 flex flex-col rounded-md items-center text-gray-600 bg-gray-100 self-center justify-center text-[11px] sticky top-1"
-                                style={{ zIndex: 20 + index }}
-                            >
-                                {onRenderViewDate(message.submit_date)}
-                            </p>
-                        )}
+                                <p
+                                    className="w-fit p-2 my-2 flex flex-col rounded-md items-center text-gray-600 bg-gray-100 self-center justify-center text-[11px] sticky top-1"
+                                    style={{ zIndex: 20 + index }}
+                                >
+                                    {onRenderViewDate(message.submit_date)}
+                                </p>
+                            )}
 
                         <ChatMessage content={message} />
                     </Fragment>
