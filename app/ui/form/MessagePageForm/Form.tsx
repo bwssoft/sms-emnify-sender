@@ -38,7 +38,7 @@ export function Form(props: {
         let dates: DateToRenderMessageIndex = {};
 
         for (const date of uniqueDates) {
-            dates[date] = reversedArray.findLastIndex((message) =>
+            dates[date] = reversedArray.findIndex((message) =>
                 message.submit_date.startsWith(date)
             );
         }
