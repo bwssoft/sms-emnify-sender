@@ -58,7 +58,7 @@ const CommandMenu: React.FC<ICommandMenuType> = ({ commands = [] }) => {
                                     key={key}
                                     onClick={() => onHandleClickCommand(props)}
                                 >
-                                    <div className="w-full bg-white px-2 py-1 shadow-md cursor-pointer hover:bg-gray-50 rounded-md h-[88px]">
+                                    <div className="w-full bg-white px-2 py-1 shadow-md cursor-pointer hover:bg-gray-50 rounded-md">
                                         <div className="text-xs font-semibold">
                                             {props.name}
                                         </div>

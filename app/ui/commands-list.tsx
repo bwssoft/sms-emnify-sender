@@ -37,60 +37,88 @@ const CommandsList: React.FC<ICommandsListType> = ({ commands }) => {
         <>
             {/* Projects list (only on smallest breakpoint) */}
             <div className="mt-10 sm:hidden">
-                <div className="px-4 sm:px-6">
-                    <h2 className="text-sm font-medium text-gray-900">Nome</h2>
+                <div className="flex border-gray-50 border-b-gray-200 border-4 border-b px-6 py-3 bg-gray-50 justify-between">
+                    <div className="flex w-full">
+                        <h2 className="text-sm font-semibold text-gray-900">
+                            Comando
+                        </h2>
+                    </div>
+                    <div className="flex w-full justify-center">
+                        <h2 className="text-sm font-semibold text-gray-900">
+                            Ações
+                        </h2>
+                    </div>
                 </div>
                 <ul
                     role="list"
-                    className="mt-3 divide-y divide-gray-100 border-t border-gray-200"
+                    className=" divide-y divide-gray-100 border-t overflow-y-auto scroll-slim max-h-[calc(100vh-60vh)] border-4  border-transparent"
                 >
                     {commands.map((data) => (
-                        <li key={data.uuid}>
-                            <a
-                                href="#"
-                                className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6"
-                            >
-                                <span className="flex items-center space-x-3 truncate">
-                                    <span className="truncate text-sm font-medium leading-6">
+                        <li
+                            className="flex w-full px-6 items-center"
+                            key={data.uuid}
+                        >
+                            <span className="flex w-full items-center truncate">
+                                <a
+                                    href={`/command/${data.uuid}`}
+                                    className="group flex items-center justify-between py-4 group sm:px-6"
+                                >
+                                    <span className="truncate text-sm group-hover:text-gray-500 ransition-all font-medium leading-6">
                                         {data.name}
                                     </span>
-                                </span>
-                                <ChevronRightIcon
-                                    className="ml-4 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                    aria-hidden="true"
-                                />
-                            </a>
+                                </a>
+                            </span>
+                            <span className="flex w-full justify-center gap-2">
+                                <Link
+                                    href={`/command/${data.uuid}`}
+                                    className="text-indigo-600 hover:text-indigo-900"
+                                >
+                                    <Tooltip content="Visualizar">
+                                        <EyeIcon className="w-4 h-4" />
+                                    </Tooltip>
+                                </Link>
+                                <div>
+                                    <Tooltip content="Deletar">
+                                        <TrashIcon
+                                            onClick={() =>
+                                                onHandleDeleteCommand(data)
+                                            }
+                                            className="text-indigo-600 cursor-pointer hover:text-indigo-900 w-4 h-4"
+                                        />
+                                    </Tooltip>
+                                </div>
+                            </span>
                         </li>
                     ))}
                 </ul>
             </div>
 
             {/* Projects table (small breakpoint and up) */}
-            <div className="mt-8 hidden sm:block">
+            <div className="mt-8 hidden sm:block overflow-y-auto scroll-slim border-4 border-white max-h-[calc(100vh-260px)]">
                 <div className="inline-block min-w-full border-b border-gray-200 align-middle">
                     <table className="min-w-full">
                         <thead>
-                            <tr className="border-t border-gray-200">
+                            <tr className="border-separate border-spacing-0">
                                 <th
-                                    className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
+                                    className="sticky top-0 border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
                                     scope="col"
                                 >
                                     <span className="lg:pl-2">Comando</span>
                                 </th>
                                 <th
-                                    className="border-b border-gray-200 text-center bg-gray-50 px-6 py-3  text-sm font-semibold text-gray-900"
+                                    className="sticky top-0 border-b border-gray-200 text-center bg-gray-50 px-6 py-3  text-sm font-semibold text-gray-900"
                                     scope="col"
                                 >
                                     Variaveis
                                 </th>
                                 <th
-                                    className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
+                                    className="hidden md:table-cell sticky top-0 border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
                                     scope="col"
                                 >
                                     Descrição
                                 </th>
                                 <th
-                                    className="border-b border-gray-200 text-center bg-gray-50 py-3 px-6 text-sm font-semibold text-gray-900"
+                                    className="sticky top-0 border-b border-gray-200 text-center bg-gray-50 py-3 px-6 text-sm font-semibold text-gray-900"
                                     scope="col"
                                 >
                                     Ações
@@ -105,7 +133,7 @@ const CommandsList: React.FC<ICommandsListType> = ({ commands }) => {
                                             <span>{data.name}</span>
                                         </div>
                                     </td>
-                                    <td className="w-1/5 hidden whitespace-nowrap px-6 py-3 text-sm text-gray-500 md:table-cell">
+                                    <td className="w-1/5 hidden whitespace-nowrap px-6 py-3 text-sm text-gray-500 sm:table-cell">
                                         <span className="flex w-full gap-1 justify-center items-center">
                                             {data.variables?.map(
                                                 (props, key) => (
