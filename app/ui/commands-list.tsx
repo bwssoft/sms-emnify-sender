@@ -66,31 +66,31 @@ const CommandsList: React.FC<ICommandsListType> = ({ commands }) => {
             </div>
 
             {/* Projects table (small breakpoint and up) */}
-            <div className="mt-8 hidden sm:block">
+            <div className="mt-8 hidden sm:block overflow-y-auto scroll-slim border-4 border-white max-h-[calc(100vh-260px)]">
                 <div className="inline-block min-w-full border-b border-gray-200 align-middle">
                     <table className="min-w-full">
                         <thead>
-                            <tr className="border-t border-gray-200">
+                            <tr className="border-separate border-spacing-0">
                                 <th
-                                    className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
+                                    className="sticky top-0 border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
                                     scope="col"
                                 >
                                     <span className="lg:pl-2">Comando</span>
                                 </th>
                                 <th
-                                    className="border-b border-gray-200 text-center bg-gray-50 px-6 py-3  text-sm font-semibold text-gray-900"
+                                    className="sticky top-0 border-b border-gray-200 text-center bg-gray-50 px-6 py-3  text-sm font-semibold text-gray-900"
                                     scope="col"
                                 >
                                     Variaveis
                                 </th>
                                 <th
-                                    className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
+                                    className="sticky top-0 border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
                                     scope="col"
                                 >
                                     Descrição
                                 </th>
                                 <th
-                                    className="border-b border-gray-200 text-center bg-gray-50 py-3 px-6 text-sm font-semibold text-gray-900"
+                                    className="sticky top-0 border-b border-gray-200 text-center bg-gray-50 py-3 px-6 text-sm font-semibold text-gray-900"
                                     scope="col"
                                 >
                                     Ações

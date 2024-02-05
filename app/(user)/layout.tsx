@@ -6,6 +6,7 @@ import { SideBar } from "../ui/side-bar";
 import { Navbar } from "../ui/nav-bar";
 import { Theme } from "@radix-ui/themes";
 import { Toaster } from "react-hot-toast";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,16 +23,18 @@ export default function RootLayout({
     return (
         <html lang="en" className="h-full bg-white">
             <body className={`h-full ${inter.className}`}>
-                <Theme className="h-full">
-                    <Toaster position="top-center" />
-                    <SideBar />
-                    <div className="h-full lg:pl-64">
-                        <Navbar />
-                        <div className="w-full max-h-[calc(100vh-120px)] sm:max-h-[calc(100vh-57px)] overflow-hidden h-full">
-                            {children}
+                <SessionProvider>
+                    <Theme className="h-full">
+                        <Toaster position="top-center" />
+                        <SideBar />
+                        <div className="h-full lg:pl-64">
+                            <Navbar />
+                            <div className="w-full max-h-[calc(100vh-120px)] sm:max-h-[calc(100vh-57px)] overflow-hidden h-full">
+                                {children}
+                            </div>
                         </div>
-                    </div>
-                </Theme>
+                    </Theme>
+                </SessionProvider>
             </body>
         </html>
     );

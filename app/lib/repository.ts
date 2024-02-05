@@ -93,10 +93,10 @@ export async function findOneCommand(uuid: string) {
       },
       {
         $limit: 1
-      }, { $project: { _id: 0 } }
+      }
     ]).toArray()
 
-    return commandEntity[0];
+    return { ...commandEntity[0], _id: commandEntity[0]._id.toString() };
   } 
   catch (error) {
     throw new Error('Failed to find one command.');

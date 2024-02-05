@@ -46,10 +46,12 @@ const Form: React.FC = () => {
         <div className="flex flex-col h-full">
             <div className="flex w-full h-full gap-2">
                 <form id="commandForm" onSubmit={onHandleSubmit}>
-                    <div className="flex flex-col gap-2 flex-1">
-                        <div className="font-semibold text-lg py-2">
-                            {commandName()}
-                        </div>
+                    <div className="flex flex-col gap-2 overflow-hidden max-w-full flex-1">
+                        <Tooltip content={commandName()}>
+                            <div className="font-semibold text-ellipsis max-w-[310px] truncate overflow-hidden text-lg py-2">
+                                {commandName()}
+                            </div>
+                        </Tooltip>
                         <Input
                             label="Nome do Comando"
                             placeholder="Nome do comando"
@@ -156,7 +158,7 @@ const Form: React.FC = () => {
                 >
                     {isReadOnly
                         ? "Visualizar"
-                        : getValues("uuid")
+                        : getValues("_id")
                         ? "Ataulizar"
                         : "Cadastrar"}
                 </button>
