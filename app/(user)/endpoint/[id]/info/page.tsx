@@ -7,7 +7,6 @@ export default async function Example({
         id: string;
     };
 }) {
-    console.log(params.id);
     const endpoint = await fetchEndpointById(params.id);
     const isUserAdm = await isAdm();
     if (!endpoint) {
