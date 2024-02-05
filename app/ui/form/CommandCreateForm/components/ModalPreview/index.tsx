@@ -25,7 +25,7 @@ const ModalPreview = () => {
             }
             open={state["MODAL_PREVIEW_COMMAND"]}
             position="center"
-            className="w-3/5 min-h-[50%]"
+            className=" w-5/6 min-h-[38%] md:w-3/5 md:min-h-[50%]"
         >
             <div>
                 <div className="overflow-y-auto">
