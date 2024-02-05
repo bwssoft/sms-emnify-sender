@@ -8,14 +8,37 @@ import { Command } from "@/app/lib/definitions";
 import CommandHelper from "../../components/CommandHelper";
 import ChatMessage from "./components/ChatMessage";
 import { Message } from "@/app/lib/emnify";
-import { useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
+import { reverseArray } from "@/app/utils/reverseArray";
+
+type DateToRenderMessageIndex = {
+    [key: string]: number; // example: { '05-04-2023': 5 }
+}
 
 export function Form(props: {
     endpoint_id?: string;
     commands: Array<Command>;
     messages: Array<Message>;
 }) {
-    const [lastRenderedDate, setLastRenderedDate] = useState<string>('')
+    const [datesToRenderMessageIndexes, setDatesToRenderMessageIndexes] = useState<DateToRenderMessageIndex>({});
+
+    const reversedArray = useMemo(() => reverseArray(props.messages), [props.messages]);
+
+    useEffect(() => {
+        const uniqueDates = Array.from(
+            new Set(
+                reversedArray.map((message) => message.submit_date.slice(0, 10))
+            )
+        );
+
+        let dates: DateToRenderMessageIndex = {};
+
+        for (const date of uniqueDates) {
+            dates[date] = reversedArray.findLastIndex((message) => message.submit_date.startsWith(date));
+        }
+
+        setDatesToRenderMessageIndexes(dates);
+    }, [reversedArray]);
 
     if (!props?.endpoint_id) return null;
 
@@ -24,41 +47,26 @@ export function Form(props: {
         url: `/message?endpoint_id=${props.endpoint_id}`,
     });
 
-    function compareDates(message: Message) {
-        const currentDate = message.submit_date.slice(0, 10);
-        const shouldRenderDate = lastRenderedDate !== currentDate;
-
-        if (!shouldRenderDate) return null
-
-        if (lastRenderedDate === "") {
-            setLastRenderedDate(currentDate);
-
-            return currentDate
-                .split("-")
-                .reverse()
-                .join("-");
-        }
-
-        setLastRenderedDate(currentDate);
-        return currentDate.split("-").reverse().join("-");
-    }
-
     return (
         <div className="cols-span-4">
-            <div className="relative pl-2 flex flex-col-reverse overflow-auto max-h-[80vh] scrollbar-thin scrollbar-thumb-gray-300">
-
-                {props.messages.map((message, index) => (
-                    <>
-                        {compareDates(message) !== null && (
-                            <p key={`${message.udh}${message.id}`} className="flex flex-col items-center text-gray-600 w-full text-[11px] sticky top-0" style={{ zIndex: 100 + index }}>{compareDates(message)}</p>
+            <div className="relative pl-2 flex flex-col overflow-auto max-h-[80vh] scrollbar-thin scrollbar-thumb-gray-300">
+                {reversedArray.map((message, index) => (
+                    <Fragment key={`${message.id}${message.payload}`}>
+                        {Object.values(datesToRenderMessageIndexes).includes(index) && (
+                            <p
+                                className="w-fit p-2 my-2 flex flex-col rounded-md items-center text-gray-600 bg-gray-100 self-center justify-center text-[11px] sticky top-1"
+                                style={{ zIndex: 20 + index }}
+                            >
+                                {message.submit_date.slice(0, 10).split('-').reverse().join('-')}
+                            </p>
                         )}
 
                         <ChatMessage
-                            key={`${message.udh}${message.id}`}
                             content={message}
                         />
-                    </>
+                    </Fragment>
                 ))}
+
                 <div className="absolute z-0 right-0 left-0 bottom-0 w-full">
                     <CommandHelper />
                 </div>
