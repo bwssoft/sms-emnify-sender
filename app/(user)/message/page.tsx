@@ -37,7 +37,7 @@ export default async function MessagePage({
     const commands = await listCommandsfromComandPage(query_command, "name");
 
     return (
-        <div className="grid grid-cols-5">
+        <div className="grid grid-cols-1 lg:grid-cols-5 relative min-h-full">
             <EndpointsInput simcards={simcards.slice(0, 9)} />
 
             {/*SEGUNDA COLUNA  */}
@@ -70,8 +70,9 @@ export default async function MessagePage({
                     />
                 </div>
             )}
+
             {!searchParams?.endpoint_id && (
-                <div className="flex flex-col w-full justify-center items-center col-span-4">
+                <div className="flex flex-col w-full justify-center items-center col-span-1 lg:col-span-4">
                     <div className="text-center flex flex-col items-center">
                         <CpuChipIcon className="h-8 w-8 text-gray-700" />
                         <h3 className="mt-2 text-sm font-semibold text-gray-900">

@@ -1,6 +1,5 @@
 'use client'
 
-import type { Metadata } from "next";
 import { Theme } from "@radix-ui/themes";
 import { Inter } from "next/font/google";
 import { useState } from "react";
