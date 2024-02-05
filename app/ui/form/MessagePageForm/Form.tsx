@@ -1,3 +1,5 @@
+'use client'
+
 import {
     sendMessagefromMessagePage,
 } from "@/app/lib/actions";
@@ -6,13 +8,14 @@ import { Command } from "@/app/lib/definitions";
 import CommandHelper from "../../components/CommandHelper";
 import ChatMessage from "./components/ChatMessage";
 import { Message } from "@/app/lib/emnify";
+import { useState } from "react";
 
-export async function Form(props: {
+export function Form(props: {
     endpoint_id?: string;
     commands: Array<Command>;
     messages: Array<Message>;
 }) {
-    let lastRenderedDate = ''
+    const [lastRenderedDate, setLastRenderedDate] = useState<string>('')
 
     if (!props?.endpoint_id) return null;
 
@@ -28,7 +31,7 @@ export async function Form(props: {
         if (!shouldRenderDate) return null
 
         if (lastRenderedDate === "") {
-            lastRenderedDate = currentDate;
+            setLastRenderedDate(currentDate);
 
             return currentDate
                 .split("-")
@@ -36,25 +39,31 @@ export async function Form(props: {
                 .join("-");
         }
 
-        lastRenderedDate = currentDate;
+        setLastRenderedDate(currentDate);
         return currentDate.split("-").reverse().join("-");
     }
 
     return (
         <div className="cols-span-4">
             <div className="relative pl-2 flex flex-col-reverse overflow-auto max-h-[80vh] scrollbar-thin scrollbar-thumb-gray-300">
+
                 {props.messages.map((message, index) => (
-                    <ChatMessage
-                        key={`${message.udh}${message.id}`}
-                        date={compareDates(message) ?? ''}
-                        content={message}
-                        index={index}
-                    />
+                    <>
+                        {compareDates(message) !== null && (
+                            <p key={`${message.udh}${message.id}`} className="flex flex-col items-center text-gray-600 w-full text-[11px] sticky top-0" style={{ zIndex: 100 + index }}>{compareDates(message)}</p>
+                        )}
+
+                        <ChatMessage
+                            key={`${message.udh}${message.id}`}
+                            content={message}
+                        />
+                    </>
                 ))}
                 <div className="absolute z-0 right-0 left-0 bottom-0 w-full">
                     <CommandHelper />
                 </div>
             </div>
+
             <div>
                 <FormContent commands={props.commands} action={sendMessageBinded} />
             </div>
