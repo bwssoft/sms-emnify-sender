@@ -47,7 +47,7 @@ const CommandsList: React.FC<ICommandsListType> = ({ commands }) => {
                     {commands.map((data) => (
                         <li key={data.uuid}>
                             <a
-                                href="#"
+                                href={`/command/${data.uuid}`}
                                 className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6"
                             >
                                 <span className="flex items-center space-x-3 truncate">
@@ -84,7 +84,7 @@ const CommandsList: React.FC<ICommandsListType> = ({ commands }) => {
                                     Variaveis
                                 </th>
                                 <th
-                                    className="sticky top-0 border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
+                                    className="hidden md:table-cell sticky top-0 border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
                                     scope="col"
                                 >
                                     Descrição
@@ -105,7 +105,7 @@ const CommandsList: React.FC<ICommandsListType> = ({ commands }) => {
                                             <span>{data.name}</span>
                                         </div>
                                     </td>
-                                    <td className="w-1/5 hidden whitespace-nowrap px-6 py-3 text-sm text-gray-500 md:table-cell">
+                                    <td className="w-1/5 hidden whitespace-nowrap px-6 py-3 text-sm text-gray-500 sm:table-cell">
                                         <span className="flex w-full gap-1 justify-center items-center">
                                             {data.variables?.map(
                                                 (props, key) => (
