@@ -72,7 +72,7 @@ export default function EndpointsInput({ simcards }: EndpointsInputProps) {
 
             <div
                 className={cn(
-                    "z-40 flex items-start justify-start min-w-full cols-span-1 bg-white",
+                    "z-40 flex items-start justify-start min-w-[350px] cols-span-1 bg-white",
                     isOnSmallerScreens && !isFullScreen && 'hidden',
                     isOnSmallerScreens && isFullScreen && 'inset-0 fixed items-center justify-center min-h-screen min-w-screen'
                 )}
