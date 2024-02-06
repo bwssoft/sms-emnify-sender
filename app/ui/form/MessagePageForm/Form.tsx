@@ -8,7 +8,7 @@ import ChatMessage from "./components/ChatMessage";
 import { Message } from "@/app/lib/emnify";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { reverseArray } from "@/app/utils/reverseArray";
-import { format, getDay, subDays, toDate } from "date-fns";
+import { compareAsc, format, getDay, subDays, toDate } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 type DateToRenderMessageIndex = {
@@ -54,16 +54,15 @@ export function Form(props: {
     });
 
     const onRenderViewDate = (date: string) => {
-        const currentDay = getDay(new Date());
-        const yesterday = getDay(subDays(new Date(), 1));
+        const today = new Date().toISOString();
 
-        const currentSendAt = getDay(toDate(date));
-
-        if (currentDay === currentSendAt) {
+        if (date.substring(0, 10) === today.substring(0, 10)) {
             return "Hoje";
         }
 
-        if (yesterday === currentSendAt) {
+        const yesterday = subDays(new Date(), 1).toISOString();
+
+        if (date.substring(0, 10) === yesterday.substring(0, 10)) {
             return "Ontem";
         }
 
@@ -78,13 +77,13 @@ export function Form(props: {
                         {Object.values(datesToRenderMessageIndexes).includes(
                             index
                         ) && (
-                                <p
-                                    className="w-[6rem] p-2 my-2 flex flex-col rounded-md items-center text-gray-600 bg-gray-100 self-center justify-center text-[11px] sticky top-1"
-                                    style={{ zIndex: 10 + index }}
-                                >
-                                    {onRenderViewDate(message.submit_date)}
-                                </p>
-                            )}
+                            <p
+                                className="w-[6rem] p-2 my-2 flex flex-col rounded-md items-center text-gray-600 bg-gray-100 self-center justify-center text-[11px] sticky top-1"
+                                style={{ zIndex: 10 + index }}
+                            >
+                                {onRenderViewDate(message.submit_date)}
+                            </p>
+                        )}
 
                         <ChatMessage content={message} />
                     </Fragment>
