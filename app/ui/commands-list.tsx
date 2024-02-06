@@ -23,6 +23,7 @@ export type ICommandsListType = {
 const CommandsList: React.FC<ICommandsListType> = ({ commands }) => {
     const [curretCommand, setCurrentCommand] = useState<Command>();
     const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+
     const onCloseModal = () => {
         setOpenDeleteModal(false);
     };

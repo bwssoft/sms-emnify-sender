@@ -1,4 +1,4 @@
-'use server'
+"use server";
 
 import {
     fetchEndpointMessagesById,
@@ -27,7 +27,9 @@ export default async function MessagePage({
     const type = searchParams?.type || undefined;
     const query_command = searchParams?.query_command || "";
     const simcards = await fetchEndpointsFilteredByName(query, type);
-    const messages = await fetchEndpointMessagesById(searchParams?.endpoint_id ?? '');
+    const messages = await fetchEndpointMessagesById(
+        searchParams?.endpoint_id ?? ""
+    );
 
     const refreshMessageBinded = refreshMessageDatafromMessagePage.bind(
         null,

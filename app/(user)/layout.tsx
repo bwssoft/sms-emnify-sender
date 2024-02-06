@@ -23,18 +23,16 @@ export default function RootLayout({
     return (
         <html lang="en" className="h-full bg-white">
             <body className={`h-full ${inter.className}`}>
-                <SessionProvider>
-                    <Theme className="h-full">
-                        <Toaster position="top-center" />
-                        <SideBar />
-                        <div className="h-full lg:pl-64">
-                            <Navbar />
-                            <div className="w-full max-h-[calc(100vh-120px)] sm:max-h-[calc(100vh-57px)] overflow-hidden h-full">
-                                {children}
-                            </div>
+                <Theme className="h-full">
+                    <Toaster position="top-center" />
+                    <SideBar />
+                    <div className="h-full lg:pl-64">
+                        <Navbar />
+                        <div className="w-full max-h-[calc(100vh-120px)] sm:max-h-[calc(100vh-57px)] overflow-hidden h-full">
+                            {children}
                         </div>
-                    </Theme>
-                </SessionProvider>
+                    </div>
+                </Theme>
             </body>
         </html>
     );
