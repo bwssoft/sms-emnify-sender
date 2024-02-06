@@ -69,7 +69,7 @@ const Variables: React.FC<IVariablesType> = (data) => {
                 </>
             )}
             <div className="text-lg font-semibold">Variaveis do Comando</div>
-            <div className="flex items-start w-full h-full border gap-3 border-gray-200 rounded-md flex-wrap p-2">
+            <div className="flex items-start min-h-[7rem] w-full h-full border gap-3 border-gray-200 rounded-md flex-wrap p-2">
                 {data.variables.map((props, key) => (
                     <Badge
                         key={key}

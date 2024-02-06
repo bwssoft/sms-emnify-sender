@@ -1,11 +1,11 @@
 import { fetchEndpointById, isAdmOrSupport } from "@/app/lib/actions";
 
 export default async function Example({
-  params,
+    params,
 }: {
-  params: {
-    id: string;
-  };
+    params: {
+        id: string;
+    };
 }) {
   const endpoint = await fetchEndpointById(params.id);
   const isUserAdm = await isAdmOrSupport();

@@ -1,12 +1,12 @@
 "use client";
 
-import CommandMenu from "@/app/(user)/message/components/CommandMenu";
 import React from "react";
-import FormInput from "../FormInput";
 import { Button } from "@/app/ui/button";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { useMessagePageForm } from "../../useMessagePageForm";
 import { Command } from "@/app/lib/definitions";
+import CommandMenu from "@/app/ui/components/CommandMenu";
+import { Input } from "@/app/ui/components/Input";
 
 export type IFormContentType = {
     action: (formData: FormData) => Promise<void>;
@@ -14,19 +14,26 @@ export type IFormContentType = {
 };
 
 const FormContent: React.FC<IFormContentType> = ({ action, commands }) => {
-    const { onHandleSubmit } = useMessagePageForm();
+    const { resetField, register } = useMessagePageForm();
 
     return (
         <form
             className=" pl-10 flex gap-4 z-[999] overflow-hidden w-full items-end flex-grow mb-3 pr-10"
-            action={action}
-            onSubmit={onHandleSubmit}
+            action={async(formData) => {
+                await action(formData);
+                resetField("payload")
+            }}
         >
             <div className="flex relative w-full mt-2 rounded-full shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
                 <div className="cursor-pointer absolute inset-y-0 right-0 flex items-center pr-3">
                     <CommandMenu commands={commands} />
                 </div>
-                <FormInput />
+                <Input
+                label=""
+                placeholder="Escreva sua mensagem..."
+                {...register("payload")}
+                className="w-full text- resize-none border-0 bg-transparent py-2 pr-10 pl-5 h-fit leading-[1.5em] text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+            />
             </div>
             <Button
                 type="submit"

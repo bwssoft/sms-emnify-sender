@@ -96,5 +96,6 @@ export const useMessagePageForm = () => {
         register,
         onHandleSubmit,
         CommnadFormater,
+        resetField
     };
 };
