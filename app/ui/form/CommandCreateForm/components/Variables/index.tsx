@@ -1,13 +1,14 @@
-import Badge from "@/app/ui/badge";
-import { Input } from "@/app/ui/components/Input";
-import { PlusCircleIcon } from "@heroicons/react/20/solid";
-import React, { useRef } from "react";
+import Badge from '@/app/ui/badge';
+import { Input } from '@/app/ui/components/Input';
+import { PlusCircleIcon } from '@heroicons/react/20/solid';
+import React, { useRef } from 'react';
 import { useVariables } from "./useVariables";
-import { Tooltip } from "@radix-ui/themes";
+import { Tooltip } from '@radix-ui/themes';
+import { Button } from '@/app/ui/button';
 
 export type IVariableSchema = {
-    name: string;
-    description?: string;
+	name: string;
+	description?: string;
 };
 
 export type IVariablesType = {
@@ -17,14 +18,14 @@ export type IVariablesType = {
 };
 
 const Variables: React.FC<IVariablesType> = (data) => {
-    const { errors, onHandleSubmit, register, onHandleClear } =
-        useVariables(data);
+	const { errors, onHandleSubmit, register, onHandleClear } =
+		useVariables(data);
 
     const isReadOnly = data.isReadOnly || false;
 
     return (
         <form
-            onSubmit={onHandleSubmit}
+            action={() => onHandleSubmit()}
             className="flex flex-col justify-start border gap-2 border-gray-200 p-2 rounded-md w-full h-full"
         >
             {!isReadOnly && (
@@ -54,7 +55,7 @@ const Variables: React.FC<IVariablesType> = (data) => {
                         </div>
                     </div>
                     <div className="flex w-full justify-end">
-                        <button
+                        <Button
                             type="submit"
                             className="inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
@@ -63,7 +64,7 @@ const Variables: React.FC<IVariablesType> = (data) => {
                                 aria-hidden="true"
                             />
                             Adicionar
-                        </button>
+                        </Button>
                     </div>
                 </>
             )}

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { CommandLineIcon } from "@heroicons/react/20/solid";
 import { Popover } from "@radix-ui/themes";
@@ -11,12 +11,12 @@ import { useDebouncedCallback } from "use-debounce";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export type ICommandMenuType = {
-    commands?: Array<Command>;
+	commands?: Array<Command>;
 };
 
 const CommandMenu: React.FC<ICommandMenuType> = ({ commands = [] }) => {
-    const badgeClassName =
-        "bg-slate-800 text-[8px] font-medium border-slate-900 text-white";
+	const badgeClassName =
+		'bg-slate-800 text-[8px] font-medium border-slate-900 text-white';
 
     const { onHandleClickCommand, CommnadFormater } = useMessagePageForm();
 

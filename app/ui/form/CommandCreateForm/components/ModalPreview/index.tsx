@@ -4,6 +4,7 @@ import Badge from "@/app/ui/badge";
 import { useModalPreview } from "./useModalPreview";
 import { Spinner } from "@/app/ui/components/Spinner";
 import { cn } from "@/app/utils/cn";
+import { Button } from "@/app/ui/button";
 
 const ModalPreview = () => {
     const {
@@ -71,7 +72,7 @@ const ModalPreview = () => {
                     </div>
                 </div>
                 <div className="mt-4 flex gap-2 w-full justify-end">
-                    <button
+                    <Button
                         type="button"
                         className={cn(
                             "bg-transparent hover:bg-indigo-600 text-indigo-700 font-semibold hover:text-white py-2 px-4 border border-indigo-500 hover:border-transparent rounded-md",
@@ -86,23 +87,18 @@ const ModalPreview = () => {
                         }
                     >
                         {isReadOnly ? "Fechar" : "Cancelar"}
-                    </button>
+                    </Button>
                     {!isReadOnly && (
-                        <button
+                        <Button
+                            disabled={onPedingRequest}
                             type="button"
                             className={cn(
                                 "inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
-                                onPedingRequest &&
-                                    "hover:bg-indigo-500 bg-indigo-500 cursor-default"
                             )}
                             onClick={onHandleSubmit}
                         >
-                            {onPedingRequest ? (
-                                <Spinner className="w-4 h-4 m-0" />
-                            ) : (
-                                "Salvar"
-                            )}
-                        </button>
+                            Salvar
+                        </Button>
                     )}
                 </div>
             </div>

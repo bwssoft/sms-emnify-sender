@@ -6,9 +6,9 @@ import { Command } from "@/app/lib/definitions";
 import CommandHelper from "../../components/CommandHelper";
 import ChatMessage from "./components/ChatMessage";
 import { Message } from "@/app/lib/emnify";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { reverseArray } from "@/app/utils/reverseArray";
-import { format, getDay, subDays, toDate } from "date-fns";
+import { compareAsc, format, getDay, subDays, toDate } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 type DateToRenderMessageIndex = {
@@ -20,6 +20,17 @@ export function Form(props: {
     commands: Array<Command>;
     messages: Array<Message>;
 }) {
+
+    const divRef = useRef(null);
+
+    // Set the messages scrolls to the end
+    useEffect(() => {
+        if (divRef.current){
+            //@ts-ignore
+            divRef.current.scrollTop = divRef.current.scrollHeight;
+        }
+      }, []);
+
     const [datesToRenderMessageIndexes, setDatesToRenderMessageIndexes] =
         useState<DateToRenderMessageIndex>({});
 
@@ -38,7 +49,7 @@ export function Form(props: {
         let dates: DateToRenderMessageIndex = {};
 
         for (const date of uniqueDates) {
-            dates[date] = reversedArray.findLastIndex((message) =>
+            dates[date] = reversedArray.findIndex((message) =>
                 message.submit_date.startsWith(date)
             );
         }
@@ -54,16 +65,15 @@ export function Form(props: {
     });
 
     const onRenderViewDate = (date: string) => {
-        const currentDay = getDay(new Date());
-        const yesterday = getDay(subDays(new Date(), 1));
+        const today = new Date().toISOString();
 
-        const currentSendAt = getDay(toDate(date));
-
-        if (currentDay === currentSendAt) {
+        if (date.substring(0, 10) === today.substring(0, 10)) {
             return "Hoje";
         }
 
-        if (yesterday === currentSendAt) {
+        const yesterday = subDays(new Date(), 1).toISOString();
+
+        if (date.substring(0, 10) === yesterday.substring(0, 10)) {
             return "Ontem";
         }
 
@@ -72,15 +82,15 @@ export function Form(props: {
 
     return (
         <div className="cols-span-4">
-            <div className="relative pl-2 flex flex-col overflow-auto max-h-[80vh] scrollbar-thin scrollbar-thumb-gray-300">
+            <div ref={divRef} className="relative pl-2 flex flex-col overflow-auto h-[calc(80vh-60px)] md:h-[72vh] 2xl:h-[80vh] scrollbar-thin scrollbar-thumb-gray-300">
                 {reversedArray.map((message, index) => (
                     <Fragment key={`${message.id}${message.payload}`}>
                         {Object.values(datesToRenderMessageIndexes).includes(
                             index
                         ) && (
                             <p
-                                className="w-fit p-2 my-2 flex flex-col rounded-md items-center text-gray-600 bg-gray-100 self-center justify-center text-[11px] sticky top-1"
-                                style={{ zIndex: 20 + index }}
+                                className="w-[6rem] p-2 my-2 flex flex-col rounded-md items-center text-gray-600 bg-gray-100 self-center justify-center text-[11px] sticky top-1"
+                                style={{ zIndex: 10 + index }}
                             >
                                 {onRenderViewDate(message.submit_date)}
                             </p>

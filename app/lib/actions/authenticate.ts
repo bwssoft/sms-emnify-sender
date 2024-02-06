@@ -17,12 +17,12 @@ export async function userAuthenticate(formData: FormData) {
   })
 }
 
-export async function isAdm(): Promise<boolean> {
+export async function isAdmOrSupport(): Promise<boolean> {
   const data = await auth()
   if(!data){
       return false
   }
-  return data.user.role ===  'adm'
+  return data.user.role ===  'adm' || data.user.role === "support"
 }
 
 export async function userLogout() {

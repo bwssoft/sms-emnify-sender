@@ -1,51 +1,45 @@
-"use client";
+'use client';
 
-import React, { useCallback, useRef } from "react";
-import { useCommandCreateForm } from "./useCommandCreateForm";
-import { Input } from "../../components/Input";
-import Variables from "./components/Variables";
-import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
-import { Tooltip } from "@radix-ui/themes";
-import Badge from "../../badge";
-import { Controller } from "react-hook-form";
-import ModalPreview from "./components/ModalPreview";
-import { CommandFormProvider } from "./context";
-import LoadingCommand from "./components/LoadingCommand";
+import React, { useCallback, useRef } from 'react';
+import { useCommandCreateForm } from './useCommandCreateForm';
+import { Input } from '../../components/Input';
+import Variables from './components/Variables';
+import { QuestionMarkCircleIcon } from '@heroicons/react/20/solid';
+import { Tooltip } from '@radix-ui/themes';
+import Badge from '../../badge';
+import { Controller } from 'react-hook-form';
+import ModalPreview from './components/ModalPreview';
+import { CommandFormProvider } from './context';
+import LoadingCommand from './components/LoadingCommand';
+import { Button } from '../../button';
 
 const Form: React.FC = () => {
-    const {
-        onHandleSubmit,
-        watch,
-        control,
-        getValues,
-        register,
-        errors,
-        state,
-    } = useCommandCreateForm();
+	const { onHandleSubmit, watch, control, getValues, register, errors, state } =
+		useCommandCreateForm();
 
-    const myRef = useRef<HTMLDivElement>(null);
+	const myRef = useRef<HTMLDivElement>(null);
 
-    const commandName = useCallback(() => {
-        const fieldValue = getValues("name");
-        if (!fieldValue) {
-            return "--";
-        }
+	const commandName = useCallback(() => {
+		const fieldValue = getValues('name');
+		if (!fieldValue) {
+			return '--';
+		}
 
-        return fieldValue;
-    }, [watch("name")]);
+		return fieldValue;
+	}, [watch('name')]);
 
     const isReadOnly = watch("readonly", false);
 
     const BadgeClassName = "bg-slate-700 border-slate-900 text-gray-300";
 
-    if (state["PENDING_COMMAND_REQUEST"]) {
-        return <LoadingCommand />;
-    }
+	if (state['PENDING_COMMAND_REQUEST']) {
+		return <LoadingCommand />;
+	}
 
     return (
         <div className="flex relative flex-col max-h-[calc(100vh-190px)] md:max-h-[calc(100vh-120px)] overflow-auto p-2.5 scroll-slim h-full">
             <div className="flex  flex-col md:flex-row w-full h-full gap-2">
-                <form id="commandForm" onSubmit={onHandleSubmit}>
+                <form id="commandForm" action={() => onHandleSubmit()}>
                     <div className="flex flex-col gap-2 max-w-full flex-1">
                         <Tooltip content={commandName()}>
                             <div className="font-semibold text-ellipsis max-w-[310px] truncate overflow-hidden text-lg py-2">
@@ -169,15 +163,15 @@ const Form: React.FC = () => {
 };
 
 export type ICommandFormType = {
-    uuid?: string;
+	uuid?: string;
 };
 
 export const CommandCreateForm: React.FC<ICommandFormType> = (data) => {
-    return (
-        <CommandFormProvider uuid={data.uuid}>
-            <Form />
-        </CommandFormProvider>
-    );
+	return (
+		<CommandFormProvider uuid={data.uuid}>
+			<Form />
+		</CommandFormProvider>
+	);
 };
 
 export default CommandCreateForm;

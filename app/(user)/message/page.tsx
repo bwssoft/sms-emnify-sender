@@ -39,12 +39,12 @@ export default async function MessagePage({
     const commands = await listCommandsfromComandPage(query_command, "name");
 
     return (
-        <div className="grid grid-cols-5">
+        <div className="grid grid-cols-1 lg:grid-cols-[min-content_1fr] relative min-h-full">
             <EndpointsInput simcards={simcards.slice(0, 9)} />
 
             {/*SEGUNDA COLUNA  */}
             {searchParams?.endpoint_id && (
-                <div className="grid grid-rows-[min-content_1fr] grid-cols-1 col-span-4">
+                <div className="grid grid-rows-[min-content_1fr] grid-cols-1">
                     <div className="border-b-2 border-gray-200 flex justify-between items-center px-6 py-2.5">
                         <div>
                             <p className="text-sm font-semibold text-gray-900">
@@ -72,8 +72,9 @@ export default async function MessagePage({
                     />
                 </div>
             )}
+
             {!searchParams?.endpoint_id && (
-                <div className="flex flex-col w-full justify-center items-center col-span-4">
+                <div className="flex flex-col w-full justify-center items-center col-span-1 lg:col-span-4">
                     <div className="text-center flex flex-col items-center">
                         <CpuChipIcon className="h-8 w-8 text-gray-700" />
                         <h3 className="mt-2 text-sm font-semibold text-gray-900">

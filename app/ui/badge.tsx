@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import { cn } from "../utils/cn";
+import { Button } from "./button";
 
 export type IBadgeType = React.HTMLAttributes<HTMLSpanElement> & {
     children: ReactNode;
@@ -24,7 +25,7 @@ const Badge: React.FC<IBadgeType> = ({
         >
             {children}
             {clear && (
-                <button
+                <Button
                     type="button"
                     className="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-gray-500/20"
                     onClick={() => onClearClick && onClearClick()}
@@ -37,7 +38,7 @@ const Badge: React.FC<IBadgeType> = ({
                         <path d="M4 4l6 6m0-6l-6 6" />
                     </svg>
                     <span className="absolute -inset-1" />
-                </button>
+                </Button>
             )}
         </span>
     );
