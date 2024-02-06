@@ -63,7 +63,7 @@ export async function listCommands({ type = 'name', value }: { type?: string, va
   try {
     let where = {};
     if(value) {
-      where = { [type]: { $regex: value } }
+      where = { [type]: { $regex: value, $options: 'i' } }
     }
     const commnadModel = (await clientPromise).db("sms-emnify-sender").collection<Command>("commands");
     const commandsEntity = await commnadModel.aggregate<Command>([
@@ -93,10 +93,10 @@ export async function findOneCommand(uuid: string) {
       },
       {
         $limit: 1
-      }, { $project: { _id: 0 } }
+      }
     ]).toArray()
 
-    return commandEntity[0];
+    return { ...commandEntity[0], _id: commandEntity[0]._id.toString() };
   } 
   catch (error) {
     throw new Error('Failed to find one command.');

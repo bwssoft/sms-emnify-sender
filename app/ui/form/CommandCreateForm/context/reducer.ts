@@ -1,8 +1,12 @@
 import { CommandCreateFormData } from "../useCommandCreateForm";
 
+type ICurrentCommandType = CommandCreateFormData & {
+  action?: 'create' | 'updated'
+}
+
 export interface State {
   'MODAL_PREVIEW_COMMAND': boolean;
-  'CURRENT_COMMAND'?: CommandCreateFormData
+  'CURRENT_COMMAND'?: ICurrentCommandType
   'PENDING_COMMAND_REQUEST': boolean;
 }
 
@@ -13,7 +17,7 @@ export type ModalPreviewStateAction = {
 
 export type CommandFormStateAction = {
   type: 'CURRENT_COMMAND',
-  payload: CommandCreateFormData;
+  payload: ICurrentCommandType;
 }
 
 export type LoadingCommandStateAction = {

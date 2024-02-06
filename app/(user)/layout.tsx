@@ -4,6 +4,7 @@ import { Theme } from "@radix-ui/themes";
 import { Inter } from "next/font/google";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
+import { SessionProvider } from "next-auth/react";
 
 import "@radix-ui/themes/styles.css";
 import "../globals.css";
