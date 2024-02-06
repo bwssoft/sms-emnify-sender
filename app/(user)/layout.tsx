@@ -27,12 +27,12 @@ export default function RootLayout({
     return (
         <html lang="en" className="h-full bg-white">
             <body className={`h-full ${inter.className}`}>
-                <Theme className="h-full">
+                <Theme className="h-full overflow-hidden">
                     <Toaster position="top-center" />
                     <SideBar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
                     <div className="h-full lg:pl-64">
                         <Navbar openSidebar={openSidebar} />
-                        <div className="w-full max-h-[calc(100vh-120px)] sm:max-h-[calc(100vh-57px)] overflow-hidden h-full">
+                        <div className="w-full overflow-hidden h-full">
                             {children}
                         </div>
                     </div>

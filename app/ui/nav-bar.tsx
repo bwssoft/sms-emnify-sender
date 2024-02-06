@@ -34,7 +34,7 @@ export function Navbar({ openSidebar }: NavbarProps) {
           <span className="sr-only">Open sidebar</span>
           <Bars3CenterLeftIcon className="h-6 w-6" aria-hidden="true" />
         </button>
-        <div className="flex flex-1 justify-between px-4 sm:px-6 lg:px-8">
+        <div className="lg:flex flex-1 justify-between px-4 sm:px-6 lg:px-8 hidden">
           <div className="flex flex-1">
             <form className="flex w-full md:ml-0" action="#" method="GET">
               <label htmlFor="search-field" className="sr-only">
