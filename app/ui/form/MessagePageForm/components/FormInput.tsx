@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
-import { useMessagePageForm } from "../../useMessagePageForm";
+import { useMessagePageForm } from "../useMessagePageForm";
 
-const FormInput: React.FC = () => {
+export default function FormInput() {
     const { register } = useMessagePageForm();
 
     return (
@@ -15,5 +14,3 @@ const FormInput: React.FC = () => {
         />
     );
 };
-
-export default FormInput;

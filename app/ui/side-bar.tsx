@@ -15,7 +15,7 @@ import { usePathname } from "next/navigation";
 import { Fragment, useCallback, useState } from "react";
 import { userLogout } from "../lib/actions";
 import Image from "next/image";
-import Logo from "../../public/logotipo.png";
+import Logo from "../ui/Icons/Logo.svg";
 
 export function SideBar() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -175,7 +175,12 @@ export function SideBar() {
             {/* Static sidebar for desktop */}
             <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col lg:border-r lg:border-gray-200 lg:bg-gray-100 lg:pb-4 lg:pt-5">
                 <div className="flex flex-shrink-0 items-center px-6">
-                    <Image src={Logo} alt="Logotipo" width={80} />
+                    <Image
+                        src={"/Logo.svg"}
+                        alt="Logotipo"
+                        width={154}
+                        height={42}
+                    />
                 </div>
                 {/* Sidebar component, swap this element with another sidebar if you like */}
                 <div className="mt-5 flex h-0 flex-1 flex-col justify-between overflow-y-auto pt-1">

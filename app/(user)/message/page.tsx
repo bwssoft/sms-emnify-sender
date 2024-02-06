@@ -1,4 +1,7 @@
+'use server'
+
 import {
+    fetchEndpointMessagesById,
     fetchEndpointsFilteredByName,
     listCommandsfromComandPage,
     refreshMessageDatafromMessagePage,
@@ -8,7 +11,7 @@ import { MessagePageForm } from "@/app/ui/form/MessagePageForm";
 import { ArrowPathIcon, EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { CpuChipIcon } from "@heroicons/react/24/outline";
 
-export default async function Example({
+export default async function MessagePage({
     searchParams,
 }: {
     searchParams?: {
@@ -24,6 +27,7 @@ export default async function Example({
     const type = searchParams?.type || undefined;
     const query_command = searchParams?.query_command || "";
     const simcards = await fetchEndpointsFilteredByName(query, type);
+    const messages = await fetchEndpointMessagesById(searchParams?.endpoint_id ?? '');
 
     const refreshMessageBinded = refreshMessageDatafromMessagePage.bind(
         null,
@@ -33,12 +37,12 @@ export default async function Example({
     const commands = await listCommandsfromComandPage(query_command, "name");
 
     return (
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-5">
             <EndpointsInput simcards={simcards.slice(0, 9)} />
 
             {/*SEGUNDA COLUNA  */}
             {searchParams?.endpoint_id && (
-                <div className="flex flex-col w-full justify-between col-span-2">
+                <div className="grid grid-rows-[min-content_1fr] grid-cols-1 col-span-4">
                     <div className="border-b-2 border-gray-200 flex justify-between items-center px-6 py-2.5">
                         <div>
                             <p className="text-sm font-semibold text-gray-900">
@@ -61,12 +65,13 @@ export default async function Example({
 
                     <MessagePageForm
                         commands={commands}
+                        messages={messages}
                         endpoint_id={searchParams?.endpoint_id}
                     />
                 </div>
             )}
             {!searchParams?.endpoint_id && (
-                <div className="flex flex-col w-full justify-center items-center col-span-2">
+                <div className="flex flex-col w-full justify-center items-center col-span-4">
                     <div className="text-center flex flex-col items-center">
                         <CpuChipIcon className="h-8 w-8 text-gray-700" />
                         <h3 className="mt-2 text-sm font-semibold text-gray-900">

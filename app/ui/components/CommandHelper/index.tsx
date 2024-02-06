@@ -4,7 +4,6 @@ import Badge from "@/app/ui/badge";
 import { useMessagePageForm } from "@/app/ui/form/MessagePageForm/useMessagePageForm";
 import { Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { Fascinate_Inline } from "next/font/google";
 import React from "react";
 
 const CommandHelper: React.FC = () => {

@@ -2,12 +2,9 @@ import { listCommandsfromComandPage } from "@/app/lib/actions";
 import { Breadcrumbs } from "@/app/ui/breadcrumbs";
 import { Button } from "@/app/ui/button";
 import CommandsList from "@/app/ui/commands-list";
-import { Modal } from "@/app/ui/components/Modal";
 import EndpointsSearchBar from "@/app/ui/endpoint-search-bar";
 import Link from "next/link";
 import React from "react";
-import ModalDelete from "./components/ModalDelete";
-import CommandMenu from "../message/components/CommandMenu";
 
 const Command: React.FC = async ({
     searchParams,
