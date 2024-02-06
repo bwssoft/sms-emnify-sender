@@ -26,11 +26,13 @@ export default function EndpointsInput({ simcards }: EndpointsInputProps) {
 
     const handleSelect = useDebouncedCallback((term) => {
         const params = new URLSearchParams(searchParams);
+
         if (term) {
             params.set("endpoint_id", term.endpoint_id);
         } else {
             params.delete("endpoint_id");
         }
+
         replace(`${pathname}?${params.toString()}`);
 
         if (term) {
@@ -38,6 +40,7 @@ export default function EndpointsInput({ simcards }: EndpointsInputProps) {
         } else {
             params.set("endpoint_name", term);
         }
+
         replace(`${pathname}?${params.toString()}`);
 
         if (term) {
@@ -45,8 +48,17 @@ export default function EndpointsInput({ simcards }: EndpointsInputProps) {
         } else {
             params.set("endpoint_imei", term);
         }
+
         replace(`${pathname}?${params.toString()}`);
     }, 300);
+
+    useEffect(() => {
+        const haveEndpointOnSearchParams = !!searchParams.get('endpoint_id')
+
+        if (haveEndpointOnSearchParams) {
+            setIsFullScreen(false)
+        }
+    }, [searchParams])
 
     return (
         <>
