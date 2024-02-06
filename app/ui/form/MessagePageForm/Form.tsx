@@ -54,7 +54,6 @@ export function Form(props: {
     });
 
     const onRenderViewDate = (date: string) => {
-        console.log(date);
         const currentDay = getDay(new Date());
         const yesterday = getDay(subDays(new Date(), 1));
 
