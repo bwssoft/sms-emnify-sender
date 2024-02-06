@@ -23,7 +23,6 @@ export type ICommandsListType = {
 const CommandsList: React.FC<ICommandsListType> = ({ commands }) => {
     const [curretCommand, setCurrentCommand] = useState<Command>();
     const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-
     const onCloseModal = () => {
         setOpenDeleteModal(false);
     };
@@ -53,11 +52,8 @@ const CommandsList: React.FC<ICommandsListType> = ({ commands }) => {
                     role="list"
                     className=" divide-y divide-gray-100 border-t overflow-y-auto scroll-slim max-h-[calc(100vh-60vh)] border-4  border-transparent"
                 >
-                    {commands.map((data) => (
-                        <li
-                            className="flex w-full px-6 items-center"
-                            key={data.uuid}
-                        >
+                    {commands.map((data, key) => (
+                        <li className="flex w-full px-6 items-center" key={key}>
                             <span className="flex w-full items-center truncate">
                                 <a
                                     href={`/command/${data.uuid}`}
@@ -126,8 +122,8 @@ const CommandsList: React.FC<ICommandsListType> = ({ commands }) => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 bg-white">
-                            {commands.map((data) => (
-                                <tr key={data.uuid}>
+                            {commands.map((data, key) => (
+                                <tr key={key}>
                                     <td className="w-1/3 max-w-0 whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-900">
                                         <div className="flex items-center space-x-3 lg:pl-2">
                                             <span>{data.name}</span>
