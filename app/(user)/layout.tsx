@@ -32,7 +32,7 @@ export default function RootLayout({
                     <SideBar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
                     <div className="h-full lg:pl-64">
                         <Navbar openSidebar={openSidebar} />
-                        <div className="w-full overflow-hidden h-full">
+                        <div className="w-full h-full">
                             {children}
                         </div>
                     </div>

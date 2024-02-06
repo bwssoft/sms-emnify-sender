@@ -54,7 +54,7 @@ export default function EndpointsInput({ simcards }: EndpointsInputProps) {
                 <MagnifyingGlassCircleIcon
                     role="button"
                     onClick={() => setIsFullScreen(true)}
-                    className="text-gray-500 w-10 h-10 absolute z-50 right-4 top-4"
+                    className="text-gray-500 w-10 h-10 absolute right-4 -translate-y-12"
                 />
             )}
 

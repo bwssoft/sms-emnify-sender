@@ -72,7 +72,7 @@ export function Form(props: {
 
     return (
         <div className="cols-span-4">
-            <div className="relative pl-2 flex flex-col overflow-auto max-h-[calc(80vh-60px)] md:max-h-[72vh] 2xl:max-h-[80vh] scrollbar-thin scrollbar-thumb-gray-300">
+            <div className="relative pl-2 flex flex-col overflow-auto h-[calc(80vh-60px)] md:h-[72vh] 2xl:h-[80vh] scrollbar-thin scrollbar-thumb-gray-300">
                 {reversedArray.map((message, index) => (
                     <Fragment key={`${message.id}${message.payload}`}>
                         {Object.values(datesToRenderMessageIndexes).includes(
@@ -80,7 +80,7 @@ export function Form(props: {
                         ) && (
                                 <p
                                     className="w-[6rem] p-2 my-2 flex flex-col rounded-md items-center text-gray-600 bg-gray-100 self-center justify-center text-[11px] sticky top-1"
-                                    style={{ zIndex: 20 + index }}
+                                    style={{ zIndex: 10 + index }}
                                 >
                                     {onRenderViewDate(message.submit_date)}
                                 </p>
