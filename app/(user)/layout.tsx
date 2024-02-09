@@ -36,7 +36,9 @@ export default function RootLayout({
 							<Navbar openSidebar={openSidebar} />
 							<Componente />
 						</div>
-						<div className="w-full h-full">{children}</div>
+						<div className="w-full h-full max-h-full overflow-hidden">
+							{children}
+						</div>
 					</div>
 				</Theme>
 			</body>

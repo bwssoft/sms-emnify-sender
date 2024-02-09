@@ -25,7 +25,7 @@ const FormContent: React.FC<IFormContentType> = ({ action, commands }) => {
 			}}
 		>
 			<div className="flex relative w-full mt-2 rounded-full shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600 items-center">
-				<div className="cursor-pointer absolute inset-y-0 left-0 z-20 flex items-center pl-3">
+				<div className="cursor-pointer absolute inset-y-0 left-1 z-20 flex items-center pl-3">
 					<CommandMenu commands={commands} />
 				</div>
 				<Input

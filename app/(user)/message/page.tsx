@@ -64,12 +64,13 @@ export default async function MessagePage({
 							<EllipsisVerticalIcon className="w-4 h-4" />
 						</div>
 					</div>
-
-					<MessagePageForm
-						commands={commands}
-						messages={messages}
-						endpoint_id={searchParams?.endpoint_id}
-					/>
+					<div className="flex flex-col max-h-[calc(80vh-60px)] md:max-h-[72vh] 2xl:max-h-[80vh]">
+						<MessagePageForm
+							commands={commands}
+							messages={messages}
+							endpoint_id={searchParams?.endpoint_id}
+						/>
+					</div>
 				</div>
 			)}
 

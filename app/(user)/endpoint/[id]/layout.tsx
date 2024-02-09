@@ -59,11 +59,11 @@ export default function Layout({
 	}, [pathname, params.id]);
 
 	return (
-		<div className="min-h-full">
+		<>
 			<Breadcrumbs root="/" data={breadbrumbs} />
-			<div>
-				<main className="pb-16">
-					<div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+			<div className="flex flex-col w-full h-full overflow-hidden">
+				<main className="pb-16  h-full">
+					<div className="h-full max-w-7xl sm:px-6 lg:px-8">
 						<div className="px-4 sm:px-0">
 							{/* Tabs */}
 							<div className="sm:hidden">
@@ -109,11 +109,13 @@ export default function Layout({
 								</div>
 							</div>
 						</div>
-						<div className="pb-16 pt-4">{children}</div>
+						<div className="pb-16 pt-4 max-h-[calc(100%-57px)] h-full">
+							{children}
+						</div>
 					</div>
 				</main>
 			</div>
-		</div>
+		</>
 	);
 }
 
