@@ -2,7 +2,6 @@
 
 import { Theme } from '@radix-ui/themes';
 import { Inter } from 'next/font/google';
-import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 
 import '@radix-ui/themes/styles.css';
@@ -11,6 +10,7 @@ import '../globals.css';
 import { SideBar } from '../ui/side-bar';
 import { Navbar } from '../ui/nav-bar';
 import Componente from './profile/componente';
+import { useState } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -32,7 +32,10 @@ export default function RootLayout({
 					<Toaster position="top-center" />
 					<SideBar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 					<div className="h-full lg:pl-64">
-						<Navbar openSidebar={openSidebar} />
+						<div className="flex items-center justify-between pr-7  border-b border-gray-200 bg-white">
+							<Navbar openSidebar={openSidebar} />
+							<Componente />
+						</div>
 						<div className="w-full h-full">{children}</div>
 					</div>
 				</Theme>
