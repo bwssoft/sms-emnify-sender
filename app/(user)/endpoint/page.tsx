@@ -18,7 +18,7 @@ export default async function Example({
 
 	return (
 		<>
-			<div className="min-h-full">
+			<div className="min-h-full max-h-full overflow-y-auto scroll-slim">
 				<div className="flex flex-col">
 					<EndpointsSearchBar
 						placeholder="Pesquise pelo endpoint."
