@@ -74,6 +74,9 @@ export default function Example() {
                 />
               </div>
             </div>
+            <div className="flex justify-end">
+              <a href="/passwordRecovery">Esqueceu a senha?</a>
+            </div>
 
             <div>
               <Button

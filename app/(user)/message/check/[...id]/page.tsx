@@ -6,7 +6,7 @@ import { Breadcrumbs } from "@/app/ui/breadcrumbs";
 import { Button } from "@/app/ui/button";
 import clsx from "clsx";
 
-export default async function Example({
+export default async function MessageByIdPage({
   params,
 }: {
   params: {
@@ -53,7 +53,7 @@ export default async function Example({
                   <span
                     className={clsx(
                       statusStyles[
-                        message?.status.description as keyof typeof statusStyles
+                      message?.status.description as keyof typeof statusStyles
                       ],
                       "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize"
                     )}
