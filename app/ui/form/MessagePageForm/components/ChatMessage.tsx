@@ -24,7 +24,7 @@ export default function ChatMessage({ content }: ChatMessageProps) {
             >
                 <div
                     key={content.id}
-                    className="flex flex-col items-end pr-10 col-start-2 w-96"
+                    className="flex flex-col items-end pr-4 col-start-2 w-96"
                 >
                     <section className="flex items-center justify-center gap-1.5">
                         <div className="flex">
