@@ -10,6 +10,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { reverseArray } from '@/app/utils/reverseArray';
 import { compareAsc, format, getDay, subDays, toDate } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import EmptyState from './components/EmptyState';
 
 type DateToRenderMessageIndex = {
 	[key: string]: number; // example: { '05-04-2023': 5 }
@@ -78,11 +79,12 @@ export function Form(props: {
 	};
 
 	return (
-		<div className="cols-span-4 max-h-full">
+		<div className="cols-span-4 h-full">
 			<div
 				ref={divRef}
 				className="relative pl-2 flex flex-col overflow-auto h-full scrollbar-thin scrollbar-thumb-gray-300"
 			>
+				{reversedArray.length <= 0 && <EmptyState />}
 				{reversedArray.map((message, index) => (
 					<Fragment key={`${message.id}${message.payload}`}>
 						{Object.values(datesToRenderMessageIndexes).includes(index) && (
