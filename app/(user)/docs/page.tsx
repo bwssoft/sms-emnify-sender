@@ -29,7 +29,7 @@ export default function Docs() {
                     </div>
                     <div className="rounded-bl-2xl rounded-br-2xl bg-slate-50 p-6 md:px-8">
                         <a
-                            href="/docs/tutorial-envio-mensagens-emnify-bws-app.pdf"
+                            href="/docs/tutorial-envio-de-mensagens-emnify-bws-app.pdf"
                             download
                             className="text-base font-medium text-indigo-700 hover:text-indigo-600"
                         >
