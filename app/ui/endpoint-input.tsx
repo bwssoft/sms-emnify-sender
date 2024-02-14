@@ -108,6 +108,10 @@ export default function EndpointsInput({ simcards }: EndpointsInputProps) {
                                 field: "endpoint_imei",
                                 label: "Imei",
                             },
+							{
+								field: 'sim_msisdn',
+								label: 'Simcard',
+							},
                         ]}
                     />
 
