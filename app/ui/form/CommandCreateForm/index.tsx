@@ -38,7 +38,7 @@ const Form: React.FC = () => {
 
 	return (
 		<div className="flex relative flex-col max-h-[calc(100vh-190px)] md:max-h-[calc(100vh-120px)] overflow-auto p-2.5 scroll-slim h-full">
-			<div className="flex  flex-col md:flex-row w-full h-full gap-2">
+			<div className="flex flex-col md:flex-row w-full gap-2">
 				<form id="commandForm" action={() => onHandleSubmit()}>
 					<div className="flex flex-col gap-2 max-w-full flex-1">
 						<Tooltip content={commandName()}>
@@ -122,11 +122,11 @@ const Form: React.FC = () => {
 					/>
 				</div>
 			</div>
-			<div className="flex w-full justify-end py-4">
+			<div className="flex w-full  justify-end my-4 py-4">
 				<button
 					form="commandForm"
 					type="submit"
-					className="inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					className=" items-center gap-x-2 rounded-md bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 				>
 					{isReadOnly
 						? 'Visualizar'
