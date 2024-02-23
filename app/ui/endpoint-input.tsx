@@ -70,12 +70,10 @@ export default function EndpointsInput({ simcards }: EndpointsInputProps) {
 				<MagnifyingGlassCircleIcon
 					role="button"
 					onClick={() => setIsFullScreen(true)}
-					className={
-						cn(
-							"text-gray-500 w-10 h-10 absolute right-4 translate-y-2",
-							!!searchParams.get('endpoint_id') && 'right-20'
-						)
-					}
+					className={cn(
+						'text-gray-500 w-10 h-10 absolute right-4 translate-y-2',
+						!!searchParams.get('endpoint_id') && 'right-20',
+					)}
 				/>
 			)}
 
@@ -84,8 +82,8 @@ export default function EndpointsInput({ simcards }: EndpointsInputProps) {
 					'z-40 flex items-start justify-start min-w-[350px] bg-white overflow-y-auto',
 					isOnSmallerScreens && !isFullScreen && 'hidden',
 					isOnSmallerScreens &&
-					isFullScreen &&
-					'inset-0 fixed items-center justify-center max-h-[80%] min-w-screen pt-14',
+						isFullScreen &&
+						'inset-0 fixed items-center justify-center max-h-[80%] min-w-screen pt-14',
 				)}
 			>
 				{isOnSmallerScreens && isFullScreen && (
@@ -97,12 +95,10 @@ export default function EndpointsInput({ simcards }: EndpointsInputProps) {
 				)}
 
 				<RadioGroup
-					className={
-						cn(
-							'w-full border-gray-200 border-r-[1px] h-full cols-span-1',
-							isOnSmallerScreens && isFullScreen && ''
-						)
-					}
+					className={cn(
+						'w-full border-gray-200 border-r-[1px] h-full cols-span-1',
+						isOnSmallerScreens && isFullScreen && '',
+					)}
 					value={selected}
 					onChange={(e) => {
 						setSelected(e);
@@ -124,7 +120,6 @@ export default function EndpointsInput({ simcards }: EndpointsInputProps) {
 								field: 'endpoint_imei',
 								label: 'Imei',
 							},
-              ,
 							{
 								field: 'sim_msisdn',
 								label: 'Simcard',
