@@ -12,7 +12,7 @@ export type Simcard = {
 		endpoint_imei: string;
 		endpoint_name: string;
 		sim_id: string;
-	} & any;
+	} ;
 	client_uuid: string;
 	uuid: string;
 	sim_msisdn: string;
