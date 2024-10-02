@@ -30,6 +30,7 @@ type ICardProps = {
 	footerLink?: {
 		href: string;
 		text: ReactNode;
+		isDownload?: boolean;
 	};
 };
 
@@ -47,12 +48,12 @@ const CardWithIcon: React.FC<Required<Pick<ICardProps, 'Icon'>>> = ({
 
 const CardWithFooterLink: React.FC<
 	Required<Pick<ICardProps, 'footerLink'>>
-> = ({ footerLink: { href, text } }) => {
+> = ({ footerLink: { href, text, isDownload = false } }) => {
 	return (
 		<CardContent className="flex items-center rounded-bl-2xl rounded-br-2xl bg-slate-50 p-6 md:px-8">
 			<a
 				href={href}
-				download
+				download={isDownload}
 				className=" text-base font-medium text-indigo-700 hover:text-indigo-600"
 			>
 				{text}

@@ -21,6 +21,7 @@ export const CardSection: React.FC = () => {
 				footerLink={{
 					href: '/docs/tutorial-envio-de-mensagens-emnify-bws-app.pdf',
 					text: footerLabel,
+          isDownload: true,
 				}}
 			/>
 			<Card
@@ -31,6 +32,7 @@ export const CardSection: React.FC = () => {
 				footerLink={{
 					href: '/docs/tutorial-tela-de-endpoints-emnify-bws-app.pdf',
 					text: footerLabel,
+          isDownload: true,
 				}}
 			/>
 			<Card
@@ -41,6 +43,7 @@ export const CardSection: React.FC = () => {
 				footerLink={{
 					href: '/docs/tutorial-mudança-de-senha-emnify-bws-app.pdf',
 					text: footerLabel,
+          isDownload: true,
 				}}
 			/>
 			<Card
@@ -51,6 +54,7 @@ export const CardSection: React.FC = () => {
 				footerLink={{
 					href: '/docs/tutorial-tela-de-comando-emnify-bws-app.pdf',
 					text: footerLabel,
+          isDownload: true,
 				}}
 			/>
 		</React.Fragment>
