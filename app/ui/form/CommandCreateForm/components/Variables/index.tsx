@@ -31,13 +31,21 @@ const Variables: React.FC<IVariablesType> = (data) => {
             {!isReadOnly && (
                 <>
                     <div>
-                        <Input.Label>Nome da Variável</Input.Label>
-                        <Input.Field
-                            placeholder="Nome da Variável"
+                        <Input.Root>
 
-                            readOnly={isReadOnly}
-                            {...register("name")}
-                        />
+                            <Input.Label>Nome da Variável</Input.Label>
+                            <Input.Group>
+                                <Input.Field
+                                    placeholder="Nome da Variável"
+
+                                    readOnly={isReadOnly}
+                                    {...register("name")}
+                                />
+                            </Input.Group>
+                            <Input.Error  >teste</Input.Error>
+
+                        </Input.Root>
+
                     </div>
                     <div className="flex flex-col">
                         <Input.Label
