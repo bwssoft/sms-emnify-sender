@@ -37,7 +37,7 @@ const CommandsList: React.FC<ICommandsListType> = ({ commands }) => {
 	return (
 		<>
 			{/* Projects list (only on smallest breakpoint) */}
-			<div className="mt-10 sm:hidden">
+			<div className="sm:hidden">
 				<div className="flex border-gray-50 border-b-gray-200 border-4 border-b px-6 py-3 bg-gray-50 justify-between">
 					<div className="flex w-full">
 						<h2 className="text-sm font-semibold text-gray-900">Comando</h2>
@@ -86,7 +86,7 @@ const CommandsList: React.FC<ICommandsListType> = ({ commands }) => {
 			</div>
 
 			{/* Projects table (small breakpoint and up) */}
-			<div className="mt-8 hidden sm:block overflow-y-auto scroll-slim border-4 border-white max-h-[calc(100vh-260px)]">
+			<div className="hidden sm:block overflow-y-auto scroll-slim border-4 border-white max-h-[calc(100vh-260px)]">
 				<div className="inline-block min-w-full border-b border-gray-200 align-middle">
 					<Table
 						rows={commands}

@@ -48,11 +48,23 @@ export async function createCommand({ _id, readonly = false, ...data }: Command)
   }
 }
 
-export async function listCommands({ type = 'name', value }: { type?: string, value?: string }) {
+export async function listCommands({ description, name, quickFilter }: {
+  quickFilter?: string;
+  description?: string;
+  name?: string;
+} = {}) {
   try {
     let where = {};
-    if (value) {
-      where = { [type]: { $regex: value, $options: 'i' } }
+    if (quickFilter) {
+      where = { ['name']: { $regex: quickFilter, $options: 'i' } }
+    }
+
+    if (name) {
+      where = { ...where, ['name']: { $regex: name, $options: 'i' } }
+    }
+
+    if (description) {
+      where = { ...where, ['description']: { $regex: description, $options: 'i' } }
     }
     const commnadModel = (await clientPromise).db("sms-emnify-sender").collection<Command>("commands");
     const commandsEntity = await commnadModel.aggregate<Command>([
