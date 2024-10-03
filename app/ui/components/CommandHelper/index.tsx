@@ -1,6 +1,6 @@
 "use client";
 
-import Badge from "@/app/ui/badge";
+import { Badge } from "@bwsoft/badge";
 import { useMessagePageForm } from "@/app/ui/form/MessagePageForm/useMessagePageForm";
 import { Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -39,15 +39,12 @@ const CommandHelper: React.FC = () => {
                 <div className="flex flex-col gap-2 mt-2">
                     {currentCommand.variables?.map((props, key) => (
                         <div key={key} className="flex items-center gap-1">
-                            <Badge className={badgeClassName}>
-                                {props.name}
-                            </Badge>
+                            <Badge label={props.name} className={badgeClassName} />
+
                             {props.description && (
                                 <>
                                     <div className="w-10 h-[1px] bg-gray-500" />
-                                    <Badge className={badgeClassName}>
-                                        {props.description}
-                                    </Badge>
+                                    <Badge label={props.description} className={badgeClassName} />
                                 </>
                             )}
                         </div>
