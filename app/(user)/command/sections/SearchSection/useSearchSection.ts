@@ -1,10 +1,7 @@
 'use client';
 
-import { cleanObject } from '@/app/utils/helperObject';
+import { useSearchParams } from '@/app/hooks/useSearchParams';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
-import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -17,17 +14,15 @@ const schema = z.object({
 export type SearchSectionType = z.infer<typeof schema>;
 
 export const useSearchSection = (props: {
-  quickFilter?: string;
-  description?: string;
-  name?: string;
+	quickFilter?: string;
+	description?: string;
+	name?: string;
 }) => {
-	const paramsAllowed = ['quickFilter', 'description', 'name'];
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 		reset,
-		getValues,
 		setValue,
 	} = useForm<SearchSectionType>({
 		resolver: zodResolver(schema),
@@ -38,54 +33,25 @@ export const useSearchSection = (props: {
 		},
 	});
 
-	const searchParams = useSearchParams();
-	const pathname = usePathname();
-	const { replace } = useRouter();
-
-	useEffect(() => {
-		const params = searchParams.entries();
-		// @ts-ignore
-		for (const [key, value] of params) {
-			if (paramsAllowed.includes(key)) {
-				setValue(key as keyof SearchSectionType, value);
-			}
-		}
-	}, []);
+	const paramsAllowed: Array<keyof SearchSectionType> = [
+		'quickFilter',
+		'description',
+		'name',
+	];
+	const { manageParams, resetParams, currentState } =
+		useSearchParams<SearchSectionType>({
+			paramsAllowed,
+			setValue,
+		});
 
 	const onHandleReset = () => {
 		reset();
-		replace(`${pathname}`);
-	};
-
-	const updateRequest = (data: SearchSectionType = {}) => {
-		const params = new URLSearchParams(searchParams);
-		Object.keys(data).forEach((key) => {
-			const keyObject = key as keyof SearchSectionType;
-			if (data[keyObject]) {
-				params.set(key, data[keyObject]);
-			} else {
-				params.delete(key);
-			}
-		});
-		replace(`${pathname}?${params.toString()}`);
+		resetParams();
 	};
 
 	const onHandleSubmit = handleSubmit((data) => {
-		updateRequest(data);
+		manageParams(data);
 	});
-
-	const currentState = useMemo(() => {
-    const params = searchParams.entries();
-    const state = new Map<string, string>();
-    // @ts-ignore
-    for (const [key, value] of params) {
-      if (paramsAllowed.includes(key)) {
-        state.set(key, value);
-      }
-    }
-
-    return Object(Object.fromEntries(state));
-  }, [props]);
 
 	return {
 		register,

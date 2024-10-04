@@ -6,6 +6,7 @@ import { useSearchSection } from './useSearchSection';
 import { Button } from '@bwsoft/button';
 import { SearchFilter } from '@bwsoft/search-filter';
 import Link from 'next/link';
+import { Form } from './Form';
 
 const SearchSection: React.FC<{
 	quickFilter?: string;
@@ -41,28 +42,7 @@ const SearchSection: React.FC<{
 						onReset={onHandleReset}
 						onConfirm={onHandleSubmit}
 					>
-						<div className="flex w-full flex-col mt-4 gap-4">
-							<Input.Root>
-								<Input.Label>Name</Input.Label>
-								<Input.Field
-									placeholder="Nome do comando"
-									{...register('name')}
-								/>
-								<Input.Error show={errors.name?.message !== undefined}>
-									{errors.quickFilter?.message}
-								</Input.Error>
-							</Input.Root>
-							<Input.Root>
-								<Input.Label>Descrição</Input.Label>
-								<Input.Field
-									placeholder="Descrição"
-									{...register('description')}
-								/>
-								<Input.Error show={errors.description?.message !== undefined}>
-									{errors.quickFilter?.message}
-								</Input.Error>
-							</Input.Root>
-						</div>
+						<Form errors={errors} register={register} />
 					</SearchFilter>
 				</div>
 				<div className="w-fit">

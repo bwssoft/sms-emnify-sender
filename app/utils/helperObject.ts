@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { Path } from './path';
+import { Condition, Filter } from 'mongodb';
 
 export const cleanObject = <T>(obj: T): Partial<T> => {
 	if (_.isArray(obj)) {
@@ -36,14 +37,14 @@ export type MethodRefineQuery<T> = {
 
 export type IManageQueryResponse<T> = {
 	[key in Path<T>]: T[keyof T];
-} & MethodRefineQuery<T>;
+};
 
 export const manageQuery = <T extends object>(
 	data: T,
-): Partial<IManageQueryResponse<T>> & MethodRefineQuery<T> => {
+): Partial<IManageQueryResponse<T>> => {
 	const mapKeys = Object.keys(data);
-	let objectValues: Partial<IManageQueryResponse<T>> & MethodRefineQuery<T> =
-		{} as Partial<IManageQueryResponse<T>> & MethodRefineQuery<T>;
+	let objectValues: Partial<IManageQueryResponse<T>> =
+		{} as Partial<IManageQueryResponse<T>>
 	mapKeys.forEach((key) => {
 		const value = data[key as keyof T];
 		if (_.isArray(value)) {
@@ -68,14 +69,34 @@ export const manageQuery = <T extends object>(
 
 	objectValues = {
 		...objectValues,
-		refine(fn) {
-			const data = { ...objectValues, refine: undefined };
-			const dataFormated: Omit<IManageQueryResponse<T>, 'refine'> = cleanObject(
-				data,
-			) as any;
-			return fn(dataFormated);
-		},
 	};
 
 	return objectValues;
+};
+
+
+export type IManageFunctionsQuery<Schema, T> = {
+	[key in Path<Schema>]?: (
+		value: Schema[keyof Schema],
+	) => Filter<T>
+};
+
+export const queryHandler = <Entity, SchemaForm>(
+	data: Partial<IManageQueryResponse<Partial<SchemaForm>>>,
+	objectFunctions: IManageFunctionsQuery<SchemaForm, Entity>,
+) => {
+	let queryState: Filter<Entity> = {};
+	const mapsKeys = Object.keys(data);
+	mapsKeys.forEach((key) => {
+		const value = data[key as keyof typeof data];
+		const propertyQueryFn =
+			objectFunctions[key as keyof typeof objectFunctions];
+		if (propertyQueryFn) {
+			const query = propertyQueryFn(value as SchemaForm[keyof SchemaForm]);
+			const partialQuery = _.merge(queryState, query);
+			queryState = partialQuery;
+		}
+	});
+
+	return queryState;
 };

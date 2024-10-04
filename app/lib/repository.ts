@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { Client, Command, Simcard } from "./definitions";
 import clientPromise from "./mongodb";
+import { Filter } from "mongodb";
 
 
 
@@ -48,29 +49,15 @@ export async function createCommand({ _id, readonly = false, ...data }: Command)
   }
 }
 
-export async function listCommands({ description, name, quickFilter }: {
-  quickFilter?: string;
-  description?: string;
-  name?: string;
-} = {}) {
+export async function listCommands(data?: Filter<Command>) {
   try {
-    let where = {};
-    if (quickFilter) {
-      where = { ['name']: { $regex: quickFilter, $options: 'i' } }
-    }
-
-    if (name) {
-      where = { ...where, ['name']: { $regex: name, $options: 'i' } }
-    }
-
-    if (description) {
-      where = { ...where, ['description']: { $regex: description, $options: 'i' } }
-    }
+    
     const commnadModel = (await clientPromise).db("sms-emnify-sender").collection<Command>("commands");
+
     const commandsEntity = await commnadModel.aggregate<Command>([
       {
         $match: {
-          ...where
+          ...data
         }
       },
       {
