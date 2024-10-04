@@ -3,6 +3,7 @@ import { Breadcrumbs } from '@/app/ui/breadcrumbs';
 import EndpointsSearchBar from '@/app/ui/endpoint-search-bar';
 import { EndpointsList } from '@/app/ui/endpoints-list';
 import { EndpointsPinned } from '@/app/ui/endpoints-pinned';
+import SearchSection from './section/SearchSection';
 
 export default async function Example({
 	searchParams,
@@ -20,27 +21,6 @@ export default async function Example({
 		<>
 			<div className="min-h-full max-h-full overflow-y-auto scroll-slim">
 				<div className="flex flex-col">
-					<EndpointsSearchBar
-						placeholder="Pesquise pelo endpoint."
-						fieldsForSearch={[
-							{
-								field: 'endpoint_name',
-								label: 'Nome',
-							},
-							{
-								field: 'sim_iccid_with_luhn',
-								label: 'Iccid',
-							},
-							{
-								field: 'endpoint_imei',
-								label: 'Imei',
-							},
-							{
-								field: 'sim_msisdn',
-								label: 'Simcard',
-							},
-						]}
-					/>
 
 					<Breadcrumbs
 						root="/"
@@ -54,6 +34,7 @@ export default async function Example({
 					<EndpointsPinned simcards={simcards.slice(0, 4)} />
 
 					<main className="flex-1">
+						<SearchSection {...searchParams} />
 						<EndpointsList simcards={simcards} />
 					</main>
 				</div>
