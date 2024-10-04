@@ -3,6 +3,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { Tabs } from "@bwsoft/tabs"
+
 import { usePathname } from 'next/navigation';
 import { Breadcrumbs } from '@/app/ui/breadcrumbs';
 import { isAdmOrSupport } from '@/app/lib/actions';
@@ -88,30 +90,43 @@ export default function Layout({
 									))}
 								</select>
 							</div>
-							<div className="hidden sm:block">
-								<div className="border-b border-gray-200">
-									<nav className="-mb-px mt-2 flex space-x-8" aria-label="Tabs">
-										{tabs.map((tab) => (
-											<Link
-												key={tab.name}
-												href={tab.href}
-												className={clsx(
-													isOptionInCurrentPathname(tab.href)
-														? 'border-purple-500 text-purple-600'
-														: 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700',
-													'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium',
-												)}
-											>
-												{tab.name}
-											</Link>
-										))}
-									</nav>
-								</div>
+							<div className='hidden sm:block max-h-full'>
+							<Tabs.Root defaultTab="Informações" className="col-span-1">
+								<Tabs.Header>
+									{tabs.map((tab) => (
+									<Link key={tab.name} href={tab.href} passHref>
+										<Tabs.Trigger value={tab.name}>
+										<a className={clsx(
+											isOptionInCurrentPathname(tab.href)
+												? 'border-purple-500 text-purple-600'
+												: 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700',
+											'whitespace-nowrap border-b-2 py-3 px-1 text-sm font-medium'
+											)}>
+											{tab.name}
+										</a>
+										</Tabs.Trigger>
+									</Link>
+									))}
+								</Tabs.Header>
+
+								{tabs.map((tab) => (
+									<Tabs.Content
+										key={tab.name}
+										value={tab.name}
+										className={clsx(
+											isOptionInCurrentPathname(`/endpoint/${params.id}/message`) ? 'h-[90vh]' : '',
+											'w-full flex-grow overflow-y-auto scrollbar-thin scrollbar-gray-indigo-500 mt-8 scrollbar-track-gray-300'
+										)}
+										>
+										{children}
+									</Tabs.Content>
+								))}
+								</Tabs.Root>
+
+
 							</div>
 						</div>
-						<div className="pb-16 pt-4 max-h-[calc(100%-57px)] h-full">
-							{children}
-						</div>
+
 					</div>
 				</main>
 			</div>

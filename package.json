@@ -18,6 +18,7 @@
     "@bwsoft/modal": "^2.0.16",
     "@bwsoft/spinner": "^2.0.12",
     "@bwsoft/table": "^1.0.0",
+    "@bwsoft/tabs": "^0.0.3",
     "@bwsoft/tooltip": "^2.0.5",
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.0.18",
