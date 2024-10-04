@@ -1,10 +1,11 @@
 'use client';
 
 import { recoverUserPassword } from '@/app/lib/actions'; // Importe a função aqui
-import { Button } from '@/app/ui/button';
+import { Button } from '@bwsoft/button';
 import Logo from '../../../public/logotipo.png';
 import Image from 'next/image';
 import React, { FormEvent, useState } from 'react';
+import { Input } from '@bwsoft/input';
 
 export default function PasswordRecovery() {
 	const [username, setUsername] = useState('');
@@ -34,14 +35,14 @@ export default function PasswordRecovery() {
 				<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 					<form className="space-y-6" onSubmit={handleSubmit}>
 						<div>
-							<label
+							<Input.Label
 								htmlFor="username"
 								className="block text-sm font-medium leading-6 text-gray-900"
 							>
 								Digite seu nome de usuário
-							</label>
+							</Input.Label>
 							<div className="mt-2">
-								<input
+								<Input.Field
 									id="username"
 									name="username"
 									type="username"
@@ -54,14 +55,14 @@ export default function PasswordRecovery() {
 							</div>
 						</div>
 						<div>
-							<label
+							<Input.Label
 								htmlFor="new_password"
 								className="block text-sm font-medium leading-6 text-gray-900"
 							>
 								Digite a nova senha
-							</label>
+							</Input.Label>
 							<div className="mt-2">
-								<input
+								<Input.Field
 									id="new_password"
 									name="new_password"
 									type="password"

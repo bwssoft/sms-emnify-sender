@@ -6,8 +6,8 @@ import { Command } from '@/app/lib/definitions';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Tooltip } from '@radix-ui/themes';
-import Badge from '../../badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@bwsoft/tooltip';
+import { Badge } from '@bwsoft/badge';
 
 export const schema = z.object({
 	payload: z.string().optional(),
@@ -44,15 +44,24 @@ export const useMessagePageForm = () => {
 					const variable = variables?.find((props) => props.name === step);
 					if (variable) {
 						return (
-							<Tooltip
-								key={key}
-								className="z-[99]"
-								content={variable.description || ''}
-							>
-								<span>
-									<Badge className={badgeClassName}>{variable.name}</Badge>
-								</span>
-							</Tooltip>
+
+							<TooltipProvider key={key}>
+								<TooltipTrigger>
+									<span>
+										<Badge label={variable.name} className={badgeClassName}></Badge>
+									</span>
+								</TooltipTrigger>
+								<TooltipContent>
+									{variable.description || ''}
+								</TooltipContent>
+							</TooltipProvider>
+							// <Tooltip
+							// 	key={key}
+							// 	//className="z-[99]"
+							// 	//content={variable.description || ''}
+							// >
+
+							// </Tooltip>
 						);
 					}
 

@@ -25,7 +25,7 @@ const CommandUpdate: React.FC<ICommandUpdateType> = async ({ params }) => {
                         },
                     ]}
                 />
-                <main className="flex-1 px-6 py-2">
+                <main className="flex-1 h-full px-6 py-2">
                     <CommandCreateForm uuid={params.id} />
                 </main>
             </div>
