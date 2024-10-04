@@ -12,8 +12,8 @@ export const Form: React.FC<IFormProps> = ({ errors, register }) => {
 	return (
 		<div className="flex w-full flex-col mt-4 gap-4">
 			<Input
-				label="Name"
-				placeholder="Nome do comando"
+				label="Nome"
+				placeholder="Nome do endpoint"
 				error={errors.query?.message}
 				{...register('query')}
 			/>

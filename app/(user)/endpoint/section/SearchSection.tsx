@@ -20,9 +20,9 @@ const SearchSection: React.FC<{
 				<div className="flex md:w-full max-w-[400px] items-end gap-4">
 					<div className="hidden md:flex w-full  gap-4 items-end">
 						<Input.Root>
-							<Input.Label>Name</Input.Label>
+							<Input.Label>Nome</Input.Label>
 							<Input.Field
-								placeholder="Nome do comando..."
+								placeholder="Nome do endpoint..."
 								className="w-full min-w-[255px] max-w-[255px]"
 								{...register('query')}
 							/>

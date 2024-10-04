@@ -6,7 +6,12 @@ import { Command } from '@/app/lib/definitions';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@bwsoft/tooltip';
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from '@bwsoft/tooltip';
 import { Badge } from '@bwsoft/badge';
 
 export const schema = z.object({
@@ -44,24 +49,19 @@ export const useMessagePageForm = () => {
 					const variable = variables?.find((props) => props.name === step);
 					if (variable) {
 						return (
-
 							<TooltipProvider key={key}>
-								<TooltipTrigger>
-									<span>
-										<Badge label={variable.name} className={badgeClassName}></Badge>
-									</span>
-								</TooltipTrigger>
-								<TooltipContent>
-									{variable.description || ''}
-								</TooltipContent>
+								<Tooltip>
+									<TooltipTrigger>
+										<span>
+											<Badge
+												label={variable.name}
+												className={badgeClassName}
+											></Badge>
+										</span>
+									</TooltipTrigger>
+									<TooltipContent className='bg-black text-white' >{variable.description || ''}</TooltipContent>
+								</Tooltip>
 							</TooltipProvider>
-							// <Tooltip
-							// 	key={key}
-							// 	//className="z-[99]"
-							// 	//content={variable.description || ''}
-							// >
-
-							// </Tooltip>
 						);
 					}
 

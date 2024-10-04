@@ -1,5 +1,5 @@
 import { fetchEndpointConnectivityById } from '@/app/lib/actions';
-import { EmptyState } from '@/app/ui/components/@composition/EmptyState';
+import { EmptyStateRequest } from '@bwsoft/empty-state';
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
 
 export default async function Example({
@@ -12,10 +12,10 @@ export default async function Example({
 	const connectivity = await fetchEndpointConnectivityById(params.id);
 	if (!connectivity) {
 		return (
-			<EmptyState.Root>
-				<EmptyState.Icon icon={ExclamationCircleIcon} />
-				<EmptyState.Title text="Nenhum dado encontrado" />
-			</EmptyState.Root>
+			<EmptyStateRequest.Root>
+				<EmptyStateRequest.Icon icon={ExclamationCircleIcon} />
+				<EmptyStateRequest.Title text="Nenhum dado foi encontrado" />
+			</EmptyStateRequest.Root>
 		);
 	}
 	return (

@@ -3,7 +3,7 @@ import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { Simcard } from '../lib/definitions';
-import { Table } from "@bwsoft/table"
+import { Table } from '@bwsoft/table';
 import { Tooltip } from '@radix-ui/themes';
 import { EyeIcon } from '@heroicons/react/24/outline';
 
@@ -51,8 +51,8 @@ export function EndpointsList({ simcards }: { simcards: Simcard[] }) {
 			</div>
 
 			{/* Projects table (small breakpoint and up) */}
-			<div className=" hidden sm:block overflow-y-auto scroll-slim border-4 border-white max-h-[calc(100vh-260px)]">
-				<div className="inline-block min-w-full border-b border-gray-200 align-middle">
+			<div className="flex flex-col w-full h-full max-w-full max-h-[calc(100vh-360px)] overflow-hidden">
+				<div className="flex flex-col h-full max-h-full gap-4 px-4 overflow-hidden">
 					<Table
 						rows={simcards}
 						columns={[
@@ -64,7 +64,9 @@ export function EndpointsList({ simcards }: { simcards: Simcard[] }) {
 							{
 								column: 'emnify',
 								label: 'IMEI',
-								render: (row) => <span>{row.emnify.endpoint_imei ?? "---"}</span>,
+								render: (row) => (
+									<span>{row.emnify.endpoint_imei ?? '---'}</span>
+								),
 							},
 							{
 								column: 'emnify',
@@ -76,7 +78,7 @@ export function EndpointsList({ simcards }: { simcards: Simcard[] }) {
 								label: '',
 								render: (row) => (
 									<Link
-									href={`/endpoint/${row.emnify.endpoint_id}/info`}
+										href={`/endpoint/${row.emnify.endpoint_id}/info`}
 										className="text-indigo-600 hover:text-indigo-900"
 									>
 										<Tooltip content="Visualizar">
