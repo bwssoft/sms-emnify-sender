@@ -1,5 +1,11 @@
+"use client"
+
 import { userAuthenticate } from "@/app/lib/actions";
-import { Button } from "@/app/ui/button";
+import { Button } from "@bwsoft/button";
+import { Input } from "@bwsoft/input"
+
+import Logo from "../../../public/logotipo.png";
+import Image from "next/image";
 
 /*
   This example requires some changes to your config:
@@ -18,21 +24,10 @@ import { Button } from "@/app/ui/button";
 export default function Example() {
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
+          <Image src={Logo} alt="Logotipo" width={120} />
+
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Faça login na sua conta
           </h2>
@@ -48,7 +43,7 @@ export default function Example() {
                 Nome do usuário
               </label>
               <div className="mt-2">
-                <input
+                <Input.Field
                   id="username"
                   name="username"
                   type="username"
@@ -66,7 +61,7 @@ export default function Example() {
                 Senha
               </label>
               <div className="mt-2">
-                <input
+                <Input.Field
                   id="password"
                   name="password"
                   type="password"
@@ -75,6 +70,9 @@ export default function Example() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+            </div>
+            <div className="flex justify-end">
+              <a href="/passwordRecovery">Esqueceu a senha?</a>
             </div>
 
             <div>
