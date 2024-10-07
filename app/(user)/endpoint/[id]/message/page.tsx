@@ -21,7 +21,9 @@ export default async function MessageEndpoint({
 
 	const messages = await fetchEndpointMessagesById(params.id);
 	console.log(params.id);
-	const commands = await listCommandsfromComandPage(query_command, 'name');
+	const commands = await listCommandsfromComandPage({
+		quickFilter: query_command,
+	});
 
 	return (
 		<div className="flex flex-col w-full h-full max-h-full overflow-hidden col-span-2">
