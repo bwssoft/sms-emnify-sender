@@ -2,16 +2,16 @@
 
 import React, { useCallback, useRef } from 'react';
 import { useCommandCreateForm } from './useCommandCreateForm';
-import { Input } from '../../components/Input';
+import { Input } from '@bwsoft/input';
 import Variables from './components/Variables';
 import { QuestionMarkCircleIcon } from '@heroicons/react/20/solid';
-import { Tooltip } from '@radix-ui/themes';
-import Badge from '../../badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@bwsoft/tooltip';
+import { Badge } from '@bwsoft/badge';
 import { Controller } from 'react-hook-form';
 import ModalPreview from './components/ModalPreview';
 import { CommandFormProvider } from './context';
 import LoadingCommand from './components/LoadingCommand';
-import { Button } from '../../button';
+
 
 const Form: React.FC = () => {
 	const { onHandleSubmit, watch, control, getValues, register, errors, state } =
@@ -37,22 +37,27 @@ const Form: React.FC = () => {
 	}
 
 	return (
-		<div className="flex relative flex-col max-h-[calc(100vh-190px)] md:max-h-[calc(100vh-120px)] overflow-auto p-2.5 scroll-slim h-full">
+		<div className="flex relative flex-col max-h-[calc(100vh-190px)] md:max-h-[calc(100vh-120px)] overflow-auto p-2.5 scroll-slim h-full ">
 			<div className="flex flex-col md:flex-row w-full gap-2">
 				<form id="commandForm" action={() => onHandleSubmit()}>
-					<div className="flex flex-col gap-2 max-w-full flex-1">
-						<Tooltip content={commandName()}>
+					<div className="flex flex-col gap-2 max-w-full flex-1 w-[350px]">
+						<Tooltip>
 							<div className="font-semibold text-ellipsis max-w-[310px] truncate overflow-hidden text-lg py-2">
 								{commandName()}
 							</div>
 						</Tooltip>
-						<Input
-							label="Nome do Comando"
-							placeholder="Nome do comando"
-							error={errors.name?.message}
-							{...register('name')}
-							readOnly={isReadOnly}
-						/>
+						<Input.Root>
+							<Input.Label>Nome do Comando</Input.Label>
+							<Input.Group>
+								<Input.Field
+									placeholder="Nome do comando"
+									{...register('name')}
+									readOnly={isReadOnly}
+								/>
+							</Input.Group>
+							<Input.Error>{errors.name?.message}</Input.Error>
+
+						</Input.Root>
 						<div className="flex flex-col">
 							<label
 								className="block text-sm font-medium leading-6 text-gray-900"
@@ -69,42 +74,56 @@ const Form: React.FC = () => {
 								/>
 							</div>
 						</div>
-						<Input
-							label={
+						<Input.Root>
+							<Input.Label>
 								<>
 									Comando
-									<Tooltip
-										content={
-											<div className="flex flex-col gap-2 max-w-[250px]">
-												<span>
-													Este campo permite que você insira qualquer texto e
-													também crie variáveis para valores dinâmicos. As
-													variáveis são criadas colocando o nome delas entre
-													colchetes{' '}
-													<Badge className={BadgeClassName}>[...]</Badge>
-												</span>
-												<span>
-													IP1#
-													<Badge className={BadgeClassName}>[IP]</Badge>#
-													<Badge className={BadgeClassName}>[PORT]</Badge>
-												</span>
-												<span className="text-gray-200">
-													Saida: IP1#999.999.999#0000
-												</span>
-											</div>
-										}
-									>
-										<QuestionMarkCircleIcon className="cursor-pointer h-[14px] w-[14px]" />
-									</Tooltip>
+									<TooltipProvider>
+
+										<Tooltip>
+											<TooltipTrigger>
+												<QuestionMarkCircleIcon className="cursor-pointer h-[14px] w-[14px]" />
+											</TooltipTrigger>
+											<TooltipContent>
+												<div className="bg-slate-900 flex flex-col gap-2 max-w-[250px] text-white rounded-[5px] p-4">
+													<span>
+														Este campo permite que você insira qualquer texto e
+														também crie variáveis para valores dinâmicos. As
+														variáveis são criadas colocando o nome delas entre
+														colchetes{' '}
+														<Badge label={'[...]'} className={BadgeClassName}></Badge>
+													</span>
+													<span>
+														IP1#
+														<Badge label={'[IP]'} className={BadgeClassName}></Badge>#
+														<Badge label={'[PORT]'} className={BadgeClassName}></Badge>
+														<Badge label={'[PORT]'} className={BadgeClassName}></Badge>
+													</span>
+													<span className="text-gray-200">
+														Saida: IP1#999.999.999#0000
+													</span>
+												</div>
+											</TooltipContent>
+										</Tooltip>
+									</TooltipProvider>
 								</>
-							}
-							readOnly={isReadOnly}
-							error={errors.command?.message}
-							labelClassName="items-center"
-							placeholder="Comando"
-							helper="Para utilizar as variáveis envolva o nome dela entre parênteses. Exemplo: [PORT]"
-							{...register('command')}
-						/>
+
+							</Input.Label>
+							<Input.Group>
+								<Input.Field
+									readOnly={isReadOnly}
+									placeholder="Comando"
+									{...register('command')}
+								/>
+
+							</Input.Group>
+							<div>
+								<Input.Helper >Para utilizar as variáveis envolva o nome dela entre parênteses. Exemplo: [PORT]</Input.Helper>
+
+								<Input.Error >{errors.command?.message}</Input.Error>
+							</div>
+
+						</Input.Root>
 					</div>
 				</form>
 				<div className="flex flex-1">
@@ -121,7 +140,7 @@ const Form: React.FC = () => {
 						)}
 					/>
 				</div>
-			</div>
+			</div >
 			<div className="flex w-full  justify-end my-4 py-4">
 				<button
 					form="commandForm"
@@ -131,12 +150,12 @@ const Form: React.FC = () => {
 					{isReadOnly
 						? 'Visualizar'
 						: getValues('_id')
-						? 'Atualizar'
-						: 'Cadastrar'}
+							? 'Atualizar'
+							: 'Cadastrar'}
 				</button>
 			</div>
 			<ModalPreview />
-		</div>
+		</div >
 	);
 };
 

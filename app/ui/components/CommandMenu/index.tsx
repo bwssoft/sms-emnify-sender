@@ -4,19 +4,17 @@ import { CommandLineIcon } from '@heroicons/react/20/solid';
 import { Popover } from '@radix-ui/themes';
 import { Arrow } from '@radix-ui/react-popover';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import Badge from '@/app/ui/badge';
 import { Command } from '@/app/lib/definitions';
 import { useMessagePageForm } from '@/app/ui/form/MessagePageForm/useMessagePageForm';
 import { useDebouncedCallback } from 'use-debounce';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Input } from '@bwsoft/input';
 
 export type ICommandMenuType = {
 	commands?: Array<Command>;
 };
 
 const CommandMenu: React.FC<ICommandMenuType> = ({ commands = [] }) => {
-	const badgeClassName =
-		'bg-slate-800 text-[8px] font-medium border-gray-500 text-white';
 
 	const { onHandleClickCommand, CommnadFormater } = useMessagePageForm();
 
@@ -42,7 +40,7 @@ const CommandMenu: React.FC<ICommandMenuType> = ({ commands = [] }) => {
 							<span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm">
 								<MagnifyingGlassIcon className="w-4 h-4 stroke-gray-500" />
 							</span>
-							<input
+							<Input
 								type="text"
 								name="name"
 								className="block w-full min-w-0 flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

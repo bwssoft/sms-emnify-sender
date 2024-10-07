@@ -1,6 +1,7 @@
 import { fetchEndpointById, isAdmOrSupport } from '@/app/lib/actions';
 import { EmptyState } from '@/app/ui/components/@composition/EmptyState';
 import { ExclamationCircleIcon } from '@heroicons/react/20/solid';
+import { ViewSectionContentSection } from './section';
 
 export default async function Example({
 	params,
@@ -30,41 +31,8 @@ export default async function Example({
 				</p>
 			</div>
 			<div className="mt-6 border-t border-gray-100">
+			 	<ViewSectionContentSection  isUserAdm={isUserAdm} endpoint={endpoint} />
 				<dl className="divide-y divide-gray-100">
-					<div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-						<dt className="text-sm font-medium leading-6 text-gray-900">
-							Nome
-						</dt>
-						<dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-							{endpoint.name}
-						</dd>
-					</div>
-					{isUserAdm && (
-						<div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-							<dt className="text-sm font-medium leading-6 text-gray-900">
-								Perfil de tarifa
-							</dt>
-							<dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-								{endpoint.tariff_profile.name}
-							</dd>
-						</div>
-					)}
-					<div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-						<dt className="text-sm font-medium leading-6 text-gray-900">
-							Perfil do serviço
-						</dt>
-						<dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-							{endpoint.service_profile.name}
-						</dd>
-					</div>
-					<div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-						<dt className="text-sm font-medium leading-6 text-gray-900">
-							Status
-						</dt>
-						<dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-							{endpoint.status.description}
-						</dd>
-					</div>
 					<div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
 						<dt className="text-sm font-medium leading-6 text-gray-900">
 							Tags

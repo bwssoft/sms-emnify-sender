@@ -1,14 +1,14 @@
-import Badge from '@/app/ui/badge';
-import { Input } from '@/app/ui/components/Input';
+import { Badge } from '@bwsoft/badge';
+import { Input } from '@bwsoft/input';
 import { PlusCircleIcon } from '@heroicons/react/20/solid';
 import React, { useRef } from 'react';
 import { useVariables } from "./useVariables";
 import { Tooltip } from '@radix-ui/themes';
-import { Button } from '@/app/ui/button';
+import { Button } from '@bwsoft/button';
 
 export type IVariableSchema = {
-	name: string;
-	description?: string;
+    name: string;
+    description?: string;
 };
 
 export type IVariablesType = {
@@ -18,8 +18,8 @@ export type IVariablesType = {
 };
 
 const Variables: React.FC<IVariablesType> = (data) => {
-	const { errors, onHandleSubmit, register, onHandleClear } =
-		useVariables(data);
+    const { errors, onHandleSubmit, register, onHandleClear } =
+        useVariables(data);
 
     const isReadOnly = data.isReadOnly || false;
 
@@ -31,21 +31,29 @@ const Variables: React.FC<IVariablesType> = (data) => {
             {!isReadOnly && (
                 <>
                     <div>
-                        <Input
-                            label="Nome da Variável"
-                            placeholder="Nome da Variável"
-                            error={errors.name?.message}
-                            readOnly={isReadOnly}
-                            {...register("name")}
-                        />
+                        <Input.Root>
+
+                            <Input.Label>Nome da Variável</Input.Label>
+                            <Input.Group>
+                                <Input.Field
+                                    placeholder="Nome da Variável"
+
+                                    readOnly={isReadOnly}
+                                    {...register("name")}
+                                />
+                            </Input.Group>
+                            <Input.Error  >teste</Input.Error>
+
+                        </Input.Root>
+
                     </div>
                     <div className="flex flex-col">
-                        <label
+                        <Input.Label
                             className="block text-sm font-medium leading-6 text-gray-900"
                             htmlFor={"description"}
                         >
                             Descrição
-                        </label>
+                        </Input.Label>
                         <div className="mt-1">
                             <textarea
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 p-2 outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-inset resize-none focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -72,12 +80,13 @@ const Variables: React.FC<IVariablesType> = (data) => {
             <div className="flex items-start min-h-[7rem] w-full h-full border gap-3 border-gray-200 rounded-md flex-wrap p-2">
                 {data.variables.map((props, key) => (
                     <Badge
+                        isRemoved
+                        iconAction={() => onHandleClear(key)}
+                        label={props.name}
                         key={key}
-                        clear
-                        onClearClick={() => onHandleClear(key)}
-                    >
-                        {props.name}
-                    </Badge>
+
+                    />
+
                 ))}
             </div>
         </form>
