@@ -36,7 +36,9 @@ export default async function MessagePage({
 		`/message?endpoint_id=${searchParams?.endpoint_id}`,
 	);
 
-	const commands = await listCommandsfromComandPage(query_command, 'name');
+	const commands = await listCommandsfromComandPage({
+		quickFilter: query_command,
+	});
 
 	return (
 		<div className="grid grid-cols-1 lg:grid-cols-[min-content_1fr] relative min-h-full">

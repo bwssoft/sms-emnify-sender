@@ -20,7 +20,7 @@ export default async function MessageEndpoint({
 	);
 
 	const messages = await fetchEndpointMessagesById(params.id);
-	console.log(params.id);
+
 	const commands = await listCommandsfromComandPage({
 		quickFilter: query_command,
 	});
